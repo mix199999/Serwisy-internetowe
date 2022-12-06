@@ -9,11 +9,13 @@ $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
 
+
+
 try {
    
        
 
-        if(!empty($_POST["login"]) && $_POST["passwd"]!='') 
+        if(isset($_POST["login"])  && isset($_POST["passwd"]))
         {	
             $user = new User($db);
             $user->login = $_POST["login"];
@@ -21,20 +23,23 @@ try {
             if($user->login()) 
             {
 
-                if($user->IDpriv == 1)
+                if($_SESSION["user_type"] == 1)
                 {
-                    $_SESSION["session_name"] = 'admin';
-                    header("location: adminDashboard.php");
+
+                    header('Location: index.php?action=StartPage');
                 }
 
-                else if ($user->IDpriv == 2)
+                else if ($_SESSION["user_type"] == 2)
 
                 {
-                    $_SESSION["session_name"] = 'user';
-                    header("location: userDashboard.php");
+
+                    header('Location: index.php?action=StartPage');
                 }
 
-               
+               //todo jesli inne role
+
+
+
             } else {
                 $loginMessage = 'Invalid login! Please try again.';
             }

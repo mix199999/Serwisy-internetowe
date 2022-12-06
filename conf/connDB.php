@@ -8,7 +8,8 @@ class Database{
     private $db  = "bw9c8o4nfp6czlfh6bd9"; 
     
 	public function getConnection()
-	{		
+	{
+        //todo try... catch...
 		$conn = new mysqli($this->server, $this->user, $this->password, $this->db);
 		if($conn->connect_error){
 			die("Error failed to connect to MySQL: " . $conn->connect_error);
@@ -18,5 +19,5 @@ class Database{
     }
 }
 
-aaa
+
 ?>

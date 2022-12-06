@@ -4,65 +4,69 @@ define('_ROOT_PATH', dirname(__FILE__));
 
 session_start();
 
-
+//ale fajne
 
 #trzeba bedzie zaprojektowac strone glowna tzn. zeby bylo do wybrania logowanie/rejestracja 
 #mozna w sumie podzielic ta strone dwa segmenty po lewej opis platformy  a po prawej formularz logowanie lub rejestracji
 #moze da sie zrobic tak jak w formsach tzn. to boxa ładujemy kontrolke ktora zmienia sie po nacisnieciu przycisku
 
-	$actions = array('wyloguj', 'user','admin', 'welcome_page', 'logowanie','pageNotFound' );
-    $action;
+	$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound' );
+
 
 	if (array_key_exists('action', $_GET)) 
 	{
-	
+
 		if($_GET['action'] == 'wyloguj') {
 			$_SESSION = array();
 			$_GET['action'] = 'logowanie';
-			$action = 'logowanie';
+			$_SESSION['action'] = 'logowanie';
 			
 		}
 		
 		if (in_array($_GET['action'] , $actions)) {
-			$action = $_GET['action'];
+			$_SESSION['action'] = $_GET['action'];
 		} 
         
-        else 
-			$action = 'pageNotFound';
+    //    else 
+		//	$action = 'pageNotFound';
 	
 	}
 
+
 		
-	if(isset($_SESSION["session_name"])) 
+	if(isset($_SESSION["user_type"])) 
     {
 	
-		if($_SESSION["session_name"] ==	 'admin')
+		if($_SESSION["user_type"] == 1)
 			{
 				
 				include("./views/admin.html");
 				
 			}
-		else if( $_SESSION["session_name"] == 'user')
+		else if( $_SESSION["user_type"] == 2)
 			{
 				
 				
 				include("./views/user.html");
 				
 			}
+
+        //todo jesli inne typy konta
+
 		
 	}
 	else
 	{
-		$action = 'logowanie';
+		$_SESSION['action'] = 'logowanie';
 	}
 
 	
 	
 
 	include(_ROOT_PATH.DIRECTORY_SEPARATOR
-	.'actions'.DIRECTORY_SEPARATOR.$action.'.php');
+	.'actions'.DIRECTORY_SEPARATOR.$_GET['action'].'.php');
 	include(_ROOT_PATH.DIRECTORY_SEPARATOR
-	.'views'.DIRECTORY_SEPARATOR.$action.'.html');
+	.'views'.DIRECTORY_SEPARATOR.$_GET['action'].'.html');
 	
 	
 

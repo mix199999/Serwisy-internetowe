@@ -15,7 +15,7 @@ try {
    
        
 
-        if(isset($_POST["login"])  && isset($_POST["passwd"]))
+        if($_POST["login"] != '' && $_POST["passwd"] != '')
         {	
             $user = new User($db);
             $user->login = $_POST["login"];

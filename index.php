@@ -13,24 +13,25 @@ session_start();
 	$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound' );
 
 
-	if (array_key_exists('action', $_GET)) 
-	{
 
-		if($_GET['action'] == 'wyloguj') {
-			$_SESSION = array();
-			$_GET['action'] = 'logowanie';
-			$_SESSION['action'] = 'logowanie';
-			
-		}
-		
-		if (in_array($_GET['action'] , $actions)) {
-			$_SESSION['action'] = $_GET['action'];
-		} 
-        
+if (array_key_exists('action', $_GET))
+{
+
+    if($_GET['action'] == 'wyloguj') {
+        $_SESSION = array();
+        $_GET['action'] = 'logowanie';
+        $_SESSION['action'] = 'logowanie';
+
+    }
+
+    if (in_array($_GET['action'] , $actions)) {
+        $_SESSION['action'] = $_GET['action'];
+    }
+
     //    else 
-		//	$action = 'pageNotFound';
-	
-	}
+    //	$action = 'pageNotFound';
+
+}
 
 
 		
@@ -60,14 +61,12 @@ session_start();
 		$_SESSION['action'] = 'logowanie';
 	}
 
-	
-	
 
-	include(_ROOT_PATH.DIRECTORY_SEPARATOR
-	.'actions'.DIRECTORY_SEPARATOR.$_GET['action'].'.php');
-	include(_ROOT_PATH.DIRECTORY_SEPARATOR
-	.'views'.DIRECTORY_SEPARATOR.$_GET['action'].'.html');
-	
+
+include(_ROOT_PATH.DIRECTORY_SEPARATOR
+    .'actions'.DIRECTORY_SEPARATOR.$_SESSION['action'].'.php');
+include(_ROOT_PATH.DIRECTORY_SEPARATOR
+    .'views'.DIRECTORY_SEPARATOR.$_SESSION['action'].'.html');
 	
 
   

@@ -8,7 +8,7 @@ class User{
 	public function __construct($db){
         $this->conn = $db;
     }	    
-	
+	//siema
 	public function login(){
 		if($this->login && $this->passwd) {
 			$sqlQuery = "SELECT * FROM ".$this->userTable." WHERE login = ? AND passwd = ?";

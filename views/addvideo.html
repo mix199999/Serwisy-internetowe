@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+    <body>
+        <form id="login-form" method="post" action = "index.php?action=addvideo" enctype="multipart/form-data">
+
+            <span class= "video_form">
+                <label for="">Tytuł:</label><input type="text" name="title" value="<?php echo $title ?>">
+                <?php if (array_key_exists('title', $errors)): ?><label><?php echo $errors['title'] ?></label><?php endif; ?>
+            </span><br>
+
+            <span class= "video_form" id="type">
+                <label for="">Wybierz formę przesłania:</label>
+                <label><input type="radio" name="type" id="filechck" value="file" <?php if($type == "file") echo 'checked'; ?> >Z pliku</label>
+                <label><input type="radio" name="type" id="urlchck" value="url" <?php if($type == "url") echo 'checked'; ?> >Z linku</label>
+                <?php if (array_key_exists('type', $errors)): ?><label><?php echo $errors['type'] ?></label><?php endif; ?>
+            <br></span>
+
+
+
+
+            <span ><input type="submit" id="send" value="Prześlij"></span><br>
+
+
+
+        </form>
+
+    </body>
+</html>

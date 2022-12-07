@@ -10,7 +10,7 @@ session_start();
 #mozna w sumie podzielic ta strone dwa segmenty po lewej opis platformy  a po prawej formularz logowanie lub rejestracji
 #moze da sie zrobic tak jak w formsach tzn. to boxa ładujemy kontrolke ktora zmienia sie po nacisnieciu przycisku
 
-	$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound','zarzadzanieUzytkownikami' );
+	$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound','zarzadzanieUzytkownikami', 'addvideo', 'test' );
 
 
 
@@ -51,7 +51,9 @@ if (array_key_exists('action', $_GET))
 				include("./views/user.html");
 				
 			}
-
+        else if($_SESSION["user_type"] == 3){
+            include("./views/editor.html");
+        }
         //todo jesli inne typy konta
 
 		
@@ -68,7 +70,10 @@ include(_ROOT_PATH.DIRECTORY_SEPARATOR
 include(_ROOT_PATH.DIRECTORY_SEPARATOR
     .'views'.DIRECTORY_SEPARATOR.$_SESSION['action'].'.html');
 	
-
+$scripts = _ROOT_PATH.DIRECTORY_SEPARATOR .'scripts'.DIRECTORY_SEPARATOR.$_SESSION['action'].'.js';
+if(file_exists($scripts)){
+    include($scripts);
+}
   
 
 ?>

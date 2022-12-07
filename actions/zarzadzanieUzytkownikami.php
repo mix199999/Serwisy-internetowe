@@ -1,7 +1,6 @@
 <?php
 
-include_once'../conf/connDB.php';
-
+include_once 'conf/connDB.php';
 $userTable = 'users';
 
 
@@ -9,8 +8,9 @@ $userTable = 'users';
 $database = new Database();
 $db = $database->getConnection();
 
-$sqlQuery = "SELECT * FROM ".$userTable;
-$stmt = $this->conn->prepare($sqlQuery);
+$sqlQuery = "SELECT login,IDuser,IDpriv FROM ".$userTable;
+$stmt = $db->prepare($sqlQuery);
 $stmt->execute();
-$result = $stmt->get_results();
-//todo fetch
+$wynik = $stmt->get_result();
+$wynik = $wynik->fetch_all();
+

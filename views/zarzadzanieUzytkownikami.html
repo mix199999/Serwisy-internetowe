@@ -7,9 +7,39 @@
 <body>
 
 
-//tabela wszystkich uzytkownikow
-//akcja edytuj/usuń jezeli IDpriv <> 1 (nie admin)
-//
+/* tabela wszystkich uzytkownikow
+akcja edytuj/usuń jezeli IDpriv <> 1 (nie admin)
+*/
+
+<table>
+    <thead>
+        <tr>
+            <th>Login</th>
+            <th>ID uzytkownika</th>
+            <th>Uprawnienia</th>
+        </tr>
+    </thead>
+    
+    <?php
+    foreach($wynik as $row){ 
+    ?>
+        <tr>
+
+            <td><?php echo $row[0]?></td>
+            <td><?php echo $row[1]?></td>
+            <td><?php echo $row[2]?></td>
+            <?php if ($row[2]<>'1'){ ?>
+            <td>
+                <a href="index.php?edytuj=<?php echo $row[1];?>">edytuj</a>
+            </td>
+            <td>
+                <a href="index.php?usun=<?php echo $row[1];?>">usuń</a>
+            </td>
+        <?php } ?>
+        </tr>
+    <?php } ?>
+</table>
+
 
 </body>
 </html>

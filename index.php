@@ -12,7 +12,7 @@ session_start();
 
 	$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound' );
 
-//dupa
+
 
 if (array_key_exists('action', $_GET))
 {

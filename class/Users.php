@@ -20,7 +20,7 @@ class User{
 	//siema
 	public function login(){
 		if($this->login && $this->passwd) {
-			$sqlQuery = "SELECT * FROM ".$this->userTable." WHERE login = ? AND passwd = ?";
+			$sqlQuery = "SELECT * FROM ".User::$userTable." WHERE login = ? AND passwd = ?";
             $stmt = $this->conn->prepare($sqlQuery);
 			$stmt->bind_param("ss", $this->login, $this->passwd);	
 			$stmt->execute();
@@ -44,7 +44,7 @@ class User{
     {
         if($this-> IDuser)
         {
-            $deleteQuery = "DELETE FROM ".$this->userTable." WHERE IDuser = ?";
+            $deleteQuery = "DELETE FROM ".User::$userTable." WHERE IDuser = ?";
             $stmt = $this->conn->prepare($deleteQuery);
             $stmt->bind_param("d", $this->IDuser);
             $stmt->execute();
@@ -65,7 +65,7 @@ class User{
 
         if($this->IDuser)
         {
-            $getQuery = "SELECT * FROM ".$this->userTable." WHERE IDuser = ?";
+            $getQuery = "SELECT * FROM ".User::$userTable." WHERE IDuser = ?";
             $stmt = $this->conn->prepare($getQuery);
             $stmt->bind_param("d", $this->IDuser);
             $stmt->execute();
@@ -97,7 +97,7 @@ class User{
     {
         if($this->login && $this->IDpriv )
         {
-            $updateQuery = "UPDATE ".$this->userTable." SET login = ?, IDpriv = ? WHERE IDuser = ?";
+            $updateQuery = "UPDATE ".User::$userTable." SET login = ?, IDpriv = ? WHERE IDuser = ?";
             $stmt = $this->conn->prepare($updateQuery);
             $stmt->bind_param("sdd",$this->login,$this->IDpriv, $this->IDuser);
             $stmt->execute();

@@ -2,7 +2,16 @@
 class User{
 	
 	
-	private $userTable = 'users';	
+	public static $userTable = 'users';
+
+
+
+    public static function getUserTable()
+    {
+       // return $userTable;
+    }
+
+
 	private $conn;
 	
 	public function __construct($db){
@@ -67,9 +76,6 @@ class User{
                 $this->login = $user['login'];
                 $this->IDpriv = $user['IDpriv'];
 
-
-
-
                 return 1;
             }
 
@@ -95,6 +101,7 @@ class User{
             $stmt = $this->conn->prepare($updateQuery);
             $stmt->bind_param("sdd",$this->login,$this->IDpriv, $this->IDuser);
             $stmt->execute();
+            $stmt->commit();
 
 
 

@@ -3,14 +3,13 @@
 include_once 'conf/connDB.php';
 include_once 'class/Users.php';
 
-$userTable = 'users';
-
 
 
 $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
-$sqlQuery = "SELECT login,IDuser,IDpriv FROM ".$userTable;
+
+$sqlQuery = "SELECT login,IDuser,IDpriv FROM ".User::$userTable;
 $stmt = $db->prepare($sqlQuery);
 $stmt->execute();
 $wynik = $stmt->get_result();

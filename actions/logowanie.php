@@ -36,6 +36,12 @@ try {
                     header('Location: index.php?action=StartPage');
                 }
 
+                else if ($_SESSION["user_type"] == 3)
+
+                {
+
+                    header('Location: index.php?action=StartPage');
+                }
                //todo jesli inne role
 
 
@@ -46,9 +52,9 @@ try {
         }
        
 
-    } catch (mysqli_sql_exception $e) 
+    } catch (PDOException $e)
     {
-        die("Connection failed: " . $db->connect_error);
+        die("Connection failed: " . $e->getMessage());
         echo"blad";
     }
 

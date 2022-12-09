@@ -51,7 +51,9 @@ if (array_key_exists('action', $_GET))
 				include("./views/user.html");
 				
 			}
-        else if($_SESSION["user_type"] == 3){
+        else if($_SESSION["user_type"] == 3)
+        {
+
             include("./views/editor.html");
         }
         //todo jesli inne typy konta

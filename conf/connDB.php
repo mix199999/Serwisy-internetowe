@@ -10,12 +10,16 @@ class Database{
 	public function getConnection()
 	{
         //todo try... catch...
-		$conn = new mysqli($this->server, $this->user, $this->password, $this->db);
-		if($conn->connect_error){
-			die("Error failed to connect to MySQL: " . $conn->connect_error);
-		} else {
-			return $conn;
-		}
+        try {
+            $conn = new PDO('mysql:host='.$this->server.';dbname='.$this->db,$this->user,$this->password);
+            return  $conn;
+
+        }catch (PDOException $e)
+        {
+            die("Error failed to connect to MySQL: " . $e->getMessage());
+        }
+		//$conn = new mysqli($this->server, $this->user, $this->password, $this->db);
+
     }
 }
 

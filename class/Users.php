@@ -22,12 +22,13 @@ class User{
 		if($this->login && $this->passwd) {
 			$sqlQuery = "SELECT * FROM ".User::$userTable." WHERE login = ? AND passwd = ?";
             $stmt = $this->conn->prepare($sqlQuery);
-			$stmt->bind_param("ss", $this->login, $this->passwd);	
+            //inne bindowanie
+			$stmt->bindParam(1, $this->login, PDO::PARAM_STR);
+            $stmt->bindParam(2, $this->passwd, PDO::PARAM_STR);
 			$stmt->execute();
-			$result = $stmt->get_result();
-			if($result->num_rows > 0)
+			//$result = $stmt->getResult();
+			if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-				$user = $result->fetch_assoc();
 				$_SESSION["userid"] = $user['IDuser'];
 				$_SESSION["user_type"] = $user['IDpriv'];
 				$_SESSION["name"]	= $user['login'];	
@@ -46,7 +47,8 @@ class User{
         {
             $deleteQuery = "DELETE FROM ".User::$userTable." WHERE IDuser = ?";
             $stmt = $this->conn->prepare($deleteQuery);
-            $stmt->bind_param("d", $this->IDuser);
+            $stmt->bindParam(1, $this->IDuser, PDO::PARAM_INT);
+
             $stmt->execute();
             return 1;
         }
@@ -67,12 +69,11 @@ class User{
         {
             $getQuery = "SELECT * FROM ".User::$userTable." WHERE IDuser = ?";
             $stmt = $this->conn->prepare($getQuery);
-            $stmt->bind_param("d", $this->IDuser);
+            $stmt->bindParam(1, $this->IDuser, PDO::PARAM_INT);
             $stmt->execute();
-            $result = $stmt->get_result();
-            if($result->num_rows > 0)
+            if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-                $user = $result->fetch_assoc();
+
                 $this->login = $user['login'];
                 $this->IDpriv = $user['IDpriv'];
 
@@ -95,11 +96,15 @@ class User{
 
     public function updateUser()
     {
+        //todo
         if($this->login && $this->IDpriv )
         {
             $updateQuery = "UPDATE ".User::$userTable." SET login = ?, IDpriv = ? WHERE IDuser = ?";
             $stmt = $this->conn->prepare($updateQuery);
-            $stmt->bind_param("sdd",$this->login,$this->IDpriv, $this->IDuser);
+
+            $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
+            $stmt->bindParam(2, $this->IDpriv, PDO::PARAM_INT);
+            $stmt->bindParam(3, $this->IDuser, PDO::PARAM_INT);
             $stmt->execute();
             $stmt->commit();
 

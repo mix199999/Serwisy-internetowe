@@ -4,6 +4,7 @@ class Video
 {
     private static $videoTable = 'videos';
     private static $tagsTable = 'tags';
+    private static $uploadedVideosTable = 'uploaded_videos';
     private $conn;
 
     private $IDvideo;
@@ -13,11 +14,13 @@ class Video
     private $tags;
     private $uploadedBy;
 
-    public function __construct($db, $IDvideo = null, $title = null, $extension = null){
-        $this->conn = $db;
+    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $tags = null){
+        $this->conn = $conn;
         $this->IDvideo = $IDvideo;
         $this->title = $title;
         $this->extension = $extension;
+        $this->uploadedBy = $uploadedBy;
+        $this->tags = $tags;
     }
 
     //WIP
@@ -39,13 +42,15 @@ class Video
     }
 
 
-    //Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
+    /**
+     * Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
+     */
     public function completeFromDb()
     {
         if($this->completeVideo() < 0){
             return -1;
         }
-        elseif($this->completeTags() < 0){
+        elseif($this->completeTags() < 0 or $this->completeUser() < 0){
             return 0;
         }
         else{
@@ -95,6 +100,26 @@ class Video
         }
     }
 
+    //Uzupełnia dane z tabeli uploaded_videos
+    private function completeUser(){
+        if(!$this->IDvideo){
+            return -1;
+        }
+        else{
+            $query = "SELECT IDuser FROM".video::$uploadedVideosTable."WHERE IDvideo = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
+            $stmt->execute();
+            if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+                $this->uploadedBy = $data['IDuser'];
+                return 1;
+            }
+            else{
+                return -1;
+            }
+        }
+    }
+
 
     //Dodaje video z obiektu do tabeli video oraz jego tagi do tabeli tags
     public function addVideoToDb(){
@@ -111,26 +136,63 @@ class Video
 
     //Dodaje video z obiektu do tabeli video
     private function addVideo(){
-        if(!$this->IDvideo){
+
+        $query = "INSERT INTO ".video::$videoTable."(IDvideo, title, extension) VALUES (:ID, :title, :extension)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('title', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('extension', $this->IDvideo, PDO::PARAM_INT);
+        if(!$stmt->execute()){
             return -1;
         }
-        else{
-            $query = "INSERT INTO ".video::$videoTable."(IDvideo, title, extension) VALUES (:ID, :title, :extension)";
-            $stmt = $this->conn->prepare($query);
-            $stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
-            $stmt->bindParam('title', $this->IDvideo, PDO::PARAM_INT);
-            $stmt->bindParam('extension', $this->IDvideo, PDO::PARAM_INT);
-            if(!$stmt->execute()){
-                return -1;
-            }
-            else {
-                $stmt->commit();
-            }
+        else {
+            $stmt->commit();
         }
+
     }
     //Do zrobienia
     private function addTags(){
     //sprawdzić w jaki sposób dostaje tagi  [] czy [][]
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getIDvideo()
+    {
+        return $this->IDvideo;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getUploadedBy()
+    {
+        return $this->uploadedBy;
     }
 
 

@@ -14,12 +14,15 @@
 
             <span class= "video_form" id="type">
                 <label for="">Wybierz formę przesłania:</label>
-                <label><input type="radio" name="type" id="filechck" value="file" <?php if($type == "file") echo 'checked'; ?> >Z pliku</label>
-                <label><input type="radio" name="type" id="urlchck" value="url" <?php if($type == "url") echo 'checked'; ?> >Z linku</label>
+                <label><input type="radio" name="type" id="filechck" value="file">Z pliku</label>
+                <label><input type="radio" name="type" id="urlchck" value="url">Z linku</label>
                 <?php if (array_key_exists('type', $errors)): ?><label><?php echo $errors['type'] ?></label><?php endif; ?>
             <br></span>
 
-
+            <span class= "video_form">
+                <label for="">Tagi:</label><input type="text" name="tags" value="<?php echo $tags ?>" placeholder="Podaj tagi oddzielone przecinkiem">
+                <?php if (array_key_exists('tags', $errors)): ?><label><?php echo $errors['tags'] ?></label><?php endif; ?>
+            </span><br>
 
 
             <span ><input type="submit" id="send" value="Prześlij"></span><br>

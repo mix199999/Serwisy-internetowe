@@ -8,8 +8,8 @@
 <h1>Edytuj użytkownika</h1>
 
 <table>
-    <form action="../action/edytuj.php" method="get">
-        <tr><th>Login</th><td><input type="text" name="loginUsr" value="<?php  echo   $_SESSION['login'] ; ?>"/></td></tr>
+    <form action="./actions/edytuj.php" method="POST">
+        <tr><th>Login</th><td><input type="text" name="loginUsr" value="<?php  echo   $user->login ; ?>"/></td></tr>
         <tr><td></td><td></td></tr>
 
         <tr><th>Uprawnienia:</th><td><select name="upr" value="">

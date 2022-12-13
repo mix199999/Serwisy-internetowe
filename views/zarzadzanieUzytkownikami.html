@@ -3,6 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <style>
+
+        td {text-align: center;}
+
+
+
+    </style>
+
 </head>
 <body>
 
@@ -11,12 +20,16 @@
 akcja edytuj/usuń jezeli IDpriv <> 1 (nie admin)
 */
 
-<table>
+
+
+
+<table border>
     <thead>
         <tr>
             <th>Login</th>
             <th>ID uzytkownika</th>
             <th>Uprawnienia</th>
+            <th colspan="2">Akcje</th>
         </tr>
     </thead>
     
@@ -28,14 +41,21 @@ akcja edytuj/usuń jezeli IDpriv <> 1 (nie admin)
             <td><?php echo $row[0]?></td>
             <td><?php echo $row[1]?></td>
             <td><?php echo $row[2]?></td>
-            <?php if ($row[2]<>'1'){ ?>
+            <?php if ($row[2]<>'admin'){ ?>
             <td>
                 <a href="index.php?edytuj=<?php echo $row[1];?>">edytuj</a>
             </td>
             <td>
                 <a href="index.php?usun=<?php echo $row[1];?>">usuń</a>
             </td>
-        <?php } ?>
+        <?php }else{ ?>
+
+            <td colspan="2">
+
+
+
+            </td>
+            <?php } ?>
         </tr>
     <?php } ?>
 </table>

@@ -20,16 +20,11 @@ $user->IDuser = $_SESSION['uzytkownikID'];
 
 $user->getUserInfo();
 
-echo $user->IDpriv;
+echo $user->login;
 
 
 if(isset($_GET['edit']))
 {
-    $user->IDpriv=$_GET["upr"];
-    $user->login =$_GET["loginUsr"];
-    echo $user->IDpriv;
-   $user->updateUser();
-    $_SESSION['action']  =zarzadzajUzytkownikami;
     header('Location: index.php?action=zarzadzajUzytkownikami');
 
 }

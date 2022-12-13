@@ -1,7 +1,7 @@
 <?php 
 class User{
-	
-	
+
+    private $conn;
 	public static $userTable = 'users';
 
 
@@ -12,7 +12,7 @@ class User{
     }
 
 
-	private $conn;
+
 	
 	public function __construct($db){
         $this->conn = $db;
@@ -113,6 +113,16 @@ class User{
         }
 
     }
+
+
+    public static function getUsers($db)
+    {
+        $selectQ = "SELECT u.login,u.IDuser, p.role_name FROM users as u join privileges as p on (u.IDpriv = p.IDpriv) ";
+        $stmt = $db->prepare($selectQ);
+        $stmt->execute();
+        return($stmt->fetchAll());
+    }
+
 
     public function insertUser()
     {

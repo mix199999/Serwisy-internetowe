@@ -82,11 +82,16 @@ else{
         }
         if (count($errors) == 0) {
 
+            //$target_dir = "videos/";
+            //$target_file = $target_dir . basename($_FILES["video"]["name"]);
+
+            //$_FILES['video']['tmp_name'] pobrać rozszerzenie
+
             $database = new Database();
             $conn = $database->getConnection();
 
-            //zrobić rozszerzenie i jjjakimś cudem muszę mieć idurzytkownika
-            $video = new Video($conn, null, $fields['title'], null, null, $tagsFormated);
+
+            $video = new Video($conn, null, $fields['title'], null, $_SESSION['IDuser'], $tagsFormated);
             $_SESSION['abc'] = $video->getTags();
 
         }

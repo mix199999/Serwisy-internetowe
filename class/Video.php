@@ -140,8 +140,8 @@ class Video
         $query = "INSERT INTO ".video::$videoTable."(IDvideo, title, extension) VALUES (:ID, :title, :extension)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
-        $stmt->bindParam('title', $this->IDvideo, PDO::PARAM_INT);
-        $stmt->bindParam('extension', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('title', $this->IDvideo, PDO::PARAM_STR);
+        $stmt->bindParam('extension', $this->IDvideo, PDO::PARAM_STR);
         if(!$stmt->execute()){
             return -1;
         }
@@ -152,7 +152,25 @@ class Video
     }
     //Do zrobienia
     private function addTags(){
-    //sprawdzić w jaki sposób dostaje tagi  [] czy [][]
+        $query = "INSERT INTO ".video::$tagsTable."(IDvideo, tag) VALUES :values";
+        $values = '';
+        foreach ($this->tags as $tag){
+            $values .= "('";
+            $values .= $this->IDvideo;
+            $values .= "','";
+            $values .= $tag;
+            $values .= "'),";
+        }
+        $values[sizeof($values) - 1] = ';';
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam('values', $values, PDO::PARAM_STR);
+        if(!$stmt->execute()){
+            return -1;
+        }
+        else {
+            $stmt->commit();
+        }
     }
 
     /**

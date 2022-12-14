@@ -9,13 +9,9 @@ $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
 
-//$sqlQuery = "SELECT login,IDuser,IDpriv FROM ".User::$userTable;
-//$stmt = $db->prepare($sqlQuery);
-//$stmt->execute();
-//$wynik = $stmt->get_result();
-
 $wynik = User::getUsers($db);
-//$wynik = $stmt->fetch_all();
+
+
 
 if(isset($_GET['edytuj']))
 {

@@ -137,7 +137,7 @@ class Video
     //Dodaje video z obiektu do tabeli video
     private function addVideo(){
 
-        $query = "INSERT INTO ".video::$videoTable."(IDvideo, title, extension) VALUES (:ID, :title, :extension)";
+        $query = "INSERT INTO ".video::$videoTable."(id_video, title, extension) VALUES (:ID, :title, :extension)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam('ID', $this->id_video, PDO::PARAM_INT);
         $stmt->bindParam('title', $this->title, PDO::PARAM_INT);

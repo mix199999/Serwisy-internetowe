@@ -30,8 +30,8 @@ class User{
 			//$result = $stmt->getResult();
 			if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-				$_SESSION["name"]	= $user['login'];
-                $_SESSION["user_type"] = $user['id_user'];
+                $_SESSION["user_type"] = $user['id_priv'];
+                $_SESSION["id_user"] = $user['id_user'];
 				return 1;		
 			}
             else
@@ -59,8 +59,9 @@ class User{
             $stmt->execute();
             if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-                $_SESSION["name"]	= $user['login'];
-                $_SESSION["user_type"] = $user['id_user'];
+
+                $_SESSION["user_type"] = $user['id_priv'];
+                $_SESSION["id_user"] = $user['id_user'];
 
                 return 1;
             }

@@ -2,17 +2,6 @@
 include_once 'conf/connDB.php';
 include_once 'class/Video.php';
 
-if(isset($_SESSION['abc'])) {
-    echo $_SESSION['abc'][0];
-    echo $_SESSION['abc'][1];
-    echo $_SESSION['abc'][2];
-}
-else{
-    $_SESSION['abc'] = 'abc';
-    echo $_SESSION['abc'];
-}
-
-
     if(isset($_POST['title'])) {
         $title = $_POST['title'];
     }
@@ -82,12 +71,18 @@ else{
         }
         if (count($errors) == 0) {
 
+            //$target_dir = "videos/";
+            //$target_file = $target_dir . basename($_FILES["video"]["name"]);
+
+            //$_FILES['video']['tmp_name'] pobrać rozszerzenie
+
             $database = new Database();
             $conn = $database->getConnection();
 
-            //zrobić rozszerzenie i jjjakimś cudem muszę mieć idurzytkownika
-            $video = new Video($conn, null, $fields['title'], null, null, $tagsFormated);
-            $_SESSION['abc'] = $video->getTags();
+
+            $video = new Video($conn, null, $fields['title'], "tst", /*$_SESSION['id_user']*/"12", "www.test.com", $tagsFormated);
+
+            $video->addVideoToDb();
 
         }
     }

@@ -7,19 +7,21 @@ class Video
     private static $uploadedVideosTable = 'uploaded_videos';
     private $conn;
 
-    private $id_video;
+    private $IDvideo;
     private $title;
     private $extension;
+    private $url;
 
     private $tags;
     private $uploadedBy;
 
-    public function __construct($conn, $id_video = null, $title = null, $extension = null, $uploadedBy = null, $tags = null){
+    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null){
         $this->conn = $conn;
-        $this->id_video = $id_video;
+        $this->IDvideo = $IDvideo;
         $this->title = $title;
         $this->extension = $extension;
         $this->uploadedBy = $uploadedBy;
+        $this->url = $url;
         $this->tags = $tags;
     }
 
@@ -30,7 +32,7 @@ class Video
 
             }
             else{
-                $query = "SELECT * from" .video::$videoTable. "v INNER JOIN uploaded_videos uv ON v.id_video = uv.id_video WHERE id_user IN ?";
+                $query = "SELECT * from" .video::$videoTable. "v INNER JOIN uploaded_videos uv ON v.IDvideo = uv.IDvideo WHERE IDuser IN ?";
             }
         }
         elseif ($tags){
@@ -61,13 +63,13 @@ class Video
 
     //Uzupełnia dane z tabeli video
     private function completeVideo(){
-        if(!$this->id_video){
+        if(!$this->IDvideo){
             return -1;
         }
         else{
-            $query = "SELECT title, extension FROM".video::$videoTable."WHERE id_video = ?";
+            $query = "SELECT title, extension FROM".video::$videoTable."WHERE IDvideo = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->id_video, PDO::PARAM_INT);
+            $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
             if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
                 $this->title = $data['title'];
@@ -82,13 +84,13 @@ class Video
 
     //Uzupełnia dane z tabeli tags
     private function completeTags(){
-        if(!$this->id_video){
+        if(!$this->IDvideo){
             return -1;
         }
         else{
-            $query = "SELECT tag FROM".video::$tagsTable."WHERE id_video = ?";
+            $query = "SELECT tag FROM".video::$tagsTable."WHERE IDvideo = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->id_video, PDO::PARAM_INT);
+            $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
             if($data = $stmt->fetchALL(PDO::FETCH_ASSOC)){
                 $this->tags = $data;
@@ -102,13 +104,13 @@ class Video
 
     //Uzupełnia dane z tabeli uploaded_videos
     private function completeUser(){
-        if(!$this->id_video){
+        if(!$this->IDvideo){
             return -1;
         }
         else{
             $query = "SELECT IDuser FROM".video::$uploadedVideosTable."WHERE IDvideo = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->id_video, PDO::PARAM_INT);
+            $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
             if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
                 $this->uploadedBy = $data['IDuser'];
@@ -126,7 +128,7 @@ class Video
         if($this->addVideo() < 0){
             return -1;
         }
-        elseif (tags != null && $this->addTags() < 0){
+        elseif ($this->tags != null && $this->addTags() < 0){
             return 0;
         }
         else{
@@ -137,30 +139,61 @@ class Video
     //Dodaje video z obiektu do tabeli video
     private function addVideo(){
 
-        $query = "INSERT INTO ".video::$videoTable."(id_video, title, extension) VALUES (:ID, :title, :extension)";
+        $query = "INSERT INTO ".video::$videoTable."(/*IDvideo,*/ title, extension, url) VALUES (/*:ID,*/ :title, :extension, :url)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam('ID', $this->id_video, PDO::PARAM_INT);
-        $stmt->bindParam('title', $this->title, PDO::PARAM_INT);
-        $stmt->bindParam('extension', $this->extension, PDO::PARAM_INT);
+        //$stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('title', $this->title, PDO::PARAM_STR);
+        $stmt->bindParam('extension', $this->extension, PDO::PARAM_STR);
+        $stmt->bindParam('url', $this->url, PDO::PARAM_STR);
         if(!$stmt->execute()){
             return -1;
         }
         else {
-            $stmt->commit();
+            $this->IDvideo = $this->completeIdFromDB();
         }
 
     }
     //Do zrobienia
     private function addTags(){
-    //sprawdzić w jaki sposób dostaje tagi  [] czy [][]
+        //$query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES :values";
+        $values = '';
+        foreach ($this->tags as $tag){
+            $values .= "('";
+            $values .= $this->IDvideo;
+            $values .= "','";
+            $values .= $tag;
+            $values .= "'),";
+        }
+        $values[strlen($values) - 1] = ';';
+
+        $query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES ";
+        $query .= $values;
+        $stmt = $this->conn->prepare($query);
+        //$stmt->bindParam('values', $values, PDO::PARAM_STR);
+        echo $values;
+        if(!$stmt->execute()){
+            return -1;
+        }
+        else {
+            //$stmt->commit();
+        }
+    }
+
+    private function completeIdFromDB(){
+        $query = "SELECT id_video FROM videos ORDER BY id_video DESC LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $id = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $id['id_video'];
+        return $id;
     }
 
     /**
      * @return mixed|null
      */
-    public function getIdvideo()
+    public function getIDvideo()
     {
-        return $this->id_video;
+        return $this->IDvideo;
     }
 
     /**
@@ -190,7 +223,6 @@ class Video
     /**
      * @return mixed|null
      */
-
     public function getUploadedBy()
     {
         return $this->uploadedBy;

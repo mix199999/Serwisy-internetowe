@@ -52,7 +52,6 @@ function passwordcheck() {
    
 }
 
-
 function emailcheck() {
     if(register == 1) {
         let regex = /^\S+@\S+\.\S+$/;
@@ -77,15 +76,13 @@ function emailcheck() {
         }
     }
     
-}
 
+}
 
 function log() {
     register = 0;
     document.getElementById("log").value = "";
     document.getElementById("passw").value = "";
-    document.getElementById("blademail").style.display = "none";
-    document.getElementById("blad").style.display = "none";
     document.getElementById("subButton").style.pointerEvents = "auto";
     document.getElementById("LoginButton").style.display = "none"; // pobranie z dokumentu elementu o ID LoginButton i zmiana jego wyświetlania na none
     document.getElementById("RegisterButton").style.display = "none"; // pobranie z dokumentu elementu o ID RegisterButton i zmiana jego wyświetlania na none

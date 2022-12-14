@@ -30,17 +30,56 @@ class User{
 			//$result = $stmt->getResult();
 			if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-				$_SESSION["userid"] = $user['id_user'];
-				$_SESSION["user_type"] = $user['id_priv'];
 				$_SESSION["name"]	= $user['login'];
+                $_SESSION["user_type"] = $user['id_user'];
 				return 1;		
-			} else {
+			}
+            else
+            {
 				return 0;		
 			}			
-		} else {
+		}
+        else
+        {
 			return 0;
 		}
 	}
+
+
+    public function  addUser()
+    {
+        if($this->login && $this->passwd && $this->email && $this->id_priv)
+        {
+            $insertQuery = "INSERT INTO users (id_priv,login, passwd, email ) VALUES (?,?,?,?)";
+            $stmt = $this->conn->prepare($insertQuery);
+            $stmt->bindParam(1, $this->id_priv, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->login, PDO::PARAM_STR);
+            $stmt->bindParam(3, $this->passwd, PDO::PARAM_STR);
+            $stmt->bindParam(4, $this->email, PDO::PARAM_STR);
+            $stmt->execute();
+            if($user = $stmt->fetch(PDO::FETCH_ASSOC))
+            {
+                $_SESSION["name"]	= $user['login'];
+                $_SESSION["user_type"] = $user['id_user'];
+
+                return 1;
+            }
+
+        }
+        else
+        {
+            return 0;
+        }
+
+    }
+
+
+
+
+
+
+
+
 
     public function deleteUser()
     {
@@ -114,6 +153,9 @@ class User{
         }
 
     }
+
+
+
 
 
     public static function getUsers($db)

@@ -2,17 +2,6 @@
 include_once 'conf/connDB.php';
 include_once 'class/Video.php';
 
-if(isset($_SESSION['abc'])) {
-    echo $_SESSION['abc'][0];
-    echo $_SESSION['abc'][1];
-    echo $_SESSION['abc'][2];
-}
-else{
-    $_SESSION['abc'] = 'abc';
-    echo $_SESSION['abc'];
-}
-
-
     if(isset($_POST['title'])) {
         $title = $_POST['title'];
     }
@@ -91,8 +80,9 @@ else{
             $conn = $database->getConnection();
 
 
-            $video = new Video($conn, null, $fields['title'], null, $_SESSION['IDuser'], $tagsFormated);
-            $_SESSION['abc'] = $video->getTags();
+            $video = new Video($conn, null, $fields['title'], "tst", /*$_SESSION['id_user']*/"12", "www.test.com", $tagsFormated);
+
+            $video->addVideoToDb();
 
         }
     }

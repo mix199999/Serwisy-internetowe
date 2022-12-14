@@ -10,16 +10,18 @@ class Video
     private $IDvideo;
     private $title;
     private $extension;
+    private $url;
 
     private $tags;
     private $uploadedBy;
 
-    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $tags = null){
+    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null){
         $this->conn = $conn;
         $this->IDvideo = $IDvideo;
         $this->title = $title;
         $this->extension = $extension;
         $this->uploadedBy = $uploadedBy;
+        $this->url = $url;
         $this->tags = $tags;
     }
 
@@ -126,7 +128,7 @@ class Video
         if($this->addVideo() < 0){
             return -1;
         }
-        elseif (tags != null && $this->addTags() < 0){
+        elseif ($this->tags != null && $this->addTags() < 0){
             return 0;
         }
         else{
@@ -137,22 +139,23 @@ class Video
     //Dodaje video z obiektu do tabeli video
     private function addVideo(){
 
-        $query = "INSERT INTO ".video::$videoTable."(IDvideo, title, extension) VALUES (:ID, :title, :extension)";
+        $query = "INSERT INTO ".video::$videoTable."(/*IDvideo,*/ title, extension, url) VALUES (/*:ID,*/ :title, :extension, :url)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
-        $stmt->bindParam('title', $this->IDvideo, PDO::PARAM_STR);
-        $stmt->bindParam('extension', $this->IDvideo, PDO::PARAM_STR);
+        //$stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('title', $this->title, PDO::PARAM_STR);
+        $stmt->bindParam('extension', $this->extension, PDO::PARAM_STR);
+        $stmt->bindParam('url', $this->url, PDO::PARAM_STR);
         if(!$stmt->execute()){
             return -1;
         }
         else {
-            $stmt->commit();
+            $this->IDvideo = $this->completeIdFromDB();
         }
 
     }
     //Do zrobienia
     private function addTags(){
-        $query = "INSERT INTO ".video::$tagsTable."(IDvideo, tag) VALUES :values";
+        //$query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES :values";
         $values = '';
         foreach ($this->tags as $tag){
             $values .= "('";
@@ -161,16 +164,28 @@ class Video
             $values .= $tag;
             $values .= "'),";
         }
-        $values[sizeof($values) - 1] = ';';
+        $values[strlen($values) - 1] = ';';
 
+        $query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES ";
+        $query .= $values;
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam('values', $values, PDO::PARAM_STR);
+        //$stmt->bindParam('values', $values, PDO::PARAM_STR);
+        echo $values;
         if(!$stmt->execute()){
             return -1;
         }
         else {
-            $stmt->commit();
+            //$stmt->commit();
         }
+    }
+
+    private function completeIdFromDB(){
+        $query = "SELECT id_video FROM videos ORDER BY id_video DESC LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $id = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id = $id['id_video'];
+        return $id;
     }
 
     /**

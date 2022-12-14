@@ -19,7 +19,8 @@ class User{
     }	    
 	//siema
 	public function login(){
-		if($this->login && $this->passwd) {
+		if($this->login && $this->passwd)
+        {
 			$sqlQuery = "SELECT * FROM ".User::$userTable." WHERE login = ? AND passwd = ?";
             $stmt = $this->conn->prepare($sqlQuery);
             //inne bindowanie
@@ -29,9 +30,9 @@ class User{
 			//$result = $stmt->getResult();
 			if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
-				$_SESSION["userid"] = $user['IDuser'];
-				$_SESSION["user_type"] = $user['IDpriv'];
-				$_SESSION["name"]	= $user['login'];	
+				$_SESSION["userid"] = $user['id_user'];
+				$_SESSION["user_type"] = $user['id_priv'];
+				$_SESSION["name"]	= $user['login'];
 				return 1;		
 			} else {
 				return 0;		
@@ -43,11 +44,11 @@ class User{
 
     public function deleteUser()
     {
-        if($this-> IDuser)
+        if($this-> id_user)
         {
-            $deleteQuery = "DELETE FROM ".User::$userTable." WHERE IDuser = ?";
+            $deleteQuery = "DELETE FROM ".User::$userTable." WHERE id_user = ?";
             $stmt = $this->conn->prepare($deleteQuery);
-            $stmt->bindParam(1, $this->IDuser, PDO::PARAM_INT);
+            $stmt->bindParam(1, $this->id_user, PDO::PARAM_INT);
 
             $stmt->execute();
             return 1;
@@ -65,17 +66,17 @@ class User{
     public function getUserInfo()
     {
 
-        if($this->IDuser)
+        if($this->id_user)
         {
-            $getQuery = "SELECT * FROM ".User::$userTable." WHERE IDuser = ?";
+            $getQuery = "SELECT * FROM ".User::$userTable." WHERE id_user = ?";
             $stmt = $this->conn->prepare($getQuery);
-            $stmt->bindParam(1, $this->IDuser, PDO::PARAM_INT);
+            $stmt->bindParam(1, $this->id_user, PDO::PARAM_INT);
             $stmt->execute();
             if($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
 
                 $this->login = $user['login'];
-                $this->IDpriv = $user['IDpriv'];
+                $this->IDpriv = $user['id_priv'];
 
                 return 1;
             }
@@ -97,14 +98,14 @@ class User{
     public function updateUser()
     {
         //todo
-        if($this->login && $this->IDpriv )
+        if($this->login && $this->id_priv )
         {
-            $updateQuery = "UPDATE ".User::$userTable." SET login = ?, IDpriv = ? WHERE IDuser = ?";
+            $updateQuery = "UPDATE ".User::$userTable." SET login = ?, id_priv = ? WHERE id_user = ?";
             $stmt = $this->conn->prepare($updateQuery);
 
             $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
-            $stmt->bindParam(2, $this->IDpriv, PDO::PARAM_INT);
-            $stmt->bindParam(3, $this->IDuser, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->id_priv, PDO::PARAM_INT);
+            $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
             $stmt->execute();
             $stmt->commit();
 
@@ -117,7 +118,7 @@ class User{
 
     public static function getUsers($db)
     {
-        $selectQ = "SELECT u.login,u.IDuser, p.role_name FROM users as u join privileges as p on (u.IDpriv = p.IDpriv) ";
+        $selectQ = "SELECT u.login,u.id_user, p.role_name FROM users as u join privileges as p on ("."u.id_priv"."="."p.id_priv".")";
         $stmt = $db->prepare($selectQ);
         $stmt->execute();
         return($stmt->fetchAll());

@@ -2,16 +2,24 @@
 
 class Database{
 	
-	private $server  = 'bw9c8o4nfp6czlfh6bd9-mysql.services.clever-cloud.com';
-    private $user  = 'uc0bqv5edm6pmbkv';
-    private $password   = "GR3CFHvPgSUYHPzP8bFI";
-    private $db  = "bw9c8o4nfp6czlfh6bd9"; 
-    
+	private $server  = 'db.lcyymlqiyvommyghfjhw.supabase.co';
+    private $user  = 'postgres';
+    private $password   = "Rhl7CnX1VvhfU3jt";
+    private $db  = "postgres";
+
+
+//$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
+
+
+
+   // user=postgres password=[YOUR-PASSWORD] host=db.lcyymlqiyvommyghfjhw.supabase.co port=5432 dbname=postgres
 	public function getConnection()
 	{
         //todo try... catch...
         try {
-            $conn = new PDO('mysql:host='.$this->server.';dbname='.$this->db,$this->user,$this->password);
+
+            $dsn = "pgsql:host=$this->server;port=5432;dbname=$this->db;";
+            $conn = new PDO($dsn,$this->user,$this->password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
             return  $conn;
 
         }catch (PDOException $e)

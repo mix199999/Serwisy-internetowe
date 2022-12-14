@@ -14,6 +14,7 @@ function reg() {
     document.getElementById("email").style.display = "block"; // pobranie z dokumentu elementu o ID email i zmiana jego wyświetlania z none na block
     document.getElementById("subButton").style.display = "block";
     document.getElementById("description").style.display = "block";
+    document.getElementById("typkonta").style.display = "block";
 
     document.getElementById("subButton").value = "Zarejestruj";
 
@@ -88,6 +89,7 @@ function log() {
     document.getElementById("blad").style.display = "none";
     document.getElementById("LoginButton").style.display = "none"; // pobranie z dokumentu elementu o ID LoginButton i zmiana jego wyświetlania na none
     document.getElementById("RegisterButton").style.display = "none"; // pobranie z dokumentu elementu o ID RegisterButton i zmiana jego wyświetlania na none
+    document.getElementById("typkonta").style.display = "none";
 
     document.getElementById("login").style.display = "block"; // pobranie z dokumentu elementu o ID login i zmiana jego wyświetlania z none na block
     document.getElementById("pass").style.display = "block"; // pobranie z dokumentu elementu o ID pass i zmiana jego wyświetlania z none na block

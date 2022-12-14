@@ -21,14 +21,15 @@
         <div id = "email">E-mail:<input type="text" onkeyup="emailcheck()" name="email" id="em"><br></div>
         <span id="blademail">Bledny email</span>
         <div id = "pass">Haslo:<input type="password" onkeyup="passwordcheck()" name="passwd" id="passw"><br></div>
-        <tr><td></td><td></td></tr>
+        
         <!-- todo zrobic funkcje ktora wyswietli dostpne role z bazy danych a nie jak debil stringi-->
-
-        <tr><th>Typ konta:</th><td><select name="id_priv" >
-            <option value="2" selected>user</option>
-            <option value="3">edytor</option>
-        </select>
-        <tr><td></td><td></td></tr>
+        <div id="typkonta">
+            Typ konta:
+            <select name="id_priv" >
+                <option value="2" selected>user</option>
+                <option value="3">edytor</option>
+            </select>
+        </div>
 
         <span id = "description"> Hasło musi mieć conajmniej 8 znaków w tym liczby oraz dużą literę</span>
         <span id="blad">Nieprawidłowe hasło</span>

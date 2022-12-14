@@ -39,7 +39,9 @@ body {
 #noacc {
     display: none;
 }
-
+#typkonta {
+    display: none;
+}
 #hacc:hover {
     color: blue;
     background-color: brown;

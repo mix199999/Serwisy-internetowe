@@ -13,7 +13,7 @@ $user = new User($db);
 
 try {
 
-        if(isset($_POST["login"])  && isset($_POST["passwd"])&& ($_POST["email"])== '')
+        if(isset($_POST["login"])  && isset($_POST["passwd"]) && ($_POST["email"])== '')
         {	
             $user = new User($db);
             $user->login = $_POST["login"];
@@ -36,6 +36,10 @@ try {
                 {
                     header('Location: index.php?action=StartPage');
                 }
+                else if( $_SESSION["session_name"] == 4)
+                {
+                    include("./strony/newUser.html");
+                }
                //todo jesli inne role
 
 
@@ -54,14 +58,23 @@ try {
             $user->passwd= $_POST["passwd"];
             $user->email= $_POST["email"];
 
-            if($user->addUser())
-            {
-                header('Location: index.php?action=newUser');
+            $user -> addUser();
+                $_SESSION["action"] = "newUser";
                 echo $_SESSION["user_type"];
+                $_SESSION["user_type"] = 4;
+                header('Location: index.php?action=newUser.html');
+            
+            
+               
+                
+                
+            
+                
 
-            }
+            
 
         }
+        
        
 
     } catch (PDOException $e)

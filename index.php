@@ -56,6 +56,9 @@ if (array_key_exists('action', $_GET))
 
             include("./views/editor.html");
         }
+        else if($_SESSION["user_type"] == 4){
+            include("./views/newUser.html");
+        }
         //todo jesli inne typy konta
 
 		

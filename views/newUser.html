@@ -12,11 +12,13 @@
 
 <table border> 
     <?php
-    for($i = 0;$i<=rand(0,$tags_number[0][0]);$i++){ 
+    for($i = 0;$i<3;$i++){ 
     ?>
         <tr>
-            <td><?php
-                 echo $all_tags[rand(0,$tags_number[0][0]-1)][1] ?></td>
+            <td>
+                <a href="index.php?wybrany_tag"><?php echo $all_tags[$losowanie[$i]-1][1] ?></a>
+            </td>
+                 
             <?php } ?>
         </tr>
     <?php  ?>

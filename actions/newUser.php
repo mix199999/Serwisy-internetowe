@@ -9,7 +9,9 @@ $database = new Database();
 $db = $database->getConnection();
 $tag = new Tag($db);
 
-$all_tags = Tag::getTags($db);
-$tags_number = Tag::getTagsNumber($db);
-//todo rand zmienic zeby bylo bez powtorzen
-//echo rand(0,$tags_number[0][0]);
+$all_tags = Tag::getTags($db); //pobranie wzystkich tagów
+$tags_number = Tag::getTagsNumber($db); // pobranie ilosci tagów
+
+
+$zbior = Tag::GenTag($tags_number[0][0]); //generacja zbioru tagów do lowania
+$losowanie = Tag::GenUnique($zbior,3); //losowanie tagów ze zbioru bez powtrzeń

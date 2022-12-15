@@ -55,13 +55,15 @@ function passwordcheck() {
 
 function emailcheck() {
     if(register == 1) {
-        let regex = /^\S+@\S+\.\S+$/;
+        let regex2 = /^[A-Za-z\d_.+-]\S+@?[a-zA-Z0-9-]\S+\.[a-zA-Z0-9-.]\S+$/
+        let regex3 = /^[^,?!%#$&*()]*$/;
+        ///^[^abc]*$/
         // \S sprawdza czy sa spacje, taby itp
     
         let email = document.getElementById("em").value;
-    
-        if(regex.test(email)) {
-    
+        
+        console.log(regex3.test(email));
+        if(regex2.test(email) && regex3.test(email)) {
             document.getElementById("blademail").style.display = "none";
             document.getElementById("subButton").style.pointerEvents = "auto";
     

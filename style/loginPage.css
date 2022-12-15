@@ -1,3 +1,69 @@
+#description {
+    display: none;
+    color: lightslategray;
+}
+
+#login {
+    display: none;
+}
+#pass {
+    display: none;
+}
+#email {
+    display: none;
+}
+#subButton {
+    display: none;
+}
+#acc {
+    display: none;
+    color: lightslategray;
+}
+#noacc {
+    display: none;
+    color: lightslategray;
+}
+#typkonta {
+    display: none;
+}
+#hacc:hover {
+
+    font-weight: bold;
+    color:black;
+}
+#dhacc:hover {
+    font-weight: bold;
+    color:black;
+}
+#blad {
+    display: none;
+    color: red;
+}
+#blademail {
+    display: none;
+    color: red;
+}
+
+
+
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(2, 64, 89, 1), rgba(1, 89, 80, 1),rgba(2, 114, 94, 1), rgba(2, 140, 62, 1), rgba(12, 242, 92, 1));
+
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(2, 64, 89, 1), rgba(1, 89, 80, 1),rgba(2, 114, 94, 1), rgba(2, 140, 62, 1), rgba(12, 242, 92, 1));
+}
+
+
+.Closeup-shot{color:#212529;}
+
+
+
+
 /* Color Theme Swatches in Hex */
 .Closeup-shot-of-a-hard-soap-with-bubbles-and-beautiful-color-textures-1-hex { color: #034159; }
 .Closeup-shot-of-a-hard-soap-with-bubbles-and-beautiful-color-textures-2-hex { color: #025951; }

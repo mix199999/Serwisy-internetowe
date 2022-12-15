@@ -229,6 +229,28 @@ class Video
     }
 
 
+    public static function youtube_link_to_embed($link) {  
+        // Sprawdź, czy link jest poprawny
+        if (!preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $match)) {
+          return $link;
+        }
+      
+        // Zwróć link embed - taki, ktory da sie wyswietlic na stronie, bo zwykle linki youtube blokuje
+        return 'https://www.youtube.com/embed/' . $match[1];
+    }
 
+    public static function getVideosWithUserTags() {
+        /*
+        $query = "SELECT url FROM videos
+        JOIN tags ON videos.id_tag = tags.id_tag    // do tego trzeba baze danych przebudować
+        JOIN users ON user.id_tag = tags.id_tag     // user musi miec jakos tagi swoje zapisane
+        WHERE user.login = 'login'";                // video tez musi miec swoje tagi
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return($stmt->fetchAll());    
+        */  
+        return 1;            
+    }
+        
 
 }

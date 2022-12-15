@@ -42,6 +42,7 @@ if (array_key_exists('action', $_GET))
 			{
 				
 				include("./views/admin.html");
+                include("./actions/admin.php");
 				
 			}
 		else if( $_SESSION["user_type"] == 2)

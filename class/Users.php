@@ -165,7 +165,7 @@ class User{
 
     public static function getUsers($db)
     {
-        $selectQ = "SELECT u.login,u.id_user, p.role_name FROM users as u join privileges as p on ("."u.id_priv"."="."p.id_priv".")";
+        $selectQ = "SELECT u.login,u.id_user, p.role_name, u.email FROM users as u join privileges as p on ("."u.id_priv"."="."p.id_priv".")";
         $stmt = $db->prepare($selectQ);
         $stmt->execute();
         return($stmt->fetchAll());

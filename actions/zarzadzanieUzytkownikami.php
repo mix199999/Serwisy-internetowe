@@ -19,13 +19,7 @@ if(isset($_GET['edytuj']))
     $_SESSION['uzytkownikID'] = $_GET['edytuj'];
     $_SESSION['action']  =edytuj;
 
-
         header('Location: index.php?action=edytuj');
-
-
-
-
-
 
 }
 

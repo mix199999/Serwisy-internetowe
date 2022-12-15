@@ -23,7 +23,7 @@ try {
 
                 if($_SESSION["user_type"] == 1)
                 {
-                    header('Location: index.php?action=StartPage');
+                    header('Location: index.php?action=zarzadzanieUzytkownikami');
                 }
 
                 else if ($_SESSION["user_type"] == 2)

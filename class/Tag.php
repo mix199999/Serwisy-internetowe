@@ -11,7 +11,7 @@ class Tag{
 
     public static function getTags($db)
     {
-        $selectQ = "SELECT id_tag, tag from ".Tag::$tagsTable;
+        $selectQ = "SELECT distinct tag from ".Tag::$tagsTable;
         $stmt = $db->prepare($selectQ);
         $stmt->execute();
         return($stmt->fetchAll());
@@ -19,7 +19,7 @@ class Tag{
 
     public static function getTagsNumber($db)
     {
-        $selectQ = "SELECT Count(id_tag) from ".Tag::$tagsTable;
+        $selectQ = "SELECT Count(tag) from ".Tag::$tagsTable;
         $stmt = $db->prepare($selectQ);
         $stmt->execute();
         return($stmt->fetchAll());

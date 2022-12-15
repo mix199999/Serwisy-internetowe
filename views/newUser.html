@@ -7,9 +7,22 @@
 </head>
 <body>
 
-    <a class="nav-link" href="./index.php?action=wyloguj">Wyloguj</a>
 
 <h1>Witom</h1>
+
+<table border> 
+    <?php
+    for($i = 0;$i<=rand(0,$tags_number[0][0]);$i++){ 
+    ?>
+        <tr>
+            <td><?php
+                 echo $all_tags[rand(0,$tags_number[0][0]-1)][1] ?></td>
+            <?php } ?>
+        </tr>
+    <?php  ?>
+</table>
+
+
 
 </body>
 </html>

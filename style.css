@@ -1,0 +1,60 @@
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 20em;
+    border: 1px solid black;
+    margin: auto;
+    padding: auto;
+}
+
+#description {
+    display: none;
+    width: 13em;
+    color: lightslategray;
+}
+
+#login {
+    display: none;
+}
+#pass {
+    display: none;
+}
+#email {
+    display: none;
+}
+#subButton {
+    display: none;
+}
+#acc {
+    display: none;
+}
+#noacc {
+    display: none;
+}
+#typkonta {
+    display: none;
+}
+#hacc:hover {
+    color: blue;
+    background-color: brown;
+}
+#dhacc:hover {
+    color: blue;
+    background-color: brown;
+}
+#blad {
+    display: none;
+    color: red;
+}
+#blademail {
+    display: none;
+    color: red;
+}

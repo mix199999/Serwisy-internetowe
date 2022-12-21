@@ -20,6 +20,7 @@ include_once 'class/Video.php';
     else {
     $tags = '';
     }
+
     $errors = array();
 
     $fields['title'] = array_key_exists('title', $_POST) ? $_POST['title'] : '';

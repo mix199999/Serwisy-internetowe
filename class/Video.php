@@ -67,7 +67,7 @@ class Video
             return -1;
         }
         else{
-            $query = "SELECT title, extension FROM".video::$videoTable."WHERE IDvideo = ?";
+            $query = "SELECT title, extension FROM ".video::$videoTable." WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
@@ -88,7 +88,7 @@ class Video
             return -1;
         }
         else{
-            $query = "SELECT tag FROM".video::$tagsTable."WHERE IDvideo = ?";
+            $query = "SELECT tag FROM ".video::$tagsTable." WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
@@ -108,12 +108,12 @@ class Video
             return -1;
         }
         else{
-            $query = "SELECT IDuser FROM".video::$uploadedVideosTable."WHERE IDvideo = ?";
+            $query = "SELECT id_user FROM ".video::$uploadedVideosTable." WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
             if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $this->uploadedBy = $data['IDuser'];
+                $this->uploadedBy = $data['id_user'];
                 return 1;
             }
             else{

@@ -10,7 +10,7 @@ session_start();
 #mozna w sumie podzielic ta strone dwa segmenty po lewej opis platformy  a po prawej formularz logowanie lub rejestracji
 #moze da sie zrobic tak jak w formsach tzn. to boxa ładujemy kontrolke ktora zmienia sie po nacisnieciu przycisku
 
-$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound','zarzadzanieUzytkownikami', 'addvideo', 'test', 'edytuj' , 'newUser', 'watchVideo');
+$actions = array('wyloguj', 'user','admin', 'StartPage', 'logowanie','pageNotFound','zarzadzanieUzytkownikami', 'addvideo', 'test', 'edytuj' , 'newUser', 'watchVideo', 'watch');
 
 
 

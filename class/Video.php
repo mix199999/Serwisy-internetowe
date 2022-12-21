@@ -125,17 +125,26 @@ class Video
 
     //Dodaje video z obiektu do tabeli video oraz jego tagi do tabeli tags
     public function addVideoToDb(){
-        if($this->addVideo() < 0){
+        if($this->addVideo() < 0) {
             return -1;
         }
-        elseif ($this->tags != null && $this->addTags() < 0){
+        elseif (($this->tags != null && $this->addTags() < 0) /*or ($this->addUploadedBy() < 0)*/){
             return 0;
         }
         else{
             return 1;
         }
     }
-
+    /*
+    public function addOtherToDb(){
+        if($this->addTags() < 0 or $this->addUploadedBy() < 0){
+            return -1;
+        }
+        else{
+            return 1;
+        }
+    }
+*/
     //Dodaje video z obiektu do tabeli video
     private function addVideo(){
 
@@ -150,6 +159,7 @@ class Video
         }
         else {
             $this->IDvideo = $this->completeIdFromDB();
+            return 1;
         }
 
     }
@@ -170,7 +180,6 @@ class Video
         $query .= $values;
         $stmt = $this->conn->prepare($query);
         //$stmt->bindParam('values', $values, PDO::PARAM_STR);
-        echo $values;
         if(!$stmt->execute()){
             return -1;
         }
@@ -178,7 +187,18 @@ class Video
             //$stmt->commit();
         }
     }
-
+    private function  addUploadedBy(){
+        $query = "INSERT INTO ".video::$uploadedVideosTable."(id_video, id_user) VALUES (:idvideo, :iduser)";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam('idvideo', $this->IDvideo, PDO::PARAM_INT);
+        $stmt->bindParam('iduser', $this->uploadedBy, PDO::PARAM_INT);
+        if(!$stmt->execute()){
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    }
     private function completeIdFromDB(){
         $query = "SELECT id_video FROM videos ORDER BY id_video DESC LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -187,6 +207,24 @@ class Video
         $id = $id['id_video'];
         return $id;
     }
+
+    public function updateUrlToDb(){
+        if($this->IDvideo != null){
+            $query = "UPDATE ".video::$videoTable." SET url = '";
+            $query .= $this->url;
+            $query .= "' WHERE id_video = :idvideo";
+            $stmt = $this->conn->prepare($query);
+            //$stmt->bindParam('newUrl', $this->url, PDO::PARAM_STR);
+            $stmt->bindParam('idvideo', $this->IDvideo, PDO::PARAM_INT);
+            if(!$stmt->execute()){
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+
 
     /**
      * @return mixed|null
@@ -226,6 +264,14 @@ class Video
     public function getUploadedBy()
     {
         return $this->uploadedBy;
+    }
+
+    /**
+     * @param mixed|null $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
 

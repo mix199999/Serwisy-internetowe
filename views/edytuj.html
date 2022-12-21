@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytuj uzytkownika</title>
+</head>
+<body>
+<h1>Edytuj użytkownika</h1>
+
+<table>
+    <form action="./actions/edytuj.php" method="POST">
+        <tr><th>Login</th><td><input type="text" name="loginUsr" value="<?php  echo   $user->login ; ?>"/></td></tr>
+        <tr><td></td><td></td></tr>
+
+        <tr><th>Uprawnienia:</th><td><select name="upr" value="">
+            <option value="<?php echo  $_SESSION['uprawnienienie'] ?>" selected><?php echo  $priv[1] ?></option>
+            <option value=""><?php echo  $priv[2] ?></option>
+            <option value=""><?php echo  $priv[3] ?></option>
+        </select>
+        <tr><td></td><td></td></tr>
+
+        <tr><td></td><td></td></tr>
+        <tr><td colspan="2" align="center"><input type="submit" name="edit" value="Edytuj"/></td></tr>
+    </form>
+</table>
+
+</body>
+</html>

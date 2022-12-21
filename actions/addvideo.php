@@ -36,7 +36,7 @@ include_once 'class/Video.php';
         trim($tags);
         for($i = 0; $i < strlen($tags); $i++){
             //zmienić żeby przy ostatnim znaku jeszcze spushował
-            if($tags[$i] == ',' or $i == strlen($tags) - 1){
+            if($tags[$i] == ','){
                 if(!empty($tag)){
                     array_push($tagsFormated, $tag);
                     $tag = null;
@@ -44,6 +44,11 @@ include_once 'class/Video.php';
                 else{
                     continue;
                 }
+            }
+            elseif ($i == strlen($tags) - 1){
+                $tag .= $tags[$i];
+                array_push($tagsFormated, $tag);
+                $tag = null;
             }
             else{
                 $tag .= $tags[$i];
@@ -71,18 +76,41 @@ include_once 'class/Video.php';
         }
         if (count($errors) == 0) {
 
-            //$target_dir = "videos/";
-            //$target_file = $target_dir . basename($_FILES["video"]["name"]);
 
             //$_FILES['video']['tmp_name'] pobrać rozszerzenie
+
+            $url = '';
+            $extension = '';
+            if($fields['type'] == "url"){
+                $url = $fields['address'];
+                $extension = "url";
+            }
+            else{
+                $url = "www.placeholder7.net"; //trzeba zmienić bazę tak żeby przyjmowała te same adresy
+                $extension = substr($_FILES['video']['type'], 6);
+                //echo  $extension;
+            }
 
             $database = new Database();
             $conn = $database->getConnection();
 
 
-            $video = new Video($conn, null, $fields['title'], "tst", /*$_SESSION['id_user']*/"12", "www.test.com", $tagsFormated);
+            $video = new Video($conn, null, $fields['title'], $extension, $_SESSION['id_user'], $url, $tagsFormated);
 
             $video->addVideoToDb();
+
+
+
+            if($fields['type'] == "file"){
+                $target_dir = "videos/";
+                $target_file = $target_dir . $video->getIDvideo() . "." . $extension;
+                $url = $target_file;
+                $video->setUrl($url);
+                move_uploaded_file($_FILES["video"]["tmp_name"], $target_file);
+                $video->updateUrlToDb();
+            }
+
+
 
         }
     }

@@ -7,7 +7,7 @@ include_once 'class/Users.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$user = new User($db);
+$userToModify = new User($db);
 
 $wynik = User::getUsers($db);
 
@@ -23,20 +23,16 @@ if(isset($_GET['edytuj']))
 
 }
 
-if(isset($_GET['usun']))
+if(isset($_GET['delete']))
 {
 
 
-    $user->IDuser = $_GET['usun'];
+    $userToModify->id_user = $_GET['delete'];
 
-    if($user->deleteUser() == 1)
-    {
-        header('Location: index.php?action=zarzadzanieUzytkownikami');
-    }
-    else
-    {
-        echo"Cannot delete user";
-    }
+    $userToModify->deleteUser();
+
+
+
 
 
 

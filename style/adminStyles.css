@@ -11703,4 +11703,16 @@ body {
 {
   text-decoration: none;
   color: white;
+
+}
+.btn-success > a
+{
+  text-decoration: none;
+  color: white;
+}
+.btn-danger
+{
+  text-decoration: none;
+  color: white;
+  text-align: right;
 }

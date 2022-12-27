@@ -180,6 +180,47 @@ class User{
 
 
 
+    public static function getRequest($db)
+    {
+        $selectQ = "SELECT * FROM privilege_change_request";
+        $stmt = $db->prepare($selectQ);
+        $stmt->execute();
+        return($stmt->fetchAll());
+
+    }
+
+
+    public static function getUserLogin($id, $db)
+    {
+
+        if($id != '')
+        {
+            $getQuery = "SELECT login FROM ".User::$userTable." WHERE id_user = ?";
+            $stmt = $db->prepare($getQuery);
+            $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            $stmt->execute();
+            if($user = $stmt->fetch(PDO::FETCH_ASSOC))
+            {
+
+                $login = $user['login'];
+
+
+                return $login;
+            }
+
+            return 1;
+        }
+        else
+        {
+
+            echo "Cannot get user param";
+            return 0;
+        }
+
+
+
+    }
+
 }
 
 

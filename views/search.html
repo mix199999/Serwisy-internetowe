@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+  <form id="search-form" method="post" action = "index.php?action=search">
+    <span class= "video_form">
+      <input type="text" name="searchbar" value="<?php echo $search ?>">
+    </span>
+    <span ><input type="submit" id="send" value="Szukaj"></span><br>
+    <span class= "video_form">
+        <label for="">Po Tytule</label><input type="checkbox" name="title">
+    </span>
+    <span class= "video_form">
+        <label for="">Po Tagach</label><input type="checkbox" name="tags">
+    </span>
+    <span class= "video_form">
+        <label for="">Po Użytkowniku</label><input type="checkbox" name="tags">
+    </span>
+
+  </form>
+</body>
+</html>

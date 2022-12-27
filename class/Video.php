@@ -290,17 +290,17 @@ class Video
         return 'https://www.youtube.com/embed/' . $match[1];
     }
 
-    public static function getVideosWithUserTags() {
-        /*
-        $query = "SELECT url FROM videos
-        JOIN tags ON videos.id_tag = tags.id_tag    // do tego trzeba baze danych przebudować
-        JOIN users ON user.id_tag = tags.id_tag     // user musi miec jakos tagi swoje zapisane
-        WHERE user.login = 'login'";                // video tez musi miec swoje tagi
-        $stmt = $this->conn->prepare($query);
+    public function getVideosWithUserTags($loginUser, $db) {  //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+                 
+        $query = "SELECT DISTINCT videos.url, videos.extension FROM ".video::$videoTable."    
+        JOIN tags ON tags.id_video = videos.id_video                        
+        JOIN user_tags ON tags.tag = user_tags.tag                          
+        JOIN users ON user_tags.user_id = users.id_user 
+        WHERE users.login = '".$loginUser."'";
+        $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetchAll());    
-        */  
-        return 1;            
+        return($stmt->fetchAll());                  
+                    
     }
         
 

@@ -1,7 +1,19 @@
 <?php
 
 include_once 'class/Video.php';
+include_once 'conf/connDB.php';
+include_once 'class/Users.php';
 
-$embedURL = Video::youtube_link_to_embed("https://www.youtube.com/watch?v=izGwDsrQ1eQ&ab_channel=georgemichaelVEVO");  //narazie testowe wyswietlanie jednego filmu
+$database = new Database();
+$db = $database->getConnection();
+$user = new User($db);
+
+
+$user->id_user = $_SESSION["id_user"];
+
+$user->getUserInfo();
+
+$urlTable = Video::getVideosWithUserTags($user->login, $db);
+$currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index filmu przy wyswietlaniu ich na stronie
 
 ?>

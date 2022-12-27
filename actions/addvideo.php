@@ -86,7 +86,7 @@ include_once 'class/Video.php';
                 $extension = "url";
             }
             else{
-                $url = "www.placeholder7.net"; //trzeba zmienić bazę tak żeby przyjmowała te same adresy
+                $url = "www.placeholdertst.net"; //trzeba zmienić bazę tak żeby przyjmowała te same adresy
                 $extension = substr($_FILES['video']['type'], 6);
                 //echo  $extension;
             }

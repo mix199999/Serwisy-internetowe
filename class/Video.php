@@ -27,23 +27,28 @@ class Video
 
     //WIP
     public static function getVideos($user = null, $tags = null){
-        if($user){
-            if($tags){
 
-            }
-            else{
-                $query = "SELECT * from" .video::$videoTable. "v INNER JOIN uploaded_videos uv ON v.IDvideo = uv.IDvideo WHERE IDuser IN ?";
-            }
-        }
-        elseif ($tags){
-
+    }
+    public static function getVideosByTitle($conn, $title){
+        $query = "SELECT id_video FROM ".video::$videoTable." WHERE title LIKE ";
+        $query .= "'%";
+        $query .= $title;
+        $query .= "%'";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+            return $data;
         }
         else{
-            $query = "SELECT * from" .video::$videoTable;
+            return null;
         }
     }
+    public static function getVideosByTags($tags){
 
+    }
+    public static function getVideosByUser($user){
 
+    }
     /**
      * Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
      */
@@ -128,7 +133,7 @@ class Video
         if($this->addVideo() < 0) {
             return -1;
         }
-        elseif (($this->tags != null && $this->addTags() < 0) /*or ($this->addUploadedBy() < 0)*/){
+        elseif (($this->tags != null && $this->addTags() < 0) or ($this->addUploadedBy() < 0)){
             return 0;
         }
         else{

@@ -70,8 +70,10 @@
             <div class="modal-body">
 
                 <p id="userMessage"></p>
+
                 <form method="post" action = "index.php?action=userRequest">
-                    <input type="hidden" name="requestID" value="a">
+
+                    <input type="text" name="requestID" value="" style="visibility: hidden">
                     <div class="form-group">
                         <label for="comment">Comment:</label>
                         <textarea class="form-control" id="comment" rows="3" name="adminComment"></textarea>
@@ -101,7 +103,7 @@
         var modal = $(this);
         modal.find('.modal-body #userMessage').text(userMessage);
         document.querySelector('#reqID').textContent ='User request #'+ requestID;
-        modal.find('input[name="requestID"]').attr("value", 'requestID').blur();
+        modal.find('input[name="requestID"]').attr("value", requestID).blur();
 
 
 

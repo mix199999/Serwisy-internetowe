@@ -192,11 +192,14 @@ class User
                 {
                     self::updateRole($db,$user_id,3);
                     self::sendAdminReply($db,$adminMessage,$request_id);
-
+                    self::changeUserRequestStatus($db, false,$request_id);
                 }
                 elseif (self::checkRole($db,$user_id) == 3)
                 {
+                    self::updateRole($db,$user_id,2);
                     self::sendAdminReply($db,$adminMessage,$request_id);
+
+                    self::changeUserRequestStatus($db, false,$request_id);
                 }
 
 
@@ -213,6 +216,7 @@ class User
             if ($user = $stmt->fetch(PDO::FETCH_ASSOC))
             {
                 self::sendAdminReply($db,$adminMessage,$request_id);
+                self::changeUserRequestStatus($db, false,$request_id);
             }
         }
 
@@ -220,13 +224,13 @@ class User
 
     public static function checkRole($db, $user_id)
     {
-        $getUserRole = "SELECT id_priv FROM ".User::$userTable." WHERE user_id = ?";
+        $getUserRole = "SELECT id_priv FROM ".User::$userTable." WHERE id_user = ?";
         $stmt = $db->prepare($getUserRole);
         $stmt->bindParam(1, $user_id, PDO::PARAM_INT);
         $stmt->execute();
         if ($user = $stmt->fetch(PDO::FETCH_ASSOC))
         {
-            return $user['user_id'];
+            return $user['id_priv'];
 
         }
         else
@@ -238,7 +242,7 @@ class User
 
     public static function updateRole($db, $user_id , $newRole)
     {
-        $updateRole = "UPDATE ".User::$userTable." SET id_priv  = ? WHERE user_id = ?";
+        $updateRole = "UPDATE ".User::$userTable." SET id_priv  = ? WHERE id_user = ?";
         $stmt = $db->prepare($updateRole);
         $stmt->bindParam(1, $newRole, PDO::PARAM_INT);
         $stmt->bindParam(2, $user_id, PDO::PARAM_INT);
@@ -257,6 +261,15 @@ class User
 
 
 
+    }
+
+    public static function changeUserRequestStatus($db , $newStatus, $case_id)
+    {
+        $updateRole = "UPDATE privilege_change_request SET case_status  = ? WHERE case_id = ?";
+        $stmt = $db->prepare($updateRole);
+        $stmt->bindParam(2, $case_id, PDO::PARAM_INT);
+        $stmt->bindParam(1, $newStatus, PDO::PARAM_BOOL);
+        $stmt->execute();
     }
 
 

@@ -17,11 +17,19 @@ if(isset($_POST['send']))
 {
     $adminMessage = $_POST['adminComment'];
 
-    $caseID = $_POST['requestID'];
-    echo '-----';
-    echo $caseID;
-    echo '-----';
-    echo $adminMessage;
+    $request_id= intval($_POST['requestID']);
+
+    if($_POST['send'] == 'accept')
+    {
+        User::replyForUserRequest($adminMessage,$request_id,true,$db);
+    }
+    else if($_POST['send'] == 'reject')
+    {
+        User::replyForUserRequest($adminMessage,$request_id,false,$db);
+    }
+
+
+
 
 
 

@@ -15,6 +15,9 @@ class Video
     private $tags;
     private $uploadedBy;
 
+
+    private $weight = 0;
+
     public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null){
         $this->conn = $conn;
         $this->IDvideo = $IDvideo;
@@ -36,18 +39,38 @@ class Video
         $query .= "%'";
         $stmt = $conn->prepare($query);
         $stmt->execute();
-        if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
             return $data;
         }
         else{
             return null;
         }
     }
-    public static function getVideosByTags($tags){
-
+    public static function getVideosByTag($conn, $tag){
+        $query = "SELECT id_video FROM ".video::$tagsTable." WHERE tag LIKE :tag";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam('tag', $tag, PDO::PARAM_STR);
+        $stmt->execute();
+        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+            return $data;
+        }
+        else{
+            return null;
+        }
     }
-    public static function getVideosByUser($user){
-
+    public static function getVideosByUser($conn, $user){
+        $query = "SELECT id_video FROM ".video::$uploadedVideosTable." uv INNER JOIN users u ON uv.id_user = u.id_user WHERE login LIKE ";
+        $query .= "'%";
+        $query .= $user;
+        $query .= "%'";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+            return $data;
+        }
+        else{
+            return null;
+        }
     }
     /**
      * Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
@@ -277,6 +300,22 @@ class Video
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param int $weight
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
     }
 
 

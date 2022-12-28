@@ -7,19 +7,23 @@
 <body>
   <form id="search-form" method="post" action = "index.php?action=search">
     <span class= "video_form">
-      <input type="text" name="searchbar" value="<?php echo $search ?>">
+      <input type="text" name="search" value="<?php echo $search ?>">
     </span>
     <span ><input type="submit" id="send" value="Szukaj"></span><br>
     <span class= "video_form">
-        <label for="">Po Tytule</label><input type="checkbox" name="title">
+        <label for="">Po Tytule</label><input type="checkbox" name="title" value="checked" <?php if(isset($_POST['title'])) echo "checked"?>>
     </span>
     <span class= "video_form">
-        <label for="">Po Tagach</label><input type="checkbox" name="tags">
+        <label for="">Po Tagach</label><input type="checkbox" name="tags" value="checked" <?php if(isset($_POST['tags'])) echo "checked"?>>
     </span>
     <span class= "video_form">
-        <label for="">Po Użytkowniku</label><input type="checkbox" name="tags">
+        <label for="">Po Użytkowniku</label><input type="checkbox" name="user" value="checked" <?php if(isset($_POST['user'])) echo "checked"?>>
     </span>
 
   </form>
+
+
+
+
 </body>
 </html>

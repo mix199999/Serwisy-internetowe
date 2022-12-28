@@ -33,12 +33,12 @@ include_once 'class/Video.php';
     $tagsFormated = array();
     $tag = '';
     if(!empty($tags)){
-        trim($tags);
+        $tags = trim($tags);
+        $tags = strtolower($tags);
         for($i = 0; $i < strlen($tags); $i++){
-            //zmienić żeby przy ostatnim znaku jeszcze spushował
             if($tags[$i] == ','){
                 if(!empty($tag)){
-                    array_push($tagsFormated, $tag);
+                    $tagsFormated[] = $tag;
                     $tag = null;
                 }
                 else{
@@ -47,7 +47,7 @@ include_once 'class/Video.php';
             }
             elseif ($i == strlen($tags) - 1){
                 $tag .= $tags[$i];
-                array_push($tagsFormated, $tag);
+                $tagsFormated[] = $tag;
                 $tag = null;
             }
             else{

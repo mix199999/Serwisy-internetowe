@@ -346,5 +346,18 @@ class Video
 
     }
 
+    public static function getSelectedTags($db, $ile_wybrano, $userid) { //Funkcja zapisujaca wybrane przez nowozarejestrowanego uzytkownika wybrane tagi
+        for($i = 0; $i < $ile_wybrano; $i++){
+
+
+            $selectQ = "INSERT INTO user_tags (tag, user_id) VALUES (?, ?)";
+            $stmt = $db->prepare($selectQ);
+            $stmt->bindParam(1, $_POST["tag"][$i], PDO::PARAM_STR);
+            $stmt->bindParam(2, $userid, PDO::PARAM_INT);
+            $stmt->execute();
+
+
+        }
+    }
 
 }

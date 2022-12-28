@@ -22,8 +22,14 @@
 
   </form>
 
-
-
+  <table border>
+      <tr><th>Tytuł</th><th>Waga</th></tr>
+    <?php
+    foreach ($resultsObjects as $result){
+        echo "<tr><td><a href='index.php?action=watch&v=0'>abc</a></td><td>".$result->getWeight()."</td></tr>";
+      }
+    ?>
+  </table>
 
 </body>
 </html>

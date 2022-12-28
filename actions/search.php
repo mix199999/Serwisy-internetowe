@@ -72,10 +72,14 @@ foreach ($searchDevided as $searchItem){
 }
 
 function addToResults($records, $weight){
+    global $conn;
     global $results;
-    global $resultsWeight;
+    global $resultsObjects;
     foreach ($records as $record){
-       if($key = array_search($record['id_video'], $results)){ //jjja jebie to zwraca 0 trzeba to naprawić
+       if(!empty($results) and $results[0] == $record['id_video']){
+           $resultsObjects[0]->addWeight($weight);
+       }
+       else if($key = array_search($record['id_video'], $results)){ //jjja jebie to zwraca 0 trzeba to naprawić
             /*
            echo "Jest jusz: ";
            echo $results[$key];
@@ -84,7 +88,7 @@ function addToResults($records, $weight){
            echo ";  ";
            */
 
-           $resultsWeight[$key] += $weight;
+           $resultsObjects[$key]->addWeight($weight);
 
        }
        else{
@@ -96,10 +100,15 @@ function addToResults($records, $weight){
            */
 
            $results[] = $record['id_video'];
-           $resultsWeight[] = $weight;
+           $resultsObjects[] = new Video($conn, $record['id_video']);
+           $resultsObjects[sizeof($resultsObjects) - 1]->setWeight($weight);
+           $resultsObjects[sizeof($resultsObjects) - 1]->completeFromDb();
            //usort
        }
     }
 }
+
+
+
 
 ?>

@@ -45,6 +45,10 @@ class User
             $stmt->bindParam(3, $this->passwd, PDO::PARAM_STR);
             $stmt->bindParam(4, $this->email, PDO::PARAM_STR);
             $stmt->execute();
+            $getQuery = "SELECT * FROM " . User::$userTable . " WHERE login = ?";
+            $stmt = $this->conn->prepare($getQuery);
+            $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
+            $stmt->execute();
             if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
                 $_SESSION["user_type"] = $user['id_priv'];

@@ -78,10 +78,10 @@
                         <label for="comment">Comment:</label>
                         <textarea class="form-control" id="comment" rows="3" name="adminComment"></textarea>
                     </div>
-
+                    <div class="modal-footer">
                     <button type="submit" class="btn btn-danger float-start" name="send" value="reject">Reject</button>
                     <button type="submit" class="btn btn-success float-end"name="send" value="accept">Accept</button>
-
+                    </div>
                 </form>
             </div>
         </div>
@@ -96,18 +96,15 @@
 <script>
 
     $(document).ready(function(){
-    $('#issue').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var userMessage = button.data('user-message');
-        var requestID = button.data('user-request-id');
-        var modal = $(this);
-        modal.find('.modal-body #userMessage').text(userMessage);
-        document.querySelector('#reqID').textContent ='User request #'+ requestID;
-        modal.find('input[name="requestID"]').attr("value", requestID).blur();
-
-
-
-    })
+        $('#issue').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var userMessage = button.data('user-message');
+            var requestID = button.data('user-request-id');
+            var modal = $(this);
+            modal.find('.modal-body #userMessage').text(userMessage);
+            document.querySelector('#reqID').textContent ='User request #'+ requestID;
+            modal.find('input[name="requestID"]').attr("value", requestID).blur();
+        })
 
     })
 

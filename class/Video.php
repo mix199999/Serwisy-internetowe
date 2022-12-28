@@ -15,9 +15,6 @@ class Video
     private $tags;
     private $uploadedBy;
 
-
-    private $weight = 0;
-
     public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null){
         $this->conn = $conn;
         $this->IDvideo = $IDvideo;
@@ -39,38 +36,18 @@ class Video
         $query .= "%'";
         $stmt = $conn->prepare($query);
         $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+        if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
             return $data;
         }
         else{
             return null;
         }
     }
-    public static function getVideosByTag($conn, $tag){
-        $query = "SELECT id_video FROM ".video::$tagsTable." WHERE tag LIKE :tag";
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam('tag', $tag, PDO::PARAM_STR);
-        $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
-            return $data;
-        }
-        else{
-            return null;
-        }
+    public static function getVideosByTags($tags){
+
     }
-    public static function getVideosByUser($conn, $user){
-        $query = "SELECT id_video FROM ".video::$uploadedVideosTable." uv INNER JOIN users u ON uv.id_user = u.id_user WHERE login LIKE ";
-        $query .= "'%";
-        $query .= $user;
-        $query .= "%'";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
-            return $data;
-        }
-        else{
-            return null;
-        }
+    public static function getVideosByUser($user){
+
     }
     /**
      * Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
@@ -302,45 +279,42 @@ class Video
         $this->url = $url;
     }
 
-    /**
-     * @return int
-     */
-    public function getWeight()
-    {
-        return $this->weight;
-    }
 
-    /**
-     * @param int $weight
-     */
-    public function setWeight($weight)
-    {
-        $this->weight = $weight;
-    }
-
-
-    public static function youtube_link_to_embed($link) {  
+    public static function youtube_link_to_embed($link) {
         // Sprawdź, czy link jest poprawny
         if (!preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $match)) {
-          return $link;
+            return $link;
         }
-      
+
         // Zwróć link embed - taki, ktory da sie wyswietlic na stronie, bo zwykle linki youtube blokuje
         return 'https://www.youtube.com/embed/' . $match[1];
     }
 
-    public function getVideosWithUserTags($loginUser, $db) {  //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
-                 
-        $query = "SELECT DISTINCT videos.url, videos.extension FROM ".video::$videoTable."    
-        JOIN tags ON tags.id_video = videos.id_video                        
-        JOIN user_tags ON tags.tag = user_tags.tag                          
-        JOIN users ON user_tags.user_id = users.id_user 
-        WHERE users.login = '".$loginUser."'";
-        $stmt = $db->prepare($query);
+    public static function getVideosWithUserTags() {
+        /*
+        $query = "SELECT url FROM videos
+        JOIN tags ON videos.id_tag = tags.id_tag    // do tego trzeba baze danych przebudować
+        JOIN users ON user.id_tag = tags.id_tag     // user musi miec jakos tagi swoje zapisane
+        WHERE user.login = 'login'";                // video tez musi miec swoje tagi
+        $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return($stmt->fetchAll());                  
-                    
+        return($stmt->fetchAll());
+        */
+        return 1;
     }
-        
+
+    public static function getSelectedTags($db, $ile_wybrano, $userid) {
+        for($i = 0; $i < $ile_wybrano; $i++){
+
+
+            $selectQ = "INSERT INTO user_tags (tag, user_id) VALUES (?, ?)";
+            $stmt = $db->prepare($selectQ);
+            $stmt->bindParam(1, $_POST["tag"][$i], PDO::PARAM_STR);
+            $stmt->bindParam(2, $userid, PDO::PARAM_INT);
+            $stmt->execute();
+
+
+        }
+    }
 
 }

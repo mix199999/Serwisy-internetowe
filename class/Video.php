@@ -95,13 +95,14 @@ class Video
             return -1;
         }
         else{
-            $query = "SELECT title, extension FROM ".video::$videoTable." WHERE id_video = ?";
+            $query = "SELECT title, extension, url FROM ".video::$videoTable." WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
             if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
                 $this->title = $data['title'];
                 $this->extension = $data['extension'];
+                $this->url = $data['url'];
                 return 1;
             }
             else{
@@ -276,6 +277,14 @@ class Video
     public function getExtension()
     {
         return $this->extension;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getUrl()
+    {
+        return $this->url;
     }
 
     /**

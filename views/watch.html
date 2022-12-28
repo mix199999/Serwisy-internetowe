@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-
+    <?php
+        if($type == "server"){
+            echo "<video controls><source src='".$video->getUrl()."'></video>";
+        }
+    ?>
 </body>
 </html>

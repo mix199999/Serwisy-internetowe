@@ -71,6 +71,10 @@ foreach ($searchDevided as $searchItem){
     }
 }
 
+if(!empty($resultsObjects)){
+    usort($resultsObjects, "compareVideoWeights");
+}
+
 function addToResults($records, $weight){
     global $conn;
     global $results;
@@ -108,7 +112,12 @@ function addToResults($records, $weight){
     }
 }
 
-
+function compareVideoWeights($a, $b){
+    if($a->getWeight() == $b->getWeight()){
+        return 0;
+    }
+    return ($a->getWeight() < $b->getWeight()) ? 1 : -1;
+}
 
 
 ?>

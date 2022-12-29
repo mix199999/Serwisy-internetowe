@@ -7,18 +7,22 @@ document.getElementById("changePrivil-button").addEventListener("click", functio
 
     const reason = document.getElementById("reason").value;
     const title = document.getElementById("title").value;
+    
+    var formData = new FormData();
+    formData.append(reason, title);
 
-    if (reason === " " || title === " ") {
-      console.log("Values cannot be empty!");
+    if (reason === "" || title === "") {
+      window.alert("Values cannot be empty!");
     } else {
       fetch("actions/changePrivil.php", {
         method: "POST",
-        body: JSON.stringify({
-          //userId: '<?php echo $x ;?>', // zmienic x
-          reason: reason,
-          title: title
-
+        body: FormData
         })
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (body) {
+          console.log(body);
       });
     }
     

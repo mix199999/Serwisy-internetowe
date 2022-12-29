@@ -6,11 +6,11 @@ document.getElementById("reportUser-button").addEventListener("click", function(
   document.getElementById("reportUser-form").addEventListener("submit", function(event) {
     event.preventDefault(); //zeby nie byl od razu wyslany
 
-    const reason = document.getElementById("reason").value;
-    const title = document.getElementById("title").value;
+    const reason = 'ziemniak';
+    const title = 'ziemniak';
 
     if (reason === "" || title === "") {
-      console.log("Values cannot be empty!");
+      window.alert("Values cannot be empty!");
     } else {
       fetch("actions/reportUser.php", {
         method: "POST",

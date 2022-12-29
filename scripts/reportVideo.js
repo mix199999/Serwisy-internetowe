@@ -10,7 +10,7 @@ document.getElementById("reportVideo-button").addEventListener("click", function
     const title = document.getElementById("title").value;
 
     if (reason === "" || title === "") {
-      console.log("Values cannot be empty!");
+      window.alert("Values cannot be empty!");
     } else {
       fetch("actions/reportVideo.php", {
         method: "POST",

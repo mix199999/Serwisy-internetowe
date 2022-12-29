@@ -10,5 +10,54 @@
             echo "<video controls><source src='".$video->getUrl()."'></video>";
         }
     ?>
+    <!--
+Report Video
+-->
+<button id="reportVideo-button">Report Video</button>
+    
+<div id="popupVideo" style="display:none;">
+    <form id="reportVideo-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+      <label for="reason">Reason for report:</label><br>
+      <input type="text" id="reason" name="reason"><br>
+      <button type="submit" name="reportVideoButton">Submit Report</button>
+    </form>
+  </div>
+
+  <script src="/scripts/reportVideo.js"></script>
+
+<!--
+Report User
+-->
+<button id="reportUser-button">Report User</button>
+
+<div id="popupUser" style="display:none;">
+    <form id="reportUser-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+      <label for="reason">Reason for report:</label><br>
+      <input type="text" id="reason" name="reason"><br>
+      <button type="submit" name="reportUserButton">Submit Report</button>
+    </form>
+  </div>
+
+  <script src="/scripts/reportUser.js"></script>
+<!--
+Change privil.
+-->
+<button id="changePrivil-button">Change Privil</button>
+
+<div id="popupPrivil" style="display:none;">
+    <form id="changePrivil-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br>
+      <label for="reason">Reason for report:</label><br>
+      <input type="text" id="reason" name="reason"><br>
+      <button type="submit" name="changePrivilButton">Submit Report</button>
+    </form>
+  </div>
+
+  <script src="/scripts/changePrivil.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+echo 'user';
 
         //$userId = $_POST['userId'];
         $reason = $_POST['reason'];

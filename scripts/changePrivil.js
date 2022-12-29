@@ -1,5 +1,5 @@
 document.getElementById("changePrivil-button").addEventListener("click", function() {
-    document.getElementById("popupUser").style.display = "block";
+    document.getElementById("popupPrivil").style.display = "block";
   });
   
   document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
@@ -8,7 +8,7 @@ document.getElementById("changePrivil-button").addEventListener("click", functio
     const reason = document.getElementById("reason").value;
     const title = document.getElementById("title").value;
 
-    if (reason === "" || title === "") {
+    if (reason === " " || title === " ") {
       console.log("Values cannot be empty!");
     } else {
       fetch("actions/changePrivil.php", {

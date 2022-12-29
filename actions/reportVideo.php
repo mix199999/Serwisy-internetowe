@@ -1,5 +1,5 @@
 <?php
-
+echo 'vid';
         //$videoId = $_POST['videoId'];
         //$userId = $_POST['userId'];
         $reason = $_POST['reason'];

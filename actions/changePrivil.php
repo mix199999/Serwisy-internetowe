@@ -1,5 +1,5 @@
 <?php
-
+echo 'privil';
 
         //$userId = $_POST['userId'];
         $reason = $_POST['reason'];

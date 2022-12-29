@@ -10,6 +10,9 @@
             echo "<video controls><source src='".$video->getUrl()."'></video>";
         }
     ?>
+    
+    
+    
     <!--
 Report Video
 -->
@@ -19,13 +22,13 @@ Report Video
     <form id="reportVideo-form">
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title"><br>
-      <label for="reason">Reason for report:</label><br>
+      <label for="reason">Reason for Video report:</label><br>
       <input type="text" id="reason" name="reason"><br>
       <button type="submit" name="reportVideoButton">Submit Report</button>
     </form>
   </div>
 
-  <script src="/scripts/reportVideo.js"></script>
+  <script src="scripts/reportVideo.js"></script>
 
 <!--
 Report User
@@ -36,13 +39,14 @@ Report User
     <form id="reportUser-form">
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title"><br>
-      <label for="reason">Reason for report:</label><br>
+      <label for="reason">Reason for User report :</label><br>
       <input type="text" id="reason" name="reason"><br>
       <button type="submit" name="reportUserButton">Submit Report</button>
     </form>
   </div>
 
-  <script src="/scripts/reportUser.js"></script>
+  <script src="scripts/reportUser.js"></script>
+  
 <!--
 Change privil.
 -->
@@ -52,12 +56,13 @@ Change privil.
     <form id="changePrivil-form">
         <label for="title">Title:</label><br>
         <input type="text" id="title" name="title"><br>
-      <label for="reason">Reason for report:</label><br>
+      <label for="reason">Reason for change report:</label><br>
       <input type="text" id="reason" name="reason"><br>
       <button type="submit" name="changePrivilButton">Submit Report</button>
     </form>
   </div>
 
-  <script src="/scripts/changePrivil.js"></script>
+  <script src="scripts/changePrivil.js"></script>
+
 </body>
 </html>

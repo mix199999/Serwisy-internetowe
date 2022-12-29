@@ -126,9 +126,8 @@
                                 <div class="pb-3">
                                 <div class="col-sm-10">
                                     <select class="form-control" id="account-type" name="account-type">
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
-                                        <option value="editor">Editor</option>
+                                        <option value="2"  >User</option>
+                                        <option value="3" >Editor</option>
                                     </select>
                                 </div>
                             </div>
@@ -175,21 +174,21 @@
                     var id = button.data('user-id')
                     var type = button.data('user-type')
                     var modal = $(this)
-                    var second_type = '';
-                    if(type == 'admin')
+
+                    if(type == 'user')
                     {
+                        modal.find("#account-type option[value=2]").attr('selected', 'selected');
 
                     }
-                    else if(type == 'user')
+                    else if(type == 'edytor')
                     {
-
+                        modal.find("#account-type option[value=3]").attr('selected', 'selected');
                     }
-
 
                     modal.find('input[name="login"]').attr("value", login).blur();
                     modal.find('input[name="email"]').attr("value", email).blur();
 
-                   // document.querySelector('#email').textContent = sdadsa;
+                   //
 
                 })
 

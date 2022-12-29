@@ -202,11 +202,8 @@ class User
                 {
                     self::updateRole($db,$user_id,2);
                     self::sendAdminReply($db,$adminMessage,$request_id);
-
                     self::changeUserRequestStatus($db, false,$request_id);
                 }
-
-
 
             }
 
@@ -276,6 +273,26 @@ class User
         $stmt->execute();
     }
 
+    public static function getTable($db, $tableName)
+    {
+        $getTable = "SELECT * FROM ".$tableName;
+        $stmt = $db->prepare($getTable);
+        $stmt->execute();
+        return ($stmt->fetchAll());
+    }
+
+    //todo  pobieranie wiadomości jeżeli jest tylko jedna wiadomość od usera/edytora  lub pobiera jeżeli id admina występuje
+    public static function getConversation($db, $id_ticket)
+    {
+        $getMessagess = "Select * from messages where ticket_id = ? order by id desc;";
+        $stmt = $db->prepare($getMessagess);
+
+        $stmt->bindParam(1,$id_ticket, PDO::PARAM_INT);
+
+        $stmt->execute();
+        return($stmt->fetchAll());
+
+    }
 
 
 
@@ -283,6 +300,8 @@ class User
 
 
 }
+
+
 
 
 

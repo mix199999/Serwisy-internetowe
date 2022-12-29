@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="/style/tickets.css" rel="stylesheet"/>
+    <script src="/scripts/jquery-3.6.3.js"></script>
+    <title>Hello, world!</title>
+</head>
+<body>
+
+<?php
+
+
+//
+
+
+
+?>
+<div class="col-12" >
+
+    <!-- sidebar -->
+    <div class="row">
+        <div class="col-2" >
+            <ul class="list-group fa-padding">
+                <div class="list-group" id="myList" role="tablist">
+                   <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
+                    <?php
+
+                        foreach($result as $row)
+                        {
+                            ?>
+                            <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issue" id="case"  data-toggle="list" role="tab" data-id-case="<?php echo $row[0]?>"><?php echo $row[0]?>
+                                <?php
+                            echo  '<span class="number pull-right"> Case ID: #'.$row[0].'</span>';
+                            echo '<p class="info">Created by <a href="#">'.User::getUserLogin($row[1], $db).'</a> Dodac date  </p>';
+                            if($row[3] == 'technical')
+                                echo '<span class="badge bg-success">'.$row[3].'</span>';
+                            else if($row[3] == 'other')
+                                echo '<span class="badge bg-danger">'.$row[3].'</span>';
+                            echo '</li>';
+                        }
+                         ?>
+                </div>
+
+                <li class="list-group-item list-group-item-action" data-id-case="123">Click me</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- dialog -->
+    <div class="col-8" id="chat">
+
+
+
+    </div>
+
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+
+    <script>
+
+        $( document ).ready(function() {
+            const listItems = document.querySelectorAll('.list-group-item-action');
+            listItems.forEach((listItem) => {
+                listItem.addEventListener('click', (event) => {
+                    var ticketId = event.target.parentElement.getAttribute('data-id-case');
+                    if(ticketId != null)
+                    {
+                        console.log(ticketId);
+
+                        $.ajax({
+                            url: '/scripts/messages.php',
+                            type: 'POST',
+                            data: {
+                                idCase: ticketId
+                            },
+                            dataType: 'json',
+                            success: function(response) {
+
+                                $('#chat').html('');
+
+
+                                $.each(response, function(index, message) {
+                                    $('#chat').append(message);
+                                });
+                            }
+                        });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+
+
+    </script>
+
+
+
+
+</div>
+
+
+
+<?php
+
+
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Optional JavaScript; choose one of the two! -->
+
+<!-- Option 1: Bootstrap Bundle with Popper
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+ Option 2: Separate Popper and Bootstrap JS -->
+
+
+
+</body>
+</html>

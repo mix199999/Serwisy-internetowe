@@ -1,12 +1,15 @@
 <?php
+session_start();
 echo 'vid';
 
-if(isset($_POST['reason']) and isset($_POST['title']) ){
+$reason = $_POST['reason1'];
+$title = $_POST['title1'];
+
+if(isset($_POST['reason1']) and isset($_POST['title1']) ){
 
         //$videoId = $_POST['videoId'];
         //$userId = $_POST['userId'];
-        $reason = $_POST['reason'];
-        $title = $_POST['title'];
+        
         
 }
         

@@ -11,7 +11,7 @@ document.getElementById("changePrivil-button").addEventListener("click", functio
     var formData = new FormData();
     formData.append(reason, title);
 
-    if (reason === "" || title === "") {
+    if (reason == "" || title == "") {
       window.alert("Values cannot be empty!");
     } else {
       fetch("actions/changePrivil.php", {

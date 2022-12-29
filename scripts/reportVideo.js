@@ -8,7 +8,7 @@ document.getElementById("reportVideo-button").addEventListener("click", function
 
     const reason = document.getElementById("reason").value;
     const title = document.getElementById("title").value;
-
+    
     if (reason === "" || title === "") {
       window.alert("Values cannot be empty!");
     } else {

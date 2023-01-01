@@ -3,24 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Search</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container-fluid">
   <form id="search-form" method="post" action = "index.php?action=search">
-    <span class= "video_form">
-      <input type="text" name="search" value="<?php echo $search ?>">
-    </span>
-    <span ><input type="submit" id="send" value="Szukaj"></span><br>
-    <span class= "video_form">
-        <label for="">Po Tytule</label><input type="checkbox" name="title" value="checked" <?php if(isset($_POST['title'])) echo "checked"?>>
-    </span>
-    <span class= "video_form">
-        <label for="">Po Tagach</label><input type="checkbox" name="tags" value="checked" <?php if(isset($_POST['tags'])) echo "checked"?>>
-    </span>
-    <span class= "video_form">
-        <label for="">Po Użytkowniku</label><input type="checkbox" name="user" value="checked" <?php if(isset($_POST['user'])) echo "checked"?>>
-    </span>
+      <div class="form-group">
+          <div class="row g-1">
+              <div class="col-md-8">
+                <input class="form-control form-control-lg" type="text" name="search" value="<?php echo $search ?>">
+              </div>
+              <div class="col-md-4">
+                  <input class="btn btn-primary btn-lg w-100" type="submit" id="send" value="Szukaj">
+              </div>
+          </div>
+      </div>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="title" name="title" value="checked" <?php if(isset($_POST['title'])) echo "checked"?>>
+          <label class="form-check-label" for="title">Po Tytule</label>
 
+      </div>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="tags" name="tags" value="checked" <?php if(isset($_POST['tags'])) echo "checked"?>>
+          <label class="form-check-label" for="tags">Po Tagach</label>
+      </div>
+      <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="user" name="user" value="checked" <?php if(isset($_POST['user'])) echo "checked"?>>
+          <label class="form-check-label" for="user">Po Urzytkowniku</label>
+      </div>
   </form>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <?php
+            foreach ($resultsObjects as $result){
+                echo "<div class='col-md-6'>";
+                echo    "<div class='card'>";
+                $src = "videos/thumbnails/" . $result->getIDvideo() . ".png";
+                if(!file_exists($src)){
+                    $src = "videos/thumbnails/placeholder.png";
+                }
+                echo        "<a href='index.php?action=watch&v=".$result->getIDvideo()."'><img class='card-img-top nav-item' src='".$src."' alt='thumbnail'></a>";
+                echo            "<div class='card-body'>";
+                echo                "<a href='index.php?action=watch&v=".$result->getIDvideo()."'><h5 class='card-title nav-item'>".$result->getTitle()."</h5></a>";
+                echo            "</div>";
+                echo            "<div class='card-footer'>";
+                echo                "<small class='text-secondary'>Przesłany przez: ".$result->getUploadedBy()."</small>";
+                echo            "</div>";
+                echo    "</div>";
+                echo "</div>";
+            }
+        ?>
+    </div>
+</div>
+
+
 
   <table border>
       <tr><th>Tytuł</th><th>Waga</th></tr>

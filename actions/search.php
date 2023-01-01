@@ -83,7 +83,7 @@ function addToResults($records, $weight){
        if(!empty($results) and $results[0] == $record['id_video']){
            $resultsObjects[0]->addWeight($weight);
        }
-       else if($key = array_search($record['id_video'], $results)){ //jjja jebie to zwraca 0 trzeba to naprawić
+       else if($key = array_search($record['id_video'], $results)){
             /*
            echo "Jest jusz: ";
            echo $results[$key];

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="/scripts/jquery-3.6.3.js"></script>
+    
+</head>
+
+<body>
+
+<!--
+Report Video
+-->
+<button id="reportVideo-button" class="btn btn-light">Report Video</button>
+    
+<div id="popupVideo" style="display:none;">
+    <form method = 'post' id="reportVideo-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title1" name="title1"><br>
+      <label for="reason">Reason for Video report:</label><br>
+      <input type="text" id="reason1" name="reason1"><br>
+      <button type="submit" name="reportVideoButton">Submit Report</button>
+    </form>
+  </div>
+
+  
+
+<!--
+Report User
+-->
+<button id="reportUser-button" class="btn btn-light">Report User</button>
+
+<div id="popupUser" style="display:none;">
+    <form method = 'post' id="reportUser-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title2" name="title2"><br>
+      <label for="reason">Reason for User report :</label><br>
+      <input type="text" id="reason2" name="reason2"><br>
+      <button type="submit" name="reportUserButton">Submit Report</button>
+    </form>
+  </div>
+
+  
+  
+<!--
+Change privil.
+-->
+<button id="changePrivil-button" class="btn btn-light" >Change Privil</button>
+
+<div id="popupPrivil" style="display:none;">
+    <form method = 'post' id="changePrivil-form">
+        <label for="title">Title:</label><br>
+        <input type="text" id="title3" name="title3"><br>
+      <label for="reason">Reason for change report:</label><br>
+      <input type="text" id="reason3" name="reason3"><br>
+      <button type="submit" name="changePrivilButton">Submit Report</button>
+    </form>
+  </div>
+
+  <script>
+
+document.getElementById("changePrivil-button").addEventListener("click", function() {
+    document.getElementById("popupPrivil").style.display = "block";
+  });
+  
+  document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
+    event.preventDefault(); //zeby nie byl od razu wyslany
+
+    var reason3 = document.getElementById("reason3").value;
+    var title3 = document.getElementById("title3").value;
+
+    if (reason3 == "" || title3 == "") {
+      window.alert("Values cannot be empty!");
+    } else {
+        $.ajax({  
+        type: 'POST',  
+        url: '/actions/changePrivil.php', 
+        data: reason3,
+        success: function(response) {
+            console.log(reason3);
+    }
+});
+    }
+        $.ajax({  
+            type: 'POST',  
+            url: '/actions/changePrivil.php', 
+            data: title3,
+            success: function(response) {
+                console.log(title3);
+        }
+});
+    
+      });
+</script>
+
+
+</body>
+</html>

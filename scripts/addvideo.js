@@ -26,5 +26,26 @@
             option = null;
         }
     }
-    //tutaj muszę naprawić bo jjak się kliknie sublit to bedzie zawsze file
+
+let vid = document.querySelector("#video-element"),
+    canv = document.querySelector("#canvas-element"),
+    canvCtx = canv.getContext("2d");
+document.querySelector("#file-input").addEventListener('change', function() {
+    document.querySelector("#video-element source").setAttribute('src', URL.createObjectURL(document.querySelector("#file-input").files[0]));
+
+
+    vid.load()
+
+    //zmienić typ
+
+
+
+});
+
+function drawThumbnail(e){
+    canvCtx.drawImage(vid,0,0,vid.videoWidth,vid.videoHeight);
+}
+
+
+
 //</script>

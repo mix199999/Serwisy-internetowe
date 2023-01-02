@@ -5,7 +5,79 @@
     <title>Title</title>
 </head>
     <body>
-        <form id="login-form" method="post" action = "index.php?action=addvideo" enctype="multipart/form-data">
+
+        <div class="container py-2 px-0">
+            <div class="card">
+                <h1 class='card-title align-self-center align-self-md-start'>Dodaj wideo</h1>
+                <div class="card-body">
+                    <form id="login-form" method="post" action = "index.php?action=addvideo" enctype="multipart/form-data">
+                        <div class="form-group row">
+                            <label class="col-md-2 col-lg-2 col-form-label" for="title">Tytuł:</label>
+                            <div class="col">
+                                <input class="form-control" id="title" type="text" name="title" value="<?php echo $title ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-lg-2 col-form-label" for="title">Wybierz formę przesłania:</label>
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type" id="filechck" value="file">
+                                    <label class="form-check-label" for="filechck">Z pliku</label>
+
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="type" id="urlchck" value="url">
+                                    <label class="form-check-label" for="urlchck">Z linku</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-lg-2 col-form-label" for="title">Wybierz plik:</label>
+                            <div class="col">
+                                <input class="form-control-file" id="file-input" type='file' name='video' accept='video/*'>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-lg-2 col-form-label" for="title">Podaj adres:</label>
+                            <div class="col">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon3">www.youtube.com/watch?v=</span>
+                                    </div>
+                                    <input class="form-control" id="adress" type="text" name="adress" value=''>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-lg-2 col-form-label" for="tags">Tagi:</label>
+                            <div class="col">
+                                <textarea class="form-control" id="tags" rows="1" placeholder="Podaj tagi oddzielone przecinkami"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="container py-2" style="">
+                            <video id="video-element" height="360" width="480" controls>
+                                <source type="video/mp4">
+                            </video>
+                            <canvas id="canvas-element" height="360" width="480"></canvas>
+                        </div>
+
+                        <div class="form-group row py-2">
+
+                                <input class="btn btn-primary w-25" type="submit" id="send" value="Prześlij">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+        <form id="login-formx" method="post" action = "index.php?action=addvideo" enctype="multipart/form-data">
 
             <span class= "video_form">
                 <label for="">Tytuł:</label><input type="text" name="title" value="<?php echo $title ?>">
@@ -14,8 +86,8 @@
 
             <span class= "video_form" id="type">
                 <label for="">Wybierz formę przesłania:</label>
-                <label><input type="radio" name="type" id="filechck" value="file">Z pliku</label>
-                <label><input type="radio" name="type" id="urlchck" value="url">Z linku</label>
+                <label><input type="radio" name="type" id="filechckx" value="file">Z pliku</label>
+                <label><input type="radio" name="type" id="urlchckx" value="url">Z linku</label>
                 <?php if (array_key_exists('type', $errors)): ?><label><?php echo $errors['type'] ?></label><?php endif; ?>
             <br></span>
 
@@ -25,11 +97,12 @@
             </span><br>
 
 
-            <span ><input type="submit" id="send" value="Prześlij"></span><br>
+            <span ><input type="submit" id="sendx" value="Prześlij"></span><br>
 
 
 
         </form>
+
 
     </body>
 </html>

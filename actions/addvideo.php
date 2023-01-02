@@ -82,7 +82,7 @@ include_once 'class/Video.php';
             $url = '';
             $extension = '';
             if($fields['type'] == "url"){
-                $url = $fields['address'];
+                $url = "https://www.youtube.com/watch?v=" . $fields['address'];
                 $extension = "url";
             }
             else{

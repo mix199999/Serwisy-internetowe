@@ -31,13 +31,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" id="fileChoice" style="display: none">
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Wybierz plik:</label>
                             <div class="col">
                                 <input class="form-control-file" id="file-input" type='file' name='video' accept='video/*'>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" id="urlChoice" style="display: none">
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Podaj adres:</label>
                             <div class="col">
                                 <div class="input-group mb-3">
@@ -54,20 +54,47 @@
                                 <textarea class="form-control" id="tags" rows="1" placeholder="Podaj tagi oddzielone przecinkami"></textarea>
                             </div>
                         </div>
+                        <div class="form-group row py-2" id="thumbnail-btn-div" style="display: none">
 
-                        <div class="container py-2" style="">
-                            <video id="video-element" height="360" width="480" controls>
-                                <source type="video/mp4">
-                            </video>
-                            <canvas id="canvas-element" height="360" width="480"></canvas>
+                            <button type="button" class="btn btn-secondary" id="thumbnail-btn">Stwórz Miniaturkę!</button>
+
                         </div>
-
                         <div class="form-group row py-2">
 
                                 <input class="btn btn-primary w-25" type="submit" id="send" value="Prześlij">
 
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="container" id="thumbnail-creator" style="display: none">
+            <div class="card">
+                <h2 class='card-title align-self-center align-self-md-start'>Kreator miniaturek</h2>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-5">
+                            <input class="w-100" id="thtxt" type="text">
+                            <video class="border border-5 border-secondary" id="video-element" height="360" width="480" controls>
+                                <source type="video/mp4">
+                            </video>
+                            <input class="w-100" id="thtxt2" type="text">
+                        </div>
+                        <div class="col-xl-1">
+                            <button type="button" class="btn btn-secondary w-auto h-100" id="capture">Uchwyć</button>
+                        </div>
+                        <div class="col-xl-5">
+                            <input type="range" class="form-control-range w-100" id="formControlRange" min="0" max="480" step="1">
+                            <canvas class="border border-5 border-secondary" id="canvas-element" height="360" width="480"></canvas>
+                            <input type="range" class="form-control-range w-100" id="formControlRange2" min="0" max="480" step="1">
+                        </div>
+                        <div class="col-xl-1">
+                            <input class="form-check-input" type="radio" name="colour" id="black" value="black" checked>
+                            <label class="form-check-label" for="black">B</label>
+                            <input class="form-check-input" type="radio" name="colour" id="white" value="white">
+                            <label class="form-check-label" for="white">W</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

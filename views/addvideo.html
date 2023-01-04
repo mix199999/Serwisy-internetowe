@@ -15,6 +15,7 @@
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Tytuł:</label>
                             <div class="col">
                                 <input class="form-control" id="title" type="text" name="title" value="<?php echo $title ?>">
+                                <label class="form-label text-danger col-12" id="title-alert" for="title" style="display: none">Pole jest wymagane</label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -29,12 +30,14 @@
                                     <input class="form-check-input" type="radio" name="type" id="urlchck" value="url">
                                     <label class="form-check-label" for="urlchck">Z linku</label>
                                 </div>
+                                <label class="form-label text-danger col-12" id="choice-alert" for="" style="display: none">Wybierz opcję przesyłu</label>
                             </div>
                         </div>
                         <div class="form-group row" id="fileChoice" style="display: none">
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Wybierz plik:</label>
                             <div class="col">
                                 <input class="form-control-file" id="file-input" type='file' name='video' accept='video/*'>
+                                <label class="form-label text-danger col-12" id="file-alert" for="file-input" style="display: none">Należy wybrać plik</label>
                             </div>
                         </div>
                         <div class="form-group row" id="urlChoice" style="display: none">
@@ -45,6 +48,7 @@
                                         <span class="input-group-text" id="basic-addon3">www.youtube.com/watch?v=</span>
                                     </div>
                                     <input class="form-control" id="adress" type="text" name="adress" value=''>
+                                    <label class="form-label text-danger col-12" id="adress-alert" for="adress" style="display: none">Należy podać adres</label>
                                 </div>
                             </div>
                         </div>
@@ -101,34 +105,10 @@
 
 
 
+<button id="testy">zapisztesst</button>
 
 
 
-        <form id="login-formx" method="post" action = "index.php?action=addvideo" enctype="multipart/form-data">
-
-            <span class= "video_form">
-                <label for="">Tytuł:</label><input type="text" name="title" value="<?php echo $title ?>">
-                <?php if (array_key_exists('title', $errors)): ?><label><?php echo $errors['title'] ?></label><?php endif; ?>
-            </span><br>
-
-            <span class= "video_form" id="type">
-                <label for="">Wybierz formę przesłania:</label>
-                <label><input type="radio" name="type" id="filechckx" value="file">Z pliku</label>
-                <label><input type="radio" name="type" id="urlchckx" value="url">Z linku</label>
-                <?php if (array_key_exists('type', $errors)): ?><label><?php echo $errors['type'] ?></label><?php endif; ?>
-            <br></span>
-
-            <span class= "video_form">
-                <label for="">Tagi:</label><input type="text" name="tags" value="<?php echo $tags ?>" placeholder="Podaj tagi oddzielone przecinkiem">
-                <?php if (array_key_exists('tags', $errors)): ?><label><?php echo $errors['tags'] ?></label><?php endif; ?>
-            </span><br>
-
-
-            <span ><input type="submit" id="sendx" value="Prześlij"></span><br>
-
-
-
-        </form>
 
 
     </body>

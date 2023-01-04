@@ -1,31 +1,34 @@
 //<script>
-    const file = document.getElementById('filechck');
-    const url = document.getElementById('urlchck');
-    const send = document.getElementById('send');
-    file.addEventListener('change', change);
-    url.addEventListener('change', change);
-    send.addEventListener('change', remove);
-    let option = "file" ;
 
-    function change(e) {
-        remove();
-        option = this.value;
-        display();
+
+document.querySelector("#send").addEventListener('click', function (){
+    //nie wiem jak to
+   if(document.querySelector("#title").value == ''){
+       document.querySelector("#title-alert").style.display = '';
+   }
+   else{
+       document.querySelector("#title-alert").style.display = 'none';
+   }
+    if(!document.querySelector("#fileChoice").checked && !document.querySelector("#fileChoice").checked){
+        document.querySelector("#choice-alert").style.display = '';
     }
-    function display(e){
-        if(option == "file"){
-            document.getElementById('type').insertAdjacentHTML("afterend", "<span class= 'video_form' id='option'><label for=''>Wybierz plik:</label><input type='file' name='video' accept='video/*'><br></span>");
-        }
-        else{
-            document.getElementById('type').insertAdjacentHTML("afterend", "<span class= 'video_form' id='option'><label for=''>Podaj adres:</label><input type='url' name='address' value=''><br></span>");
-        }
+    else{
+        document.querySelector("#choice-alert").style.display = 'none';
     }
-    function remove(e){
-        if (document.getElementById('option')) {
-            document.getElementById('option').remove();
-            option = null;
-        }
+    if(document.querySelector("#file-input").value == ''){
+        document.querySelector("#file-alert").style.display = '';
     }
+    else{
+        document.querySelector("#file-alert").style.display = 'none';
+    }
+    if(document.querySelector("#adress").value == ''){
+        document.querySelector("#adress-alert").style.display = '';
+    }
+    else{
+        document.querySelector("#adress-alert").style.display = 'none';
+    }
+});
+
 
     document.querySelector("#filechck").addEventListener('change', function (){
         document.querySelector("#fileChoice").style.display = '';
@@ -61,7 +64,6 @@ document.querySelector("#file-input").addEventListener('change', function() {
     //zmienić typ
 
 
-
 });
 
 document.querySelector("#capture").addEventListener('click', function (){
@@ -80,9 +82,28 @@ function drawThumbnail(e){
     canv.textAlign = "center";
     canvCtx.fillStyle = "black";
     canvCtx.fillText(text,position,50);
-    canvCtx.fillText(text2,position2,320);
+    canvCtx.fillText(text2,position2,350);
 }
 
 
+document.querySelector("#testy").addEventListener('click', saveThumbnail);
+
+function saveThumbnail(){
+    let canvasData = canv.toDataURL("image/jpg");
+    let ajax;
+    if (window.XMLHttpRequest) {
+        ajax = new XMLHttpRequest();
+    }
+    else if (window.ActiveXObject) {
+        ajax = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    ajax.open("POST", "/actions/addvideo.php", false);
+    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    ajax.onreadystatechange = function() {
+        console.log(ajax.responseText);
+    }
+    ajax.send("imgData=" + canvasData);
+}
 
 //</script>

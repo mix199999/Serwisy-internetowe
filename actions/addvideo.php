@@ -2,7 +2,19 @@
 include_once 'conf/connDB.php';
 include_once 'class/Video.php';
 
-    if(isset($_POST['title'])) {
+
+if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
+    $imageData = $GLOBALS['HTTP_RAW_POST_DATA'];
+    $filteredData = substr($imageData, strpos($imageData, ",") + 1);
+    $unencodedData = base64_decode($filteredData);
+    $fp = fopen('/videos/thumbnails/file.jpg', 'wb');
+
+    fwrite($fp, $unencodedData);
+    fclose($fp);
+}
+
+
+if(isset($_POST['title'])) {
         $title = $_POST['title'];
     }
     else {

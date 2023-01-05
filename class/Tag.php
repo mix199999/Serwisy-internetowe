@@ -9,7 +9,7 @@ class Tag{
         $this->conn = $db;
     }
 
-    public static function getTags($db)
+    public static function getTags($db) //pobranie wszystkich niepowtarzających się tagów
     {
         $selectQ = "SELECT distinct tag from ".Tag::$tagsTable;
         $stmt = $db->prepare($selectQ);
@@ -17,9 +17,9 @@ class Tag{
         return($stmt->fetchAll());
     }
 
-    public static function getTagsNumber($db)
+    public static function getTagsNumber($db) // funkcja pobierająca ilość wszystkich tagów niepowtarzających się
     {
-        $selectQ = "SELECT distinct Count(tag) from ".Tag::$tagsTable;
+        $selectQ = "SELECT Count( distinct tag) from ".Tag::$tagsTable;
         $stmt = $db->prepare($selectQ);
         $stmt->execute();
         return($stmt->fetchAll());

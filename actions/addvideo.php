@@ -1,16 +1,24 @@
 <?php
-include_once 'conf/connDB.php';
-include_once 'class/Video.php';
+//include_once 'conf/connDB.php';
+//include_once 'class/Video.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/conf/connDB.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/class/Video.php';
 
 
-if (isset($GLOBALS["HTTP_RAW_POST_DATA"])) {
-    $imageData = $GLOBALS['HTTP_RAW_POST_DATA'];
-    $filteredData = substr($imageData, strpos($imageData, ",") + 1);
-    $unencodedData = base64_decode($filteredData);
-    $fp = fopen('/videos/thumbnails/file.jpg', 'wb');
+if(isset($_POST['imgBase64'])) {
+    $imgBase64 = $_POST['imgBase64'];
+}
+else{
+    $imgBase64 = null;
+}
 
-    fwrite($fp, $unencodedData);
-    fclose($fp);
+if(!is_null($imgBase64)){
+    $img = $imgBase64;
+    $img = str_replace('data:image/png;base64,', '', $img);
+    $img = str_replace(' ', '+', $img);
+    $fileData = base64_decode($img);
+    $fileName = 'photo.png';
+    file_put_contents($fileName, $fileData);
 }
 
 
@@ -123,6 +131,11 @@ if(isset($_POST['title'])) {
             }
 
 
+
+            if(file_exists("actions/photo.png")) {
+                $thbDir = 'videos/thumbnails/' . $video->getIDvideo() . '.png';
+                rename('actions/photo.png', $thbDir);
+            }
 
         }
     }

@@ -68,6 +68,18 @@ document.querySelector("#file-input").addEventListener('change', function() {
 
 document.querySelector("#capture").addEventListener('click', function (){
    drawThumbnail();
+
+    let canvasData = canv.toDataURL("image/png");
+    $.ajax({
+        type: "POST",
+        url: "/actions/addvideo.php",
+        data: {
+            imgBase64: canvasData
+        },
+        success: function (response) {
+            console.log(response);
+        }
+    })
 });
 
 
@@ -86,24 +98,9 @@ function drawThumbnail(e){
 }
 
 
-document.querySelector("#testy").addEventListener('click', saveThumbnail);
+document.querySelector("#send").addEventListener('click', function (){
 
-function saveThumbnail(){
-    let canvasData = canv.toDataURL("image/jpg");
-    let ajax;
-    if (window.XMLHttpRequest) {
-        ajax = new XMLHttpRequest();
-    }
-    else if (window.ActiveXObject) {
-        ajax = new ActiveXObject("Microsoft.XMLHTTP");
-    }
+});
 
-    ajax.open("POST", "/actions/addvideo.php", false);
-    ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    ajax.onreadystatechange = function() {
-        console.log(ajax.responseText);
-    }
-    ajax.send("imgData=" + canvasData);
-}
 
 //</script>

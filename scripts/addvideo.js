@@ -1,6 +1,6 @@
 //<script>
 
-
+/*
 document.querySelector("#send").addEventListener('click', function (){
     //nie wiem jak to
    if(document.querySelector("#title").value == ''){
@@ -28,7 +28,7 @@ document.querySelector("#send").addEventListener('click', function (){
         document.querySelector("#adress-alert").style.display = 'none';
     }
 });
-
+*/
 
     document.querySelector("#filechck").addEventListener('change', function (){
         document.querySelector("#fileChoice").style.display = '';

@@ -16,7 +16,7 @@
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Tytuł:</label>
                             <div class="col">
                                 <input class="form-control" id="title" type="text" name="title" value="<?php echo $title ?>">
-                                <label class="form-label text-danger col-12" id="title-alert" for="title" style="display: none">Pole jest wymagane</label>
+                                <label class="form-label text-danger col-12" id="title-alert" for="title" style="display: <?php echo $errors['title']; ?>">Pole jest wymagane</label>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -31,14 +31,13 @@
                                     <input class="form-check-input" type="radio" name="type" id="urlchck" value="url">
                                     <label class="form-check-label" for="urlchck">Z linku</label>
                                 </div>
-                                <label class="form-label text-danger col-12" id="choice-alert" for="" style="display: none">Wybierz opcję przesyłu</label>
+                                <label class="form-label text-danger col-12" id="choice-alert" for="" style="display: <?php echo $errors['choice']; ?>"><?php echo $choiceMsg; ?></label>
                             </div>
                         </div>
                         <div class="form-group row" id="fileChoice" style="display: none">
                             <label class="col-md-2 col-lg-2 col-form-label" for="title">Wybierz plik:</label>
                             <div class="col">
                                 <input class="form-control-file" id="file-input" type='file' name='video' accept='video/*'>
-                                <label class="form-label text-danger col-12" id="file-alert" for="file-input" style="display: none">Należy wybrać plik</label>
                             </div>
                         </div>
                         <div class="form-group row" id="urlChoice" style="display: none">
@@ -49,7 +48,6 @@
                                         <span class="input-group-text" id="basic-addon3">www.youtube.com/watch?v=</span>
                                     </div>
                                     <input class="form-control" id="adress" type="text" name="adress" value=''>
-                                    <label class="form-label text-danger col-12" id="adress-alert" for="adress" style="display: none">Należy podać adres</label>
                                 </div>
                             </div>
                         </div>
@@ -103,14 +101,5 @@
                 </div>
             </div>
         </div>
-
-
-
-<button id="testy">zapisztesst</button>
-
-
-
-
-
     </body>
 </html>

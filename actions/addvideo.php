@@ -44,7 +44,7 @@ if(isset($_POST['title'])) {
 
     $fields['title'] = array_key_exists('title', $_POST) ? $_POST['title'] : '';
     $fields['type'] = array_key_exists('type', $_POST) ? $_POST['type'] : '';
-    $fields['address'] = array_key_exists('address', $_POST) ? $_POST['address'] : '';
+    $fields['adress'] = array_key_exists('adress', $_POST) ? $_POST['adress'] : '';
     $fields['tags'] = array_key_exists('tags', $_POST) ? $_POST['tags'] : '';
 
     //$target_dir = "videos/";
@@ -76,25 +76,24 @@ if(isset($_POST['title'])) {
         }
     }
 
+    $errors['title'] = 'none';
+    $errors['choice'] = 'none';
+    $choiceMsg = 'Wybierz opcję przesyłu';
 
     if (count($_POST) > 0) {
-        if (empty($fields['title'])) {
-            $errors['title'] = 'Pole jest wymagane.';
+
+        $errors['title'] = empty($fields['title']) ? '' : 'none';
+        $errors['choice'] = empty($fields['type']) ? '' : 'none';
+        if ($fields['type'] == "file") {
+            $errors['choice'] = !is_uploaded_file($_FILES['video']['tmp_name']) ? '' : 'none';
+            $choiceMsg = 'Należy wybrać plik';
         }
-        if (empty($fields['type'])) {
-            $errors['type'] = 'Należy wybrać opcję przesyłu.';
+        elseif($fields['type'] == "url"){
+            $errors['choice'] = empty($fields['adress']) ? '' : 'none';
+            $choiceMsg = 'Należy podać adres';
         }
-        elseif ($fields['type'] == "file"){
-            if(!is_uploaded_file($_FILES['video']['tmp_name'])) {
-                $errors['type'] = 'Wymagane jest przesłanie pliku.';
-            }
-        }
-        elseif ($fields['type'] == "url"){
-            if(empty($fields['address'])){
-                $errors['type'] = 'Podaj link do filmu.';
-            }
-        }
-        if (count($errors) == 0) {
+
+        if ($errors['title'] == 'none' and $errors['choice'] == 'none') {
 
 
             //$_FILES['video']['tmp_name'] pobrać rozszerzenie

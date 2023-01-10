@@ -13,19 +13,11 @@
 </head>
 <body>
 
-<?php
-
-
-//
-
-
-
-?>
-<div class="col-12" >
+<div class="col-12 p-5" >
 
     <!-- sidebar -->
     <div class="row">
-        <div class="col-2" >
+        <div class="col-12" >
             <ul class="list-group fa-padding">
                 <div class="list-group" id="myList" role="tablist">
                    <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
@@ -34,9 +26,11 @@
                         foreach($result as $row)
                         {
                             ?>
-                            <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issue" id="case"  data-toggle="list" role="tab" data-id-case="<?php echo $row[0]?>"><?php echo $row[0]?>
+                            <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="
+                            <?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>">
                                 <?php
-                            echo  '<span class="number pull-right"> Case ID: #'.$row[0].'</span>';
+                            echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
+                                echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
                             echo '<p class="info">Created by <a href="#">'.User::getUserLogin($row[1], $db).'</a> Dodac date  </p>';
                             if($row[3] == 'technical')
                                 echo '<span class="badge bg-success">'.$row[3].'</span>';
@@ -46,66 +40,91 @@
                         }
                          ?>
                 </div>
-
-                <li class="list-group-item list-group-item-action" data-id-case="123">Click me</li>
             </ul>
         </div>
     </div>
 
 
-    <!-- dialog -->
-    <div class="col-8" id="chat">
+    <div class="modal" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id ="reqID">Case Title: <?php echo $row[4]?></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div  class="modal-body modal-body-scroll"id="chatText" >
 
+                </div>
 
+                    <form method="post" action = "index.php?action=tickets">
+                        <div class="form-group">
+                            <textarea class="form-control" id="comment" rows="3" name="messageText"></textarea>
+                        </div>
+                        <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
+                        <input type="text" name="caseID" value="<?php echo $row[0]?>" style="visibility: hidden">
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success float-end"name="sendMessage" value="accept">Send</button>
+                        </div>
+                    </form>
 
+            </div>
+        </div>
     </div>
 
 
     </div>
+
+<!-- MODAL -->
+
+
+
+
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
 
     <script>
 
-        $( document ).ready(function() {
-            const listItems = document.querySelectorAll('.list-group-item-action');
-            listItems.forEach((listItem) => {
-                listItem.addEventListener('click', (event) => {
-                    var ticketId = event.target.parentElement.getAttribute('data-id-case');
-                    if(ticketId != null)
-                    {
-                        console.log(ticketId);
+        $(document).ready(function(){
+            $('#chatModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
 
-                        $.ajax({
-                            url: '/scripts/messages.php',
-                            type: 'POST',
-                            data: {
-                                idCase: ticketId
-                            },
-                            dataType: 'json',
-                            success: function(response) {
+                var ticketId = button.data('id-case');
+                var loggedUser = button.data('logged-user');
+                if(ticketId != undefined)
+                {
+                    console.log(ticketId);
 
-                                $('#chat').html('');
+                    $.ajax({
+                        url: '/scripts/messages.php',
+                        type: 'POST',
+                        data: {
+                            idCase: ticketId,
+                             idUser: loggedUser
+                        },
+                        dataType: 'json',
+                        success: function(response) {
 
+                            $('#chatText').html('');
 
-                                $.each(response, function(index, message) {
-                                    $('#chat').append(message);
-                                });
-                            }
-                        });
+                            $.each(response, function(index, message) {
+                                $('#chatText').append(message);
+                            });
+                            $('#chatText').append()
+                        }
+                    });
 
-                    }
-
-                });
-            });
-
+                }
 
 
-        });
+            })
 
-
-
+        })
     </script>
 
 

@@ -170,8 +170,9 @@ class User
                 return $login;
             }
 
-            return 1;
-        } else {
+
+        }
+        else {
 
             echo "Cannot get user param";
             return 0;
@@ -284,13 +285,34 @@ class User
     //todo  pobieranie wiadomości jeżeli jest tylko jedna wiadomość od usera/edytora  lub pobiera jeżeli id admina występuje
     public static function getConversation($db, $id_ticket)
     {
-        $getMessagess = "Select * from messages where ticket_id = ? order by id desc;";
+        $getMessagess = "Select * from messages where ticket_id = ? order by id asc;";
         $stmt = $db->prepare($getMessagess);
 
         $stmt->bindParam(1,$id_ticket, PDO::PARAM_INT);
 
         $stmt->execute();
         return($stmt->fetchAll());
+
+    }
+
+
+    public static function sendMessage($db, $id_ticket, $message, $sender_id)
+    {
+        $sendMessage= "INSERT INTO messages (ticket_id, message, sender_id) VALUES (?,?,?)";
+        $stmt = $db->prepare($sendMessage);
+        $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
+        $stmt->bindParam(2, $message, PDO::PARAM_STR);
+        $stmt->bindParam(3, $sender_id, PDO::PARAM_INT);
+        if( $stmt->execute())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+
+
 
     }
 

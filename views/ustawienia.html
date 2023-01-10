@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <title>Ustawienia</title>
+</head>
+
+<body>
+    
+
+<div class="row" >
+    
+        <button id="button1" class="btn btn-light m-3 px-3" >Zmień hasło</button>
+        <button id="button2" class="btn btn-light m-3 px-3" >Zmień tło dla konta</button>
+        <button id="button3" class="btn btn-light m-3 px-3" >Przejdź do czatu</button>
+        <button id="changePrivil-button" class="btn btn-light m-3 px-3" >Poproś o zmiane uprawnień konta</button>
+        <div id="popupPrivil" style="display:none;" class="form-floating mb-3 text-center" >
+            <form method = 'post' id="changePrivil-form">
+                <label class="form-control" for="title">Tytuł zgłoszenia:</label><br>
+                <input class="form-control" type="text" id="title3" name="title3"><br>
+                <label class="form-control" for="reason">Podaj przyczyne prośby:</label><br>
+                <input  class="form-control"type="text" id="reason3" name="reason3"><br>
+                <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
+                <button type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
+            </form>
+          </div>
+
+    
+</div>
+        
+</div>
+    
+    <script>
+    document.getElementById("changePrivil-button").addEventListener("click", function() {
+        document.getElementById("popupPrivil").style.display = "block";
+      });
+      
+      document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
+        event.preventDefault(); //zeby nie byl od razu wyslany
+    
+        var reason3 = document.getElementById("reason3").value;
+        var title3 = document.getElementById("title3").value;
+        var id_user3 = document.getElementById("id_user3").value;
+    
+        if (reason3 == "" || title3 == "") {
+          window.alert("Values cannot be empty!");
+        } else {
+            $.ajax({  
+            type: 'POST',  
+            url: '/scripts/changePrivil.php', 
+            data: {reason3: reason3, title3: title3, id_user3: id_user3},
+            success: function(response) {
+                console.log(response);
+        }
+    });
+        }
+        
+          });
+    </script>
+
+
+</body>
+</html>

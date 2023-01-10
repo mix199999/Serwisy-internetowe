@@ -110,49 +110,7 @@ document.getElementById("reportUser-button").addEventListener("click", function(
 
   </script>
   
-<!--
-Change privil.
--->
-<button id="changePrivil-button" class="btn btn-light" >Change Privil</button>
 
-<div id="popupPrivil" style="display:none;">
-    <form method = 'post' id="changePrivil-form">
-        <label for="title">Title:</label><br>
-        <input type="text" id="title3" name="title3"><br>
-      <label for="reason">Reason for change report:</label><br>
-      <input type="text" id="reason3" name="reason3"><br>
-      <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
-      <button type="submit" name="changePrivilButton">Submit Report</button>
-    </form>
-  </div>
-
-<script>
-document.getElementById("changePrivil-button").addEventListener("click", function() {
-    document.getElementById("popupPrivil").style.display = "block";
-  });
-  
-  document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
-    event.preventDefault(); //zeby nie byl od razu wyslany
-
-    var reason3 = document.getElementById("reason3").value;
-    var title3 = document.getElementById("title3").value;
-    var id_user3 = document.getElementById("id_user3").value;
-
-    if (reason3 == "" || title3 == "") {
-      window.alert("Values cannot be empty!");
-    } else {
-        $.ajax({  
-        type: 'POST',  
-        url: '/scripts/changePrivil.php', 
-        data: {reason3: reason3, title3: title3, id_user3: id_user3},
-        success: function(response) {
-            console.log(response);
-    }
-});
-    }
-    
-      });
-</script>
 
 </body>
 </html>

@@ -255,6 +255,19 @@ class Video
         }
     }
 
+    public function getUploadedByLogin()
+    {
+        $query = "SELECT login FROM users WHERE id_user = :iduser";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam('iduser', $this->uploadedBy, PDO::PARAM_INT);
+        $stmt->execute();
+        //$login = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($login = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $login = $login['login'];
+            return $login;
+        }
+        return "Zagubiony w czeluściach czasu";
+    }
 
     /**
      * @return mixed|null

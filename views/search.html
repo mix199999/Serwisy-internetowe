@@ -39,7 +39,7 @@
         <?php
             foreach ($resultsObjects as $result){
                 echo "<div class='col-md-6'>";
-                echo    "<div class='card'>";
+                echo    "<div class='card m-1 bg-dark border border-dark border-5'>";
                 $src = "videos/thumbnails/" . $result->getIDvideo() . ".png";
                 if(!file_exists($src)){
                     if($result->getExtension() == 'url'){
@@ -52,10 +52,10 @@
                 }
                 echo        "<a href='index.php?action=watch&v=".$result->getIDvideo()."'><img class='card-img-top nav-item' src='".$src."' alt='thumbnail'></a>";
                 echo            "<div class='card-body'>";
-                echo                "<a href='index.php?action=watch&v=".$result->getIDvideo()."'><h5 class='card-title nav-item'>".$result->getTitle()."</h5></a>";
+                echo                "<h5 class='card-title nav-item text-primary'>".$result->getTitle()."</h5>";
                 echo            "</div>";
                 echo            "<div class='card-footer'>";
-                echo                "<small class='text-secondary'>Przesłany przez: ".$result->getUploadedBy()."</small>";
+                echo                "<small class='text-secondary'>Przesłany przez: ".$result->getUploadedByLogin()."</small>";
                 echo            "</div>";
                 echo    "</div>";
                 echo "</div>";
@@ -65,15 +65,6 @@
 </div>
 
 
-
-  <table border>
-      <tr><th>Tytuł</th><th>Waga</th></tr>
-    <?php
-    foreach ($resultsObjects as $result){
-        echo "<tr><td><a href='index.php?action=watch&v=".$result->getIDvideo()."'>".$result->getTitle()."</a></td><td>".$result->getWeight()."</td></tr>";
-      }
-    ?>
-  </table>
 
 </body>
 </html>

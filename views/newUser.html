@@ -36,8 +36,10 @@
                                         <?php
                                         for($i = 0; $i < $tags_number[0][0]; $i++){
                                         ?>
-                                        <input type="checkbox" class="form-check-input ml-2" name="tag[]" id="tag<?php echo $i; ?>" value="<?php echo $all_tags[$i][0]; ?>">
-                                        <label for="tag<?php echo $i; ?>"> <?php echo $all_tags[$i][0]; ?></label>
+
+                                                    <input type="checkbox" class="form-check-input" name="tag[]" id="tag<?php echo $i; ?>" value="<?php echo $all_tags[$i][0]; ?>">
+                                                    <label class="me-2" for="tag<?php echo $i; ?>"> <?php echo $all_tags[$i][0]; ?></label>
+
                                         <?php } ?>
                                     </div>
 

@@ -10,6 +10,8 @@
 </head>
 <body>
 
+
+
 <style>
     .list-group-item {
         display: flex;
@@ -29,7 +31,11 @@
                     <button id="button1" class="btn btn-secondary m-3 px-3" >Zmień hasło</button>
                 </li>
                 <li class="list-group-item">
-                    <button id="button2" class="btn btn-secondary m-3 px-3" >Zmień tło dla konta</button>
+                    <form method="POST" action="index.php?action=ustawienia">
+                        <input type="submit" name="Colorsubmit" value="Zapisz wybrany kolor" id="button2" class="btn btn-secondary m-3 px-3" >
+                        <br>
+                        <input type="color" class="btn btn-outline-secondary m-3 px-3" id="favcolor" name="favcolor" value="#ff0000">
+                    </form>
                 </li>
                 <li class="list-group-item">
                     <a href="index.php?action=userChatPage" id="button3" class="btn btn-secondary m-3 px-3" >Przejdź do czatu</a>
@@ -79,9 +85,18 @@
 
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+
+<script>
+    $(document).ready(function(){
+        let color = "<?php echo $bgColor; ?>"; //Getting the color value from PHP variable
+        document.querySelector("body").style.backgroundColor = color;
+        //$("body").css("background-color", color); //Changing the background color of the body element
+        console.log(color);
+    });
+</script>
 
     <script>
 

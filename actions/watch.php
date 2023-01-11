@@ -23,7 +23,7 @@ if(isset($_GET['v']))
         $editorId = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
     } else 
     {
-        $editorId = 'Brak edytora';                                                   //dla braku edytora ustawiamy brak edytora
+        $editorId = 'null';                                                   //dla braku edytora ustawiamy brak edytora
     }
 }
 else 
@@ -35,7 +35,7 @@ else
         $editorName = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
     } else 
     {
-        $editorName = 'Brak edytora';                                                   //dla braku edytora ustawiamy brak edytora
+        $editorName = 'null';                                                   //dla braku edytora ustawiamy brak edytora
     }
 }
 ?>

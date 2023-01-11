@@ -31,12 +31,15 @@
                                 <?php
                             echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
                                 echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
-                            echo '<p class="info">Created by <a href="#">'.User::getUserLogin($row[1], $db).'</a> Dodac date  </p>';
-                            if($row[3] == 'technical')
+                                if($row[3] == 'technical')
                                 echo '<span class="badge bg-success">'.$row[3].'</span>';
-                            else if($row[3] == 'other')
+                                else if($row[3] == 'other')
                                 echo '<span class="badge bg-danger">'.$row[3].'</span>';
-                            echo '</li>';
+                                else if($row[3] == 'account')
+                                echo '<span class="badge bg-info">'.$row[3].'</span>';
+                                else if($row[3] == 'payment')
+                                echo '<span class="badge bg-warning">'.$row[3].'</span>';
+                                echo '</li>';
                         }
                          ?>
                 </div>
@@ -54,20 +57,20 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div  class="modal-body modal-body-scroll"id="chatText" >
+                <div  class="modal-body modal-body-scroll"id="chatText"  style=" max-height: 50vh; overflow-y: scroll;" >
 
                 </div>
 
-                    <form method="post" action = "index.php?action=tickets">
-                        <div class="form-group">
-                            <textarea class="form-control" id="comment" rows="3" name="messageText"></textarea>
-                        </div>
-                        <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
-                        <input type="text" name="caseID" value="<?php echo $row[0]?>" style="visibility: hidden">
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success float-end"name="sendMessage" value="accept">Send</button>
-                        </div>
-                    </form>
+                <form method="post" action = "index.php?action=tickets">
+                    <div class="form-group">
+                        <textarea class="form-control" id="comment" rows="3" name="messageText"></textarea>
+                    </div>
+                    <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
+                    <input type="text" name="caseID" value="<?php echo $row[0]?>" style="visibility: hidden">
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success float-end"name="sendMessage" value="accept">Send</button>
+                    </div>
+                </form>
 
             </div>
         </div>

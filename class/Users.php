@@ -296,13 +296,40 @@ class User
     }
 
 
-    public static function sendMessage($db, $id_ticket, $message, $sender_id)
+
+
+    public function getUserTickets()
+    {
+        $getTickets = "Select * from tickets where user_id = ?";
+        $stmt= $this->conn-> prepare($getTickets);
+        $stmt ->bindParam(1,$this->id_user, PDO::PARAM_INT);
+        $stmt-> execute();
+
+        if($stmt->rowCount() > 0)
+        {
+
+                $results= $stmt->fetchAll();
+
+                return $results;
+
+        }
+        else
+            return 0;
+
+
+
+
+    }
+
+
+
+    public  function sendMessage( $id_ticket, $message )
     {
         $sendMessage= "INSERT INTO messages (ticket_id, message, sender_id) VALUES (?,?,?)";
-        $stmt = $db->prepare($sendMessage);
+        $stmt = $this->conn->prepare($sendMessage);
         $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
         $stmt->bindParam(2, $message, PDO::PARAM_STR);
-        $stmt->bindParam(3, $sender_id, PDO::PARAM_INT);
+        $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
         if( $stmt->execute())
         {
             return 1;
@@ -313,6 +340,36 @@ class User
         }
 
     }
+
+
+
+
+    public function createNewTicket( $ticketTitle, $ticketType, $ticketMessage)
+    {
+        $openTicket = "INSERT INTO tickets ( user_id, status, type, ticket_name) VALUES (?, false, ?,? ) ";
+        $stmt = $this->conn->prepare($openTicket);
+        $stmt-> bindParam(1, $this->id_user, PDO::PARAM_INT);
+
+        $stmt-> bindParam(2, $ticketType, PDO::PARAM_STR);
+        $stmt-> bindParam(3, $ticketTitle, PDO::PARAM_STR);
+        if( $stmt->execute())
+        {
+            $ticket_id = $this->conn->lastInsertId();
+
+            $this->sendMessage($ticket_id, $ticketMessage);
+
+
+        }
+        else
+        {
+            echo "Error while insert data";
+        }
+
+
+    }
+
+
+
 
 
 

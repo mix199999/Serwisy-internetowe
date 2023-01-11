@@ -106,7 +106,13 @@
             modal.find('input[name="requestID"]').attr("value", requestID).blur();
         })
 
+
+        $('#issue').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     })
+
+
 
 
 

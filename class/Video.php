@@ -423,4 +423,18 @@ class Video
 
         }
     }
+
+    public static function getVideosByLogin($login, $db) {
+        $query = "SELECT url, extension FROM videos v 
+                JOIN uploaded_videos uv ON v.id_video = uv.id_video
+                JOIN users u ON uv.id_user = u.id_user
+                WHERE u.login = :login";
+
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':login', $login);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

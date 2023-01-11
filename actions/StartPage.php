@@ -1,40 +1,56 @@
 <?php
-
 include_once 'conf/connDB.php';
+include_once 'class/Users.php';
+include_once 'class/Video.php';
 
 $database = new Database();
+
 $db = $database->getConnection();
 
-if(isset($_POST["Colorsubmit"])){
 
-    $iduser = intval($_SESSION["id_user"]);
-    $selectQ = "SELECT id_user from user_background_color WHERE id_user =".$iduser;
-    $stmt = $db->prepare($selectQ);
-    $stmt->execute();
-    $result = $stmt->fetch();
 
-    if(empty($result['id_user']))
-    {
-        $iduser = intval($_SESSION["id_user"]);
-        $selectQ = "INSERT INTO user_background_color (color, id_user) VALUES (?, ?)";
-        $stmt = $db->prepare($selectQ);
-        $stmt->bindParam(1, $_POST["favcolor"], PDO::PARAM_STR);
-        $stmt->bindParam(2, $iduser, PDO::PARAM_INT);
-        $stmt->execute();
-        $kolor = $_POST["favcolor"];
-        echo "<style> body{ background-color: ".$kolor."} </style>";
 
-    }else{
-        $iduser = intval($_SESSION["id_user"]);
-        $selectQ = "UPDATE user_background_color SET color = ? WHERE id_user =".$iduser;
-        $stmt = $db->prepare($selectQ);
-        $stmt->bindParam(1, $_POST["favcolor"], PDO::PARAM_STR);
-        $stmt->execute();
-        $kolor = $_POST["favcolor"];
-        echo "<style> body{ background-color: ".$kolor."} </style>";
-    }
+$channelName = User::getUserLogin($_SESSION['id_user'],$db);
 
+
+$movies = Video::getVideosWithUserTags( $channelName,$db);
+
+
+$modifiedLinks = [];
+$randomIndices = [];
+$randomMovies = [];
+foreach ($movies as $movie)
+{
+    if($movie['extension'] == 'url')
+        $modifiedLinks[] = Video::youtube_link_to_embed($movie['url']);
+    else
+        $modifiedLinks[] = $movie['url'];
 }
+
+foreach ($movies as $movie) {
+    $randomIndex = array_rand($modifiedLinks);
+    while (in_array($randomIndex, $randomIndices)) {
+        $randomIndex = array_rand($modifiedLinks);
+    }
+    $randomIndices[] = $randomIndex;
+    $randomMovies[] = $modifiedLinks[$randomIndex];
+    //you can display the $randomMovies here
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

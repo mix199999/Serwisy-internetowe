@@ -14,16 +14,32 @@ $currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index film
 
 if(isset($_GET['v'])) 
 {
-    $oneVideoUrl = Video::getVideo($_GET['v'], $db);           //jezeli jest ustawione v w linku to pobieramy jedno video o id=v
-    $editorId = Video::getEditorUsername($_GET['v'], $db);      // oraz pobieramy nazwe tworcy filmu z tabeli uploaded_videos
+    $v = intval($_GET['v']);
+    if(is_int($v) && $v>0)
+    {
+        $oneVideoUrl = Video::getVideo($_GET['v'], $db);           //jezeli jest ustawione v w linku to pobieramy jedno video o id=v
+        $editorId = Video::getEditorUsername($_GET['v'], $db);      // oraz pobieramy nazwe tworcy filmu z tabeli uploaded_videos
 
-    if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db)))    //sprawdzamy czy jest tworca danego filmu bo niektore byly na sztywno bez
+        if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db)))    //sprawdzamy czy jest tworca danego filmu bo niektore byly na sztywno bez
+        {
+            $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);  //jezeli jest to pobieramy id filmu z tablicy filmow i dostajemy informacje
+            $editorId = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
+        } else 
+        {
+            $editorId = 'null';                                                   //dla braku edytora ustawiamy brak edytora
+        }
+    }
+    else 
     {
-        $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);  //jezeli jest to pobieramy id filmu z tablicy filmow i dostajemy informacje
-        $editorId = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
-    } else 
-    {
-        $editorId = 'null';                                                   //dla braku edytora ustawiamy brak edytora
+        $video = Video::getVideoIdFromUrl($_GET['v'], $db);
+        $oneVideoUrl = Video::getVideo($video['id_video'], $db);
+    
+        if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db))) {
+            $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);
+            $editorId = $editor['login'];
+        } else {
+                $editorId = 'null';
+        }       
     }
 }
 else 

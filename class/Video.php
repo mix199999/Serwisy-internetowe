@@ -378,6 +378,14 @@ class Video
         $stmt->execute();
         return($stmt->fetch());
     }
+    public function getVideoIdFromUrl($videoUrl, $db) 
+    {  
+        $query = "SELECT videos.id_video FROM ".video::$videoTable."                            
+        WHERE url = '".$videoUrl."'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return($stmt->fetch());
+    }
 
     public function getVideo($videoid, $db) //Funkcja pobierająca jedno video
     {  

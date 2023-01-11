@@ -5,6 +5,7 @@ class Video
     private static $videoTable = 'videos';
     private static $tagsTable = 'tags';
     private static $uploadedVideosTable = 'uploaded_videos';
+    private static $usersTable = 'users';
     private $conn;
 
     private $IDvideo;
@@ -254,7 +255,6 @@ class Video
             }
         }
     }
-
     public function getUploadedByLogin()
     {
         $query = "SELECT login FROM users WHERE id_user = :iduser";
@@ -346,30 +346,50 @@ class Video
     }
 
 
-    public static function youtube_link_to_embed($link) {
+    public static function youtube_link_to_embed($link) 
+    {
         // Sprawdź, czy link jest poprawny
         if (!preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $match)) {
             return $link;
         }
-
         // Zwróć link embed - taki, ktory da sie wyswietlic na stronie, bo zwykle linki youtube blokuje
         return 'https://www.youtube.com/embed/' . $match[1];
     }
 
-    public function getVideosWithUserTags($loginUser, $db) {  //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
-
-        $query = "SELECT DISTINCT videos.url, videos.extension FROM ".video::$videoTable."    
+    public function getVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    {  
+        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
         JOIN tags ON tags.id_video = videos.id_video                        
         JOIN user_tags ON tags.tag = user_tags.tag                          
         JOIN users ON user_tags.user_id = users.id_user 
+        JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
         WHERE users.login = '".$loginUser."'";
         $stmt = $db->prepare($query);
         $stmt->execute();
         return($stmt->fetchAll());
-
     }
 
-    public static function getSelectedTags($db, $ile_wybrano, $userid) { //Funkcja zapisujaca wybrane przez nowozarejestrowanego uzytkownika wybrane tagi
+    public function getEditorUsername($videoid, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    {  
+        $query = "SELECT users.login FROM ".video::$usersTable."                            
+        JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
+        WHERE uploaded_videos.id_video = '".$videoid."'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return($stmt->fetch());
+    }
+
+    public function getVideo($videoid, $db) //Funkcja pobierająca jedno video
+    {  
+        $query = "SELECT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
+        WHERE id_video = '".$videoid."'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return($stmt->fetch());
+    }
+
+    public static function getSelectedTags($db, $ile_wybrano, $userid) //Funkcja zapisujaca wybrane przez nowozarejestrowanego uzytkownika wybrane tagi
+    { 
         for($i = 0; $i < $ile_wybrano; $i++){
 
 
@@ -382,5 +402,4 @@ class Video
 
         }
     }
-
 }

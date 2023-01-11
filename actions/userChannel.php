@@ -22,8 +22,10 @@ foreach ($movies as $movie)
 {
     if($movie['extension'] == 'url')
         $modifiedLinks[] = Video::youtube_link_to_embed($movie['url']);
-    else
+    else if(file_exists($movie['url']))
+    {
         $modifiedLinks[] = $movie['url'];
+    }
 }
 
 

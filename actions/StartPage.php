@@ -16,26 +16,23 @@ $channelName = User::getUserLogin($_SESSION['id_user'],$db);
 $movies = Video::getVideosWithUserTags( $channelName,$db);
 
 
+$user = new User($db);
+
+$user->id_user = $_SESSION['id_user'];
+
 $modifiedLinks = [];
-$randomIndices = [];
-$randomMovies = [];
+
 foreach ($movies as $movie)
 {
     if($movie['extension'] == 'url')
         $modifiedLinks[] = Video::youtube_link_to_embed($movie['url']);
-    else
+    else if(file_exists($movie['url']))
+    {
         $modifiedLinks[] = $movie['url'];
+    }
 }
 
-foreach ($movies as $movie) {
-    $randomIndex = array_rand($modifiedLinks);
-    while (in_array($randomIndex, $randomIndices)) {
-        $randomIndex = array_rand($modifiedLinks);
-    }
-    $randomIndices[] = $randomIndex;
-    $randomMovies[] = $modifiedLinks[$randomIndex];
-    //you can display the $randomMovies here
-}
+
 
 
 

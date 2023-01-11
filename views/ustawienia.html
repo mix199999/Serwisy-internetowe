@@ -9,56 +9,75 @@
     <script src="/scripts/jquery-3.6.3.js"></script>
 </head>
 <body>
-    
+
+<style>
+    .list-group-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+</style>
   
 
-<!-- Modal -->
-<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Poproś o zmiane uprawnień konta</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form method = 'post' id="changePrivil-form">
-                <label class="form-control" for="title">Tytuł zgłoszenia:</label><br>
-                <input class="form-control" type="text" id="title3" name="title3"><br>
-                <label class="form-control" for="reason">Podaj przyczyne prośby:</label><br>
-                <input  class="form-control"type="text" id="reason3" name="reason3"><br>
-                <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
-                <button type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
-            </form>
 
-          </div>
 
-      </div>
-  </div>
+<div class="col-12 vh-100 p-5">
+    <div class="row col-12 h-100 d-flex justify-content-center align-items-start">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <button id="button1" class="btn btn-secondary m-3 px-3" >Zmień hasło</button>
+                </li>
+                <li class="list-group-item">
+                    <button id="button2" class="btn btn-secondary m-3 px-3" >Zmień tło dla konta</button>
+                </li>
+                <li class="list-group-item">
+                    <a href="index.php?action=userChatPage" id="button3" class="btn btn-secondary m-3 px-3" >Przejdź do czatu</a>
+                </li>
+                <li class="list-group-item">
+                    <button id="changePrivil-button" class="btn btn-secondary m-3 px-3" data-bs-toggle="modal" data-bs-target="#edit">Poproś o zmiane uprawnień konta</button>
+                </li>
+            </ul>
+
+    </div>
 </div>
 
-<div class="row" >
-    
-        <button id="button1" class="btn btn-light m-3 px-3" >Zmień hasło</button>
-        <button id="button2" class="btn btn-light m-3 px-3" >Zmień tło dla konta</button>
-        <a href="index.php?action=userChatPage" id="button3" class="btn btn-light m-3 px-3" >Przejdź do czatu</a>
 
 
-    <button id="changePrivil-button" class="btn btn-light m-3 px-3" data-bs-toggle="modal" data-bs-target="#edit">Poproś o zmiane uprawnień konta</button>
-        <div id="popupPrivil" style="display:none;" class="form-floating mb-3 text-center" >
-            <form method = 'post' id="changePrivil-form">
-                <label class="form-control" for="title">Tytuł zgłoszenia:</label><br>
-                <input class="form-control" type="text" id="title3" name="title3"><br>
-                <label class="form-control" for="reason">Podaj przyczyne prośby:</label><br>
-                <input  class="form-control"type="text" id="reason3" name="reason3"><br>
-                <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
-                <button type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
-            </form>
-          </div>
 
-    
-</div>
-        
-</div>
+<!-- Modal Change_Acc_Type -->
+    <div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Poproś o zmiane uprawnień konta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method = 'post' id="changePrivil-form">
+                        <label class="form-control" for="title3">Tytuł zgłoszenia:</label><br>
+                        <input class="form-control" type="text" id="title3" name="title3"><br>
+                        <label class="form-control" for="reason3">Podaj przyczyne prośby:</label><br>
+                        <input  class="form-control"type="text" id="reason3" name="reason3"><br>
+                        <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
+                        <button type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
@@ -93,6 +112,21 @@ $('#edit').on('show.bs.modal', function (event) {
         
           });
 })
+
+    var maxWidth = 0;
+
+    $('.btn').each(function(){
+        if($(this).width() > maxWidth){
+            maxWidth = $(this).width();
+        }
+    });
+
+    $('.btn').width(maxWidth);
+
+
+
+
+
 });
     </script>
 

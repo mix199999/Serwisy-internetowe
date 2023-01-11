@@ -380,8 +380,8 @@ class Video
     }
     public function getVideoIdFromUrl($videoUrl, $db) 
     {  
-        $query = "SELECT videos.id_video FROM ".video::$videoTable."                            
-        WHERE url = '".$videoUrl."'";
+        $query = "SELECT videos.id_video FROM ".video::$videoTable." 
+        WHERE url LIKE '%".$videoUrl."%'";
         $stmt = $db->prepare($query);
         $stmt->execute();
         return($stmt->fetch());
@@ -394,6 +394,19 @@ class Video
         $stmt = $db->prepare($query);
         $stmt->execute();
         return($stmt->fetch());
+    }
+
+    public function isEmbed($url) {
+        return preg_match('/^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+$/', $url);
+    }
+
+    public function youtube_embed_to_link($url) {
+        preg_match('/^https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9]+)/', $url, $matches);
+        if (count($matches) > 1) {
+            return 'https://www.youtube.com/watch?v=' . $matches[1];
+        } else {
+            return false;
+        }
     }
 
     public static function getSelectedTags($db, $ile_wybrano, $userid) //Funkcja zapisujaca wybrane przez nowozarejestrowanego uzytkownika wybrane tagi

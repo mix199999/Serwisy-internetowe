@@ -31,7 +31,13 @@ if(isset($_GET['v']))
     }
     else 
     {
-        $video = Video::getVideoIdFromUrl($_GET['v'], $db);
+        if(Video::isEmbed($_GET['v']) == true)
+        {
+            $link = Video::youtube_embed_to_link($_GET['v']);
+        }
+        else $link = $_GET['v'];
+
+        $video = Video::getVideoIdFromUrl($link, $db);
         $oneVideoUrl = Video::getVideo($video['id_video'], $db);
     
         if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db))) {

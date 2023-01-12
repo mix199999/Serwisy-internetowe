@@ -378,7 +378,7 @@ class Video
         $stmt->execute();
         return($stmt->fetch());
     }
-    public function getVideoIdFromUrl($videoUrl, $db) 
+    public static function getVideoIdFromUrl($videoUrl, $db)
     {  
         $query = "SELECT videos.id_video FROM ".video::$videoTable." 
         WHERE url LIKE '%".$videoUrl."%'";
@@ -400,7 +400,7 @@ class Video
         return preg_match('/^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+$/', $url);
     }
 
-    public function youtube_embed_to_link($url) {
+    public static function youtube_embed_to_link($url) {
         preg_match('/^https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9]+)/', $url, $matches);
         if (count($matches) > 1) {
             return 'https://www.youtube.com/watch?v=' . $matches[1];

@@ -89,10 +89,16 @@ function drawThumbnail(e){
         text = document.querySelector("#thtxt").value,
         text2 = document.querySelector("#thtxt2").value;
 
+    let colour = "black";
+    if(document.querySelector("#black").checked == false){
+        colour = "white";
+    }
+
+
     canvCtx.drawImage(vid,0,0,480,360);
     canvCtx.font="50px Comic Sans MS";
     canv.textAlign = "center";
-    canvCtx.fillStyle = "black";
+    canvCtx.fillStyle = colour;
     canvCtx.fillText(text,position,50);
     canvCtx.fillText(text2,position2,350);
 }

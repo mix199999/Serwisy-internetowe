@@ -12,13 +12,21 @@ else{
     $imgBase64 = null;
 }
 
-$fileName = '';
+if(!isset($fileName)){
+    $fileName = '';
+}
+
+
 if(!is_null($imgBase64)){
     $img = $imgBase64;
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
     $fileData = base64_decode($img);
-    $fileName = 'photo' . $_SESSION['userName'] . '.png';
+    $number = 1;
+    while(file_exists('photo' . $number . '.png') and $fileName = ''){
+        $number++;
+    }
+    $fileName = 'photo' . $number . '.png';
     file_put_contents($fileName, $fileData);
 }
 
@@ -97,7 +105,6 @@ if(isset($_POST['title'])) {
         if ($errors['title'] == 'none' and $errors['choice'] == 'none') {
 
 
-            //$_FILES['video']['tmp_name'] pobrać rozszerzenie
 
             $url = '';
             $extension = '';
@@ -106,9 +113,8 @@ if(isset($_POST['title'])) {
                 $extension = "url";
             }
             else{
-                $url = "www.placeholdertst.net"; //trzeba zmienić bazę tak żeby przyjmowała te same adresy
+                $url = "www.placeholdertst.net";
                 $extension = substr($_FILES['video']['type'], 6);
-                //echo  $extension;
             }
 
             $database = new Database();

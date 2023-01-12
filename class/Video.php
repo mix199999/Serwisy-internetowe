@@ -396,7 +396,7 @@ class Video
         return($stmt->fetch());
     }
 
-    public function isEmbed($url) {
+    public static function isEmbed($url) {
         return preg_match('/^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+$/', $url);
     }
 

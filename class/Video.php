@@ -438,7 +438,7 @@ class Video
     }
 
 
-    public function getStaticVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    public static function getStaticVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
     {
         $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
         JOIN tags ON tags.id_video = videos.id_video                        

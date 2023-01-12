@@ -387,7 +387,7 @@ class Video
         return($stmt->fetch());
     }
 
-    public function getVideo($videoid, $db) //Funkcja pobierająca jedno video
+    public static function getVideo($videoid, $db) //Funkcja pobierająca jedno video
     {  
         $query = "SELECT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
         WHERE id_video = '".$videoid."'";

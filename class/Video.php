@@ -356,7 +356,7 @@ class Video
         return 'https://www.youtube.com/embed/' . $match[1];
     }
 
-    public function getVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    public static function getVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
     {  
         $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
         JOIN tags ON tags.id_video = videos.id_video                        
@@ -369,7 +369,7 @@ class Video
         return($stmt->fetchAll());
     }
 
-    public function getEditorUsername($videoid, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    public static function getEditorUsername($videoid, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
     {  
         $query = "SELECT users.login FROM ".video::$usersTable."                            
         JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user

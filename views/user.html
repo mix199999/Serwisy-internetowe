@@ -14,6 +14,7 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="/scripts/jquery-3.6.3.js"></script>
 </head>
 <body>
 
@@ -23,13 +24,38 @@
             <a href="/index.php?action=StartPage" class="navbar-brand ps-3">User panel</a>
             <!-- Sidebar Toggle-->
             <button onclick="hideSideBar()" class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-
+<!--
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
+-->
+
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" id="search-form" method="post" action = "index.php?action=search">
+        <div class="input-group">
+            <?php if(!isset($search)) {$search = '';}?>
+                  <input id="search-input" class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" name="search" value="<?php echo $search ?>">
+                    <button class="btn btn-primary" id="send" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+            <div style="display:none;" id="search-tag1" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" checked="checked" id="title" name="title" value="checked" <?php if(isset($_POST['title'])) echo "checked"?>>
+                <label class="form-check-label text-light" for="title">Po Tytule</label>
+  
+            </div>
+            <div style="display:none;" id="search-tag2" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tags" name="tags" value="checked" <?php if(isset($_POST['tags'])) echo "checked"?>>
+                <label class="form-check-label text-light" for="tags">Po Tagach</label>
+            </div>
+            <div style="display:none;" id="search-tag3" class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="user" name="user" value="checked" <?php if(isset($_POST['user'])) echo "checked"?>>
+                <label class="form-check-label text-light" for="user">Po Uzytkowniku</label>
+            </div>
+    </form>
+  </div>
+  
+
             <!-- Navbar-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
@@ -55,6 +81,15 @@
             </div>
             <div id="layoutSidenav_content" >
 
+<script>
+        $(document).ready(function(){
+            $('#search-input').click(function(){
+                document.getElementById("search-tag1").style.display = "inline-block	";
+                document.getElementById("search-tag2").style.display = "inline-block	";
+                document.getElementById("search-tag3").style.display = "inline-block	";
+            });
+        })
 
+</script>
 </body>
 </html>

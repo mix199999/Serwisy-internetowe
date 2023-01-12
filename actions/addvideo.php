@@ -12,12 +12,13 @@ else{
     $imgBase64 = null;
 }
 
+$fileName = '';
 if(!is_null($imgBase64)){
     $img = $imgBase64;
     $img = str_replace('data:image/png;base64,', '', $img);
     $img = str_replace(' ', '+', $img);
     $fileData = base64_decode($img);
-    $fileName = 'photo.png';
+    $fileName = 'photo' . $_SESSION['userName'] . '.png';
     file_put_contents($fileName, $fileData);
 }
 
@@ -133,7 +134,9 @@ if(isset($_POST['title'])) {
 
             if(file_exists("actions/photo.png")) {
                 $thbDir = 'videos/thumbnails/' . $video->getIDvideo() . '.png';
-                rename('actions/photo.png', $thbDir);
+
+                $fName = 'actions/' . $fileName;
+                rename($fName, $thbDir);
             }
 
         }

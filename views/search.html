@@ -8,10 +8,14 @@
 <body>
 
 <div class="container-fluid">
+    <div class="row d-none d-md-block">
+        <input type="range" class="form-control-range" id="displayRange" min="2" max="8" step="2" value="2">
+    </div>
     <div class="row">
         <?php
+            $vn = 1;
             foreach ($resultsObjects as $result){
-                echo "<div class='col-md-6'>";
+                echo "<div class='col-md-2' id='video".$vn."' style='display: '>";
                 echo    "<div class='card m-1 bg-dark border border-dark border-5'>";
                 $src = "videos/thumbnails/" . $result->getIDvideo() . ".png";
                 if(!file_exists($src)){
@@ -32,6 +36,7 @@
                 echo            "</div>";
                 echo    "</div>";
                 echo "</div>";
+                $vn++;
             }
         ?>
     </div>

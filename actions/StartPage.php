@@ -13,7 +13,8 @@ $db = $database->getConnection();
 $channelName = User::getUserLogin($_SESSION['id_user'],$db);
 
 
-$movies = Video::getVideosWithUserTags( $channelName,$db);
+
+$movies = Video::getStaticVideosWithUserTags( $channelName,$db);
 
 
 $user = new User($db);

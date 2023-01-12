@@ -437,4 +437,18 @@ class Video
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+    public function getStaticVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    {
+        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
+        JOIN tags ON tags.id_video = videos.id_video                        
+        JOIN user_tags ON tags.tag = user_tags.tag                          
+        JOIN users ON user_tags.user_id = users.id_user 
+        JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
+        WHERE users.login = '".$loginUser."'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return($stmt->fetchAll());
+    }
+
 }

@@ -451,4 +451,63 @@ class Video
         return($stmt->fetchAll());
     }
 
+
+
+
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+
+    public function getVideoData(){
+        $stmt = $this->conn->prepare("SELECT uploaded_videos.id_video, videos.title, users.login, videos.url FROM uploaded_videos 
+    JOIN videos ON uploaded_videos.id_video = videos.id_video
+    JOIN users ON uploaded_videos.id_user = users.id_user");
+        $stmt->execute();
+        $videoData = $stmt->fetchAll();
+        $videoList = [];
+
+        foreach($videoData as $row) {
+            $videoObject = new Video($this->conn);
+            $videoObject->id_video = $row['id_video'];
+            $videoObject->title = $row['title'];
+            $videoObject->login = $row['login'];
+            $videoObject->url = $row['url'];
+            $videoList[] = $videoObject;
+        }
+
+
+        return $videoList;
+    }
+
+    public function isReported() {
+        $stmt = $this->conn->prepare("SELECT * FROM reported_videos JOIN reported_video_reasons ON reported_videos.video_id = reported_video_reasons.video_id
+         WHERE reported_videos.video_id = :id_video");
+        $stmt->bindParam(':id_video', $this->id_video, PDO::PARAM_INT);
+        $stmt->execute();
+        if($stmt->rowCount() > 0)
+        {
+
+            $reportedVideo = $stmt->fetchAll();
+            foreach ($reportedVideo as $row)
+            {
+                $reportedVideoData[] = array(
+                    'id_reason' => $row['id_reason'],
+                    'reason' => $row['reason'],
+                    'video_id' => $row['video_id'],
+                    'description' => $row['description']
+                );
+            }
+            $reportedVideo = json_encode($reportedVideoData);
+            return $reportedVideo;
+        }
+        else
+            return 2;
+    }
+
+
+
+
 }

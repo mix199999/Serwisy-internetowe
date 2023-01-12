@@ -12,10 +12,10 @@ $user->getUserInfo();
 
 $currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index filmu przy wyswietlaniu ich na stronie
 
-if(isset($_GET['v'])) 
-{
-    $v = intval($_GET['v']);
-    if(is_int($v) && $v>0)
+if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
+{   
+    $v = intval($_GET['v']);    //pobieramy v i konwertujemy do inta
+    if(is_int($v) && $v>0)      //sprawdzamy czy to int, jak jest string to wartosc 0 to string, dlatego tutaj sprawdzamy wieksze od 0 bo chcemy nizej miec inta
     {
         $oneVideoUrl = Video::getVideo($_GET['v'], $db);           //jezeli jest ustawione v w linku to pobieramy jedno video o id=v
         $editorId = Video::getEditorUsername($_GET['v'], $db);      // oraz pobieramy nazwe tworcy filmu z tabeli uploaded_videos
@@ -29,16 +29,16 @@ if(isset($_GET['v']))
             $editorId = 'null';                                                   //dla braku edytora ustawiamy brak edytora
         }
     }
-    else 
+    else                        //jeżeli v okazało się stringiem czyli np linkiem do filmu
     {
-        if(Video::isEmbed($_GET['v']) == true)
+        if(Video::isEmbed($_GET['v']) == true)      //sprawdzamy czy link to embed youtube
         {
-            $link = Video::youtube_embed_to_link($_GET['v']);
+            $link = Video::youtube_embed_to_link($_GET['v']);       //jezeli tak to konwertujemy go z powrotem w zwykly link youtube bo takie mamy w bazie danych
         }
-        else $link = $_GET['v'];
+        else $link = $_GET['v'];                    //jezeli nie byl to embed to po prostu pobieramy link
 
-        $video = Video::getVideoIdFromUrl($link, $db);
-        $oneVideoUrl = Video::getVideo($video['id_video'], $db);
+        $video = Video::getVideoIdFromUrl($link, $db);                  //pobieramy id filmu z pobranego linku
+        $oneVideoUrl = Video::getVideo($video['id_video'], $db);        //reszta jak wcześniej
     
         if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db))) {
             $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);

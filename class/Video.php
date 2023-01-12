@@ -378,7 +378,7 @@ class Video
         $stmt->execute();
         return($stmt->fetch());
     }
-    public static function getVideoIdFromUrl($videoUrl, $db)
+    public static function getVideoIdFromUrl($videoUrl, $db)  //Funkcja, która dla podanego url pobierze jego id
     {  
         $query = "SELECT videos.id_video FROM ".video::$videoTable." 
         WHERE url LIKE '%".$videoUrl."%'";

@@ -48,10 +48,9 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
         else $link = $_GET['v'];                    //jezeli nie byl to embed to po prostu pobieramy link
 
         $video = Video::getVideoIdFromUrl($link, $db);                  //pobieramy id filmu z pobranego linku
-        if(!empty($video['extension']))
-        {
-            $oneVideoUrl = Video::getVideo($video['id_video'], $db);        //reszta jak wcześniej
-        
+        $oneVideoUrl = Video::getVideo($video['id_video'], $db);        //reszta jak wcześniej
+        if(!empty($oneVideoUrl['extension']))
+        {       
             if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db))) {
                 $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);
                 $editorId = $editor['login'];

@@ -9,8 +9,11 @@ $user = new User($db);
 
 $user->id_user = $_SESSION["id_user"];
 $user->getUserInfo();
+
 $videoExist = true;
 $currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index filmu przy wyswietlaniu ich na stronie
+
+$userRole = User::checkRole($db,  $_SESSION['id_user']);  //sprawdzenie jaka role ma user
 
 if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
 {   

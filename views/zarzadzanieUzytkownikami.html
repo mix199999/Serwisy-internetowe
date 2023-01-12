@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
     <link href="style/adminStyles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="/scripts/jquery-3.6.3.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
@@ -72,7 +73,8 @@
                                             >Edit</button>
 
 
-                                            <button type="button" class="btn btn-danger" ><a href="index.php?delete=<?php echo $row[1];?>">Delete</a></button>
+                                            <button type="button" class="btn btn-danger" ><a href="index.php?delete=<?php echo $row[1];?>" onClick="location.reload()"
+                                            >Delete</a></button>
                                     </td>
                                 <?php }else{ ?>
 
@@ -108,7 +110,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="/login" class="form-horizontal">
+                        <form method="POST" action="index.php?action=zarzadzanieUzytkownikami" class="form-horizontal">
                             <div class="form-group">
                                 <label for="login" class="col-form-label col-sm-2">Login:</label>
                                 <div class="col-sm-10">
@@ -122,6 +124,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <input type="text" name="id_user" value="" style="visibility: hidden">
                                 <label for="account-type" class="col-form-label col-sm-4">Account type:</label>
                                 <div class="pb-3">
                                 <div class="col-sm-10">
@@ -136,7 +139,7 @@
                             <div class="form-group">
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-success">Save changes</button>
+                                    <button type="submit" class="btn btn-success" name="alterUser">Save changes</button>
 
                                 </div>
                             </div>
@@ -156,7 +159,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
 
 
@@ -175,22 +178,35 @@
                     var type = button.data('user-type')
                     var modal = $(this)
 
-                    if(type == 'user')
-                    {
-                        modal.find("#account-type option[value=2]").attr('selected', 'selected');
 
-                    }
-                    else if(type == 'edytor')
-                    {
-                        modal.find("#account-type option[value=3]").attr('selected', 'selected');
+                    console.log(id);
+                    console.log(type);
+
+                    if (type.indexOf("user") >= 0) {
+                        modal.find("#account-type").val(2);
+                    } else if (type.indexOf("edytor") >= 0) {
+                        modal.find("#account-type").val(3);
                     }
 
                     modal.find('input[name="login"]').attr("value", login).blur();
                     modal.find('input[name="email"]').attr("value", email).blur();
+                    modal.find('input[name="id_user"]').attr("value", id).blur();
 
-                   //
+
 
                 })
+
+
+                $('#edit').on('hide.bs.modal', function () {
+                 //   location.reload();
+                })
+
+                $('#deleteAlert').on('hide.bs.modal', function () {
+                  //  location.reload();
+                })
+
+
+
 
 
 

@@ -95,6 +95,8 @@ class User
 
                 $this->login = $user['login'];
                 $this->IDpriv = $user['id_priv'];
+                $this->email = $user['email'];
+
 
                 return 1;
             }
@@ -109,24 +111,6 @@ class User
 
     }
 
-
-    public function updateUser()
-    {
-        //todo
-        if ($this->login && $this->id_priv) {
-            $updateQuery = "UPDATE " . User::$userTable . " SET login = ?, id_priv = ? WHERE id_user = ?";
-            $stmt = $this->conn->prepare($updateQuery);
-
-            $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
-            $stmt->bindParam(2, $this->id_priv, PDO::PARAM_INT);
-            $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
-            $stmt->execute();
-            $stmt->commit();
-
-
-        }
-
-    }
 
 
     public static function getUsers($db)
@@ -385,6 +369,78 @@ class User
         }
 
     }
+
+
+    public function deleteFromTable($tableName, $columnName)
+    {
+        $deleteQuery = "DELETE FROM " . $tableName . " WHERE " . $columnName . " = ?";
+        $stmt= $this->conn->prepare($deleteQuery);
+        $stmt-> bindParam(1, $this->id_user, PDO::PARAM_INT);
+        $stmt->execute();
+
+    }
+
+    public function deleteCascadeUser()
+    {
+        $this->deleteFromTable('messages', 'sender_id');
+        $this->deleteFromTable('privilege_change_request', 'user_id');
+
+        $this->deleteFromTable('tickets', 'user_id');
+        $this->deleteFromTable('uploaded_videos', 'id_user');
+        $this->deleteFromTable('user_background_color', 'id_user');
+        $this->deleteFromTable('user_tags', 'user_id');
+        $this->deleteFromTable('users', 'id_user');
+    }
+
+
+    public function compareUserInfo($userToModify) {
+        $this->getUserInfo();
+
+        if ($this->id_user == $userToModify->id_user && $this->login == $userToModify->login && $this->IDpriv == $userToModify->IDpriv && $this->email == $userToModify->email) {
+
+            return 0;
+        }
+        else
+        {
+
+            $updateFields = array();
+            if($this->login != $userToModify->login) {
+                $updateFields['login'] = $userToModify->login;
+            }
+            if($this->email != $userToModify->email) {
+                $updateFields['email'] = $userToModify->email;
+            }
+            if($this->IDpriv != $userToModify->IDpriv) {
+                $updateFields['id_priv'] = $userToModify->IDpriv;
+            }
+            if(count($updateFields)>0){
+                $this->updateUser($updateFields);
+            }
+
+            return 1;
+        }
+
+    }
+
+    public function updateUser($updateFields) {
+
+        $setString = "";
+        $values = array();
+        $counter = 1;
+        foreach ($updateFields as $field => $newValue) {
+            $setString .= $field . " = ?";
+            if ($counter < count($updateFields)) {
+                $setString .= ", ";
+            }
+            $values[] = $newValue;
+            $counter++;
+        }
+        $updateQuery = "UPDATE " . User::$userTable . " SET " . $setString . " WHERE id_user = ?";
+        $values[] = $this->id_user;
+        $stmt = $this->conn->prepare($updateQuery);
+        $stmt->execute($values);
+    }
+
 
 
 

@@ -66,7 +66,7 @@
                         <label  for="reason3">Podaj przyczyne prośby:</label><br>
                         <input  class="form-control"type="text" id="reason3" name="reason3"><br>
                         <input type="text" id="id_user3" name="id_user3" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
-                        <button type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
+                        <button id="button" type="submit" name="changePrivilButton" class="btn btn-primary w-22">Wyślij</button>
                     </form>
 
                 </div>
@@ -102,9 +102,6 @@
 
 $(document).ready(function(){
 
-
-$('#edit').on('show.bs.modal', function (event) {
-
   document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
         event.preventDefault(); //zeby nie byl od razu wyslany
     
@@ -121,12 +118,13 @@ $('#edit').on('show.bs.modal', function (event) {
             data: {reason3: reason3, title3: title3, id_user3: id_user3},
             success: function(response) {
                 console.log(response);
+                location.reload();
         }
     });
         }
         
           });
-})
+
 
     var maxWidth = 0;
 
@@ -142,7 +140,12 @@ $('#edit').on('show.bs.modal', function (event) {
 
 
 });
+
+
+
     </script>
+
+
 
 
 </body>

@@ -9,12 +9,16 @@ $db = $database->getConnection();
         $id_video = $_POST['idVideo'];
         $choice = $_POST['choice'];
 
-        $stmt = $db->prepare("INSERT INTO reported_videos (video_id, description) VALUES (:idVideo, :description)");
-        $stmt->bindParam(':idVideo', $id_video);
-        $stmt->bindParam(':description', $reason);
-        $stmt->execute();
+        foreach($choice as $wybor){
 
-        $stmt2 = $db->prepare("INSERT INTO reported_video_reasons (reason, video_id ) VALUES (:reason, :video_id)");
-        $stmt2->bindParam(':reason', $choice);
-        $stmt2->bindParam(':video_id', $id_video);
-        $stmt2->execute();
+                $stmt = $db->prepare("INSERT INTO reported_videos (video_id, description) VALUES (:idVideo, :description)");
+                $stmt->bindParam(':idVideo', $id_video);
+                $stmt->bindParam(':description', $reason);
+                $stmt->execute();
+
+                $stmt2 = $db->prepare("INSERT INTO reported_video_reasons (reason, video_id ) VALUES (:reason, :video_id)");
+                $stmt2->bindParam(':reason', $wybor);
+                $stmt2->bindParam(':video_id', $id_video);
+                $stmt2->execute();
+        }
+       

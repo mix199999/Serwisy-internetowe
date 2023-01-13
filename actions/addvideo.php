@@ -109,7 +109,7 @@ if(isset($_POST['title'])) {
             $url = '';
             $extension = '';
             if($fields['type'] == "url"){
-                $url = "https://www.youtube.com/watch?v=" . $fields['address'];
+                $url = "https://www.youtube.com/watch?v=" . $fields['adress'];
                 $extension = "url";
             }
             else{
@@ -144,9 +144,7 @@ if(isset($_POST['title'])) {
                 $fName = 'actions/' . $fileName;
                 rename($fName, $thbDir);
             }
-            <script>
-                window.alert("Wideo przesłane!");
-            </script>
+            echo "<script> window.alert('Wideo przesłane!');</script>";
 
         }
     }

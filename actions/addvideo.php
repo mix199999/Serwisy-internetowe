@@ -144,6 +144,9 @@ if(isset($_POST['title'])) {
                 $fName = 'actions/' . $fileName;
                 rename($fName, $thbDir);
             }
+            <script>
+                window.alert("Wideo przesłane!");
+            </script>
 
         }
     }

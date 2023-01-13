@@ -118,11 +118,11 @@
                     
                     <div><input type="radio" id="11" name="choice" value="11">
                         <label for="11">Problem z napisami</label></div>
-                    
+                        
 
                     <label  for="reason">Dodatkowe uwagi:</label><br>
                     <input  class="form-control"type="text" id="reason" name="reason"><br>
-                    <input type="text" id="idVideo" name="idVideo" value=2137 style="visibility:hidden">
+                    <input type="text" id="idVideo" name="idVideo" value="<?php echo $id_video_value ?>"style="visibility:hidden"> 
                     <input type="text" id="id_user" name="id_user" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
                     <button type="submit" name="reportButton" class="btn btn-primary w-22">Wyślij</button>
                 </form>

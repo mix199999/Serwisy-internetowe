@@ -21,6 +21,7 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
     if(is_int($v) && $v>0)      //sprawdzamy czy to int, jak jest string to wartosc 0 to string, dlatego tutaj sprawdzamy wieksze od 0 bo chcemy nizej miec inta
     {        
         $oneVideoUrl = Video::getVideo($_GET['v'], $db);           //jezeli jest ustawione v w linku to pobieramy jedno video o id=v
+        $id_video_value = $_GET['v'];
         if(!empty($oneVideoUrl['extension']))               //sprawdzamy czy taki film istnieje
         {
             $editorId = Video::getEditorUsername($_GET['v'], $db);      // oraz pobieramy nazwe tworcy filmu z tabeli uploaded_videos
@@ -49,6 +50,7 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
 
         $video = Video::getVideoIdFromUrl($link, $db);                  //pobieramy id filmu z pobranego linku
         $oneVideoUrl = Video::getVideo($video['id_video'], $db);        //reszta jak wcześniej
+        $id_video_value = $video['id_video'];
         if(!empty($oneVideoUrl['extension']))
         {       
             if (!empty(Video::getEditorUsername($oneVideoUrl['id_video'], $db))) {
@@ -72,9 +74,11 @@ else
         if (!empty(Video::getEditorUsername($urlTable[$currentIndex]['id_video'], $db)))    //sprawdzamy czy jest tworca danego filmu bo niektore byly na sztywno bez
         {
             $editor = Video::getEditorUsername($urlTable[$currentIndex]['id_video'], $db);  //jezeli jest to pobieramy id filmu z tablicy filmow i dostajemy informacje
+            $id_video_value = $urlTable[$currentIndex]['id_video'];
             $editorName = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
         } else 
         {
+            $id_video_value = $urlTable[$currentIndex]['id_video'];
             $editorName = 'null';                                                   //dla braku edytora ustawiamy brak edytora
         }
     }

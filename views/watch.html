@@ -29,7 +29,7 @@
                         $stringEXT = $urlTable[$currentIndex]['extension'];
                         echo "<video width='1255' height='753' controls> <source src='$stringURL' type='video/$stringEXT'></video>";    
                     }  
-                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$urlTable[$currentIndex]['title']."</h1></div><a href='index.php?action=report&video=".$urlTable[$currentIndex]['title']."'><button class='btn btn-danger ml-auto'>Zgłoś</button></a></div>";
+                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$urlTable[$currentIndex]['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>";
                     echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorName."' style='text-decoration:none; color:rgb(0, 153, 153);'> ".$editorName." </a> </h3></div>";           
                     ?>
           </div>
@@ -61,7 +61,7 @@
                         $stringEXT = $oneVideoUrl['extension'];
                         echo "<video width='1255' height='753' controls> <source src='$stringURL' type='video/$stringEXT'> </video>";  
                     }
-                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$oneVideoUrl['title']."</h1></div><a href='index.php?action=report&video=".$oneVideoUrl['id_video']."'><button class='btn btn-danger ml-auto'>Zgłoś</button></a></div>";
+                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$oneVideoUrl['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>";
                     echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorId."' style='text-decoration:none; color:rgb(0, 153, 153)'> ".$editorId." </a> </h3></div>"; 
                 }
             }
@@ -73,7 +73,7 @@
       </div>
   </div>
 
-  <button id="report-button" class="btn btn-secondary m-3 px-3" data-bs-toggle="modal" data-bs-target="#report">Zgłoś video</button>
+  
   
   <!-- Modal Change_Acc_Type -->
   <div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

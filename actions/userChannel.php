@@ -20,11 +20,18 @@ $modifiedLinks = [];
 
 foreach ($movies as $movie)
 {
-    if($movie['extension'] == 'url')
-        $modifiedLinks[] = Video::youtube_link_to_embed($movie['url']);
+    if($movie['extension'] == 'url'){
+        $modifiedLinks[] = array(
+            'url' => Video::youtube_link_to_embed($movie['url']),
+            'title' => $movie['title']
+        );
+    }
     else if(file_exists($movie['url']))
     {
-        $modifiedLinks[] = $movie['url'];
+        $modifiedLinks[] = array(
+            'url' => $movie['url'],
+            'title' => $movie['title']
+        );
     }
 }
 

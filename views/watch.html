@@ -74,7 +74,7 @@
   </div>
 
   <button id="changePrivil-button" class="btn btn-secondary m-3 px-3" data-bs-toggle="modal" data-bs-target="#report">Zgłoś video</button>
-  <!-- Modal Change_Acc_Type -->
+  
   <!-- Modal Change_Acc_Type -->
   <div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -122,6 +122,7 @@
 
                     <label  for="reason">Dodatkowe uwagi:</label><br>
                     <input  class="form-control"type="text" id="reason" name="reason"><br>
+                    <input type="text" id="idVideo" name="idVideo" value=2137 style="visibility:hidden">
                     <input type="text" id="id_user" name="id_user" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
                     <button type="submit" name="reportButton" class="btn btn-primary w-22">Wyślij</button>
                 </form>
@@ -144,13 +145,52 @@ $('#report').on('show.bs.modal', function (event) {
 
   document.getElementById("report-form").addEventListener("submit", function(event) {
         event.preventDefault(); //zeby nie byl od razu wyslany
-    
+
+        let reason = document.getElementById("reason").value;
+        let choice;
+        let id_user = document.getElementById("id_user").value;
+        let idVideo= document.getElementById("idVideo").value;
+
+        if(document.getElementById('1').checked) {
+            choice = 1;
+        }else if(document.getElementById('2').checked) {
+            choice = 2;
+        }else if(document.getElementById('3').checked) {
+            choice = 3;
+        }else if(document.getElementById('4').checked) {
+            choice = 4;
+        }else if(document.getElementById('5').checked) {
+            choice = 5;
+        }else if(document.getElementById('6').checked) {
+            choice = 6;
+        }else if(document.getElementById('7').checked) {
+            choice = 7;
+        }else if(document.getElementById('8').checked) {
+            choice = 8;
+        }else if(document.getElementById('9').checked) {
+            choice = 9;
+        }else if(document.getElementById('10').checked) {
+            choice = 10;
+        }else if(document.getElementById('11').checked) {
+            choice = 11;
+        }
+
+        if (reason == "") {
+          window.alert("Values cannot be empty!");
+        } else {
+            $.ajax({  
+            type: 'POST',  
+            url: '/scripts/reportVideo.php', 
+            data: {reason: reason, choice:choice, id_user: id_user, idVideo:idVideo},
+            success: function(response) {
+                console.log(response);
+        }
+    });
+        }
        
         
           });
 })
-
-
 
 });
 

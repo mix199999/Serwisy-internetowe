@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/scripts/jquery-3.6.3.js"></script>
+
     <title>Title</title>
 </head>
 
@@ -71,6 +73,88 @@
       </div>
   </div>
 
+  <button id="changePrivil-button" class="btn btn-secondary m-3 px-3" data-bs-toggle="modal" data-bs-target="#report">Zgłoś video</button>
+  <!-- Modal Change_Acc_Type -->
+  <!-- Modal Change_Acc_Type -->
+  <div class="modal fade" id="report" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Zgłoś video</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method = 'post' id="report-form">
+                    <label  for="reason">Wybierz przyczyne prośby:</label><br>
+                    <div><input type="radio" id="1" name="choice" value="1"checked>
+                        <label for="1">Treści o charakterze seksualnym</label></div>
+                    
+                    <div><input type="radio" id="2" name="choice" value="2">
+                        <label for="2">Treści przedstawiające przemoc lub budzące odrazę</label></div>
+                    
+                    <div><input type="radio" id="3" name="choice" value="3">
+                        <label for="3">Treści krzywdzące lub szerzące nienawiść</label></div>
+                    
+                    <div><input type="radio" id="4" name="choice" value="4">
+                        <label for="4">Nękanie lub dokuczanie</label></div>
+                    
+                    <div><input type="radio" id="5" name="choice" value="5">
+                        <label for="5">Sceny szkodliwe lub niebezpieczne</label></div>
+                    
+                    <div><input type="radio" id="6" name="choice" value="6">
+                        <label for="6">Nieprawdziwe informacje</label></div>
+                    
+                    <div><input type="radio" id="7" name="choice" value="7">
+                        <label for="7">Wykorzystywanie dzieci</label></div>
+                    
+                    <div><input type="radio" id="8" name="choice" value="8">
+                        <label for="8">Propagowanie terroryzmu</label></div>
+                    
+                    <div><input type="radio" id="9" name="choice" value="9">
+                        <label for="9">Spam lub treści wprowadzające w błąd</label></div>
+                    
+                    <div><input type="radio" id="10" name="choice" value="10">
+                        <label for="10">Naruszenie moich praw</label></div>
+                    
+                    <div><input type="radio" id="11" name="choice" value="11">
+                        <label for="11">Problem z napisami</label></div>
+                    
+
+                    <label  for="reason">Dodatkowe uwagi:</label><br>
+                    <input  class="form-control"type="text" id="reason" name="reason"><br>
+                    <input type="text" id="id_user" name="id_user" value="<?php echo $_SESSION['id_user'] ?>"style="visibility:hidden">
+                    <button type="submit" name="reportButton" class="btn btn-primary w-22">Wyślij</button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+$('#report').on('show.bs.modal', function (event) {
+
+  document.getElementById("report-form").addEventListener("submit", function(event) {
+        event.preventDefault(); //zeby nie byl od razu wyslany
+    
+       
+        
+          });
+})
+
+
+
+});
+
+</script>
 
 </body>
 </html>

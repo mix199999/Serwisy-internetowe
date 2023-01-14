@@ -13,59 +13,55 @@
       <div class="row mt-5">
           <div class="col-md-12">
             <?php
-            if($videoExist == true)
+            if($videoExist == true)         //sprawdzamy czy film wogole istnieje
             {              
-                if($userRole == 1) echo "<div class='mt-3 text-center mb-5'><a href='index.php?action=zarzadzanieUzytkownikami'> <button type='button' class='btn btn-primary'>Zarządzanie użytkownikami</button></a></div>";
-                if(!isset($_GET['v'])) 
+                if($userRole == 1) echo "<div class='mt-3 text-center mb-5'><a href='index.php?action=zarzadzanieUzytkownikami'> <button type='button' class='btn btn-primary'>Zarządzanie użytkownikami</button></a></div>";       //jezeli admin to dodajemy mu przycisk co przenosi do zarzadzania uzytkownikami
+                
+                if(!isset($_GET['v']))      //jezeli w linku nie jest ustawiony parametr v
                 {       
-                    // wyświetl aktualny film w zaleznosci czy rozszerzenie mp4 czy brak dla youtube
-                    if($urlTable[$currentIndex]['extension'] == 'url') 
+                    if($urlTable[$currentIndex]['extension'] == 'url') // pobieramy filmy uzytkownika z jego tagami i wyswietlamy tutaj film o rozszerzeniu URL czyli youtube
                     {
                         echo "<iframe width='1255' height='753' src='" . Video::youtube_link_to_embed($urlTable[$currentIndex]['url']) . "' title='' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
                     } 
-                    else 
+                    else //jezeli nie jest to rozszerzenie youtube to wyswietlamy zwykly
                     {
-                        $stringURL = $urlTable[$currentIndex]['url'];
-                        $stringEXT = $urlTable[$currentIndex]['extension'];
-                        echo "<video width='1255' height='753' controls> <source src='$stringURL' type='video/$stringEXT'></video>";    
+                        echo "<video width='1255' height='753' controls> <source src='{$urlTable[$currentIndex]['url']}' type='video/{$urlTable[$currentIndex]['extension']}'> </video>";   
                     }  
-                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$urlTable[$currentIndex]['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>";
-                    echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorName."' style='text-decoration:none; color:rgb(0, 153, 153);'> ".$editorName." </a> </h3></div>";           
+                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$urlTable[$currentIndex]['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>"; //tytul filmu oraz reportbutton filmu
+                    echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorName."' style='text-decoration:none; color:rgb(0, 153, 153);'> ".$editorName." </a> </h3></div>";     //wyswietlenie edytora  wraz z linkiem do niego    
                     ?>
           </div>
       </div>
 
       <div class="row">
           <div class="col-md-12 text-center mt-3">
-              <?php
-                    // sprawdź, czy istnieje poprzedni film
-                    if ($currentIndex > 0) 
+              <?php            
+                    if ($currentIndex > 0)  // sprawdź, czy istnieje poprzedni film - wyswietlenie przeycisku przejscia do poprzedniego filmu
                     {
                         echo "<a href='index.php?action=watch&index=" . ($currentIndex - 1) . "'><button class='btn btn-secondary mx-2'>Poprzedni</button></a>";
                     }
-                    // sprawdź, czy istnieje następny film
-                    if ($currentIndex < count($urlTable) - 1) 
+                    if ($currentIndex < count($urlTable) - 1)   // sprawdź, czy istnieje następny film - wyswietlenie przycisku przejscia do kolejnego filmu
                     {
                         echo "<a href='index.php?action=watch&index=" . ($currentIndex + 1) . "'><button class='btn btn-secondary mx-2'>Następny</button></a>";
                     }            
                 }
-                else
+
+                else    //jezeli v jest ustawione znaczy ze wyswietlamy tylko jeden film konkretny bez przyciskow dalej wczesniej
                 {
-                    if($oneVideoUrl['extension'] == 'url') 
+                    if($oneVideoUrl['extension'] == 'url')  //jezeli jego rozszerzenie to youtube wyswietlamy youtube
                     {
                         echo "<iframe width='1255' height='753' src='" . Video::youtube_link_to_embed($oneVideoUrl['url']) . "' title='' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
                     } 
-                    else 
+                    else //jezeli to nie youtube to wyswietlamy jak normalny film
                     {
-                        $stringURL = $oneVideoUrl['url'];
-                        $stringEXT = $oneVideoUrl['extension'];
-                        echo "<video width='1255' height='753' controls> <source src='$stringURL' type='video/$stringEXT'> </video>";  
+                        echo "<video width='1255' height='753' controls> <source src='{$oneVideoUrl['url']}' type='video/{$oneVideoUrl['extension']}'> </video>";   
                     }
-                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$oneVideoUrl['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>";
-                    echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorId."' style='text-decoration:none; color:rgb(0, 153, 153)'> ".$editorId." </a> </h3></div>"; 
+                    echo "<div class='d-flex align-items-center'><div class='col-md-11 mb-2'><h1 class='mt-3 font-weight-bold'>".$oneVideoUrl['title']."</h1></div><button id='report-button' class='btn btn-danger ml-auto' data-bs-toggle='modal' data-bs-target='#report'>Zgłoś</button></div>"; //tytul filmu i przcisk report
+                    echo "<div class='col-md-12 mb-2'><h3 class='mt-3'> <a href='index.php?action=userChannel&channel=".$editorId."' style='text-decoration:none; color:rgb(0, 153, 153)'> ".$editorId." </a> </h3></div>";         //edytor i przejscie do niego
                 }
             }
-            else
+
+            else  //jezeli film nie istnieje wyswietlamy komunikat ze zdjeciem o jego braku
             {
             echo "<div class='text-center col-md-11'><img src='../icons/errorVideo.png' alt='error video'><p class='h1 text-center'>Brak filmu</p></div>";            
             }

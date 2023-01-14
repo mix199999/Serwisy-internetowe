@@ -10,8 +10,8 @@ $user = new User($db);
 $user->id_user = $_SESSION["id_user"];
 $user->getUserInfo();
 
-$videoExist = true;
-$currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index filmu przy wyswietlaniu ich na stronie
+$videoExist = true;     //na poczatku ustawiamy zmienna ze film istnieje
+$currentIndex = isset($_GET['index']) ? intval($_GET['index']) : 0; //index filmu gdy wyswietlamy zbior filmow uzytkownika, bo zapisuja sie one do jednej tablicy i po indexie otwieramy film
 
 $userRole = User::checkRole($db,  $_SESSION['id_user']);  //sprawdzenie jaka role ma user
 
@@ -66,9 +66,9 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
         }
     }
 }
-else 
+else //jezeli nie jest ustawiony parametr v
 {
-    $urlTable = Video::getVideosWithUserTags($user->login, $db);                        //jezeli nie jest v to pobieramy tablice wszystkich filmow z tagami
+    $urlTable = Video::getVideosWithUserTags($user->login, $db);                        //pobieramy tablice wszystkich filmow z tagami
     if(!empty($urlTable[$currentIndex]['extension']))                       //sprawdzenie czy taki film wgl istnieje
     {
         if (!empty(Video::getEditorUsername($urlTable[$currentIndex]['id_video'], $db)))    //sprawdzamy czy jest tworca danego filmu bo niektore byly na sztywno bez

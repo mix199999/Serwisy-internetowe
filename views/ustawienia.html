@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/scripts/jquery-3.6.3.js"></script>
 </head>
-<body>
+<body style="background-color: <?php echo $user->GetColor(); ?>">
 
 
 
@@ -88,15 +88,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
-
-<script>
-    $(document).ready(function(){
-        let color = "<?php echo $bgColor; ?>"; //Getting the color value from PHP variable
-        document.querySelector("body").style.backgroundColor = color;
-        //$("body").css("background-color", color); //Changing the background color of the body element
-        console.log(color);
-    });
-</script>
 
     <script>
 

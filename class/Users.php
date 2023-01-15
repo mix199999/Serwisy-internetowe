@@ -359,7 +359,6 @@ class User
         $getColor = "SELECT color FROM user_background_color WHERE id_user=?";
         $stmt = $this->conn->prepare($getColor);
         $stmt-> bindParam(1, $this->id_user, PDO::PARAM_INT);
-        //if($stmt->rowCount() > 0)
         if($stmt->execute() && $stmt->rowCount() > 0){
 
             $result = $stmt->fetch();

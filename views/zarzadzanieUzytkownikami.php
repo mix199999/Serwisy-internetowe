@@ -10,13 +10,15 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <script src="/scripts/jquery-3.6.3.js"></script>
 
+  
+   
+    echo "<link href='styles/".$_SESSION['action'].".css' rel='stylesheet' />";
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 
 
-
+     
 
 
 

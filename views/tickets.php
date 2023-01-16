@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="/style/tickets.css" rel="stylesheet"/>
-    <script src="/scripts/jquery-3.6.3.js"></script>
+    <?php  echo "<script src='scripts/jquery-3.6.3.js'></script>"?>
     <title>Hello, world!</title>
 </head>
 <body>
@@ -66,7 +66,8 @@
                         <textarea class="form-control" id="comment" rows="3" name="messageText"></textarea>
                     </div>
                     <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
-                    <input type="text" name="caseID" value="<?php echo $row[0]?>" style="visibility: hidden">
+                    <input type="text" id="case_id" name="caseID" value="$row[0]" style="visibility: hidden">
+                    
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success float-end"name="sendMessage" value="accept">Send</button>
                     </div>
@@ -88,7 +89,7 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
+    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
 
     <script>
@@ -96,15 +97,28 @@
         $(document).ready(function(){
             $('#chatModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
+                var rootPath = "<?php echo str_replace('\\', '/', dirname(dirname(__FILE__))) ?>";
+                
+                var rootPath = rootPath.substr(rootPath.lastIndexOf('/') + 1);
+               
+                var rootPath = 'http://localhost/' + rootPath + '/scripts/';
+                    
 
+                
                 var ticketId = button.data('id-case');
                 var loggedUser = button.data('logged-user');
+                var modal = $(this);
+                
+                $('#case_id').val(ticketId);
+
+             console.log(rootPath);
                 if(ticketId != undefined)
                 {
-                    console.log(ticketId);
-
+                   
+                   
                     $.ajax({
-                        url: '/scripts/messages.php',
+                       
+                        url: rootPath+'messages.php',                       
                         type: 'POST',
                         data: {
                             idCase: ticketId,

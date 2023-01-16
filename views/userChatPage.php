@@ -108,6 +108,7 @@
             <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
 
             <div class="modal-footer">
+              
               <button type="submit" class="btn btn-success float-end"name="sendTicket" value="accept">Send</button>
             </div>
           </form>
@@ -150,6 +151,16 @@
 <script>
 
   $(document).ready(function(){
+
+
+    var rootPath = "<?php echo str_replace('\\', '/', dirname(dirname(__FILE__))) ?>";
+                
+                var rootPath = rootPath.substr(rootPath.lastIndexOf('/') + 1);
+               
+                var rootPath = 'http://localhost/' + rootPath + '/scripts/';
+
+
+
     $('#chatModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget);
 
@@ -160,7 +171,7 @@
         console.log(ticketId);
 
         $.ajax({
-          url: '/scripts/messages.php',
+          url: rootPath+'messages.php',           
           type: 'POST',
           data: {
             idCase: ticketId,

@@ -30,7 +30,7 @@
                                             <strong><?php echo $row[5]?></strong>
                                             <?php
                                             if($row[2] == true)
-                                            {echo '<span class="badge bg-success">Open</span>';}
+                                            {echo '<span class="badge bg-success" id='."$row[0]".'>Open</span>';}
                                             else
                                             {echo '<span class="badge bg-danger">Closed</span>';}
 
@@ -39,7 +39,7 @@
 
 
                                             <span class="number pull-right" ># <?php echo $row[0]?></span>
-                                            <p class="info">Created by <a href="#"><?php echo User::getUserLogin($row[1], $db);?></a> Dodac date  </p>
+                                            <p class="info">Created by <a href="#"><?php echo User::getUserLogin($row[1], $db);?></a> </p>
                                         </div>
                                     </div>
                                 </li>
@@ -89,7 +89,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js" ></script>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
 
 
@@ -107,9 +107,16 @@
         })
 
 
-        $('#issue').on('hidden.bs.modal', function (e) {
-            location.reload();
-        })
+        $('#issue').on('hidden.bs.modal', function (e) 
+        {
+            var requestID = $('input[name="requestID"]').val();
+            console.log(requestID);
+            
+            $('#'+requestID).attr('class', 'badge bg-danger');
+           
+            $('#'+requestID).text('Closed');
+            
+        });
 
 
 

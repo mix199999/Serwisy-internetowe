@@ -14,7 +14,10 @@
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-    <script src="/scripts/jquery-3.6.3.js"></script>
+    
+    echo "<link href='styles/zarzadzanieUzytkownikami.css' rel='stylesheet' />";
+   
+   echo "<script src='scripts/jquery-3.6.3.js'></script>"
 </head>
 <body>
 
@@ -71,7 +74,6 @@
                         <div class="nav">
 
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=watch" class="nav-link">Oglądaj filmy</a></div>
-                            <div class="sb-sidenav-menu-heading"><a href="./index.php?action=reports" class="nav-link">Reports</a></div>
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=ustawienia" class="nav-link">Ustawienia</a></div>
 
 

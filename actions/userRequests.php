@@ -1,6 +1,6 @@
 <?php
-include_once 'conf/connDB.php';
-include_once 'class/Users.php';
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
 
 
 $database = new Database();
@@ -15,6 +15,10 @@ $result = User::getRequest($db);
 
 if(isset($_POST['send']))
 {
+
+
+
+
     $adminMessage = $_POST['adminComment'];
 
     $request_id= intval($_POST['requestID']);

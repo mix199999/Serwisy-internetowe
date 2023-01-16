@@ -1,9 +1,15 @@
 <?php
-
+define('_SERWER_PATH', str_replace('\\', '/', dirname(dirname(__FILE__))));
 
 // Include the User class file
-require_once $_SERVER['DOCUMENT_ROOT'].'/conf/connDB.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/class/Users.php';
+
+require_once _SERWER_PATH . '/class/Users.php';
+require_once _SERWER_PATH . '/conf/connDB.php';
+
+
+
+
+
 
 
 // Connect to the database
@@ -62,7 +68,7 @@ if (isset($_POST['idCase']) and $_POST['idCase'] != null) {
     }
 
 
-
+    //$response = ' <p class="small ms-3 mb-3 rounded-3 text-muted float-end">aaaaaaaa</p>';
     echo json_encode($response);
 }
 

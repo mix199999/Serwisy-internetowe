@@ -181,9 +181,13 @@ $(document).ready(function(){
         if (reason == "") {
           window.alert("Values cannot be empty!");
         } else {
+
+            var rootPath = "<?php echo str_replace('\\', '/', dirname(dirname(__FILE__))) ?>";                
+            var rootPath = rootPath.substr(rootPath.lastIndexOf('/') + 1);               
+            var rootPath = 'http://localhost/' + rootPath + '/scripts/';
             $.ajax({  
             type: 'POST',  
-            url: '/scripts/reportVideo.php', 
+            url: rootPath+'reportVideo.php', 
             data: {reason: reason, choice:choice, id_user: id_user, idVideo:idVideo},
             success: function(response) {
                 console.log(response);

@@ -1,8 +1,8 @@
 <?php
 
 
-include 'conf/connDB.php';
-include 'class/Users.php';
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
 
 $database = new Database();
 $db = $database->getConnection();

@@ -1,5 +1,6 @@
 <?php
-    include_once 'conf/connDB.php';
+
+require_once CONN_PATH;
 
 
     $database = new Database();

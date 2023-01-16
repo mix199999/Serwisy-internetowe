@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="/style/loginPage.css">
+    <link rel="stylesheet" href="<?php echo _ROOT_PATH.DIRECTORY_SEPARATOR .'styles'.DIRECTORY_SEPARATOR.'logowanie'.'.css' ?>">
+
+    <?php 
+    echo "<link href='styles/"."logowanie.css' rel='stylesheet' />"; 
+   
+    echo "<script src='scripts/jquery-3.6.3.js'></script>";
+   
+
+   
+    ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -11,9 +20,6 @@
 </head>
 <body>
 <section class="vh-100 gradient-custom">
-
-
-
 
     <div class="container py-5 h-100" >
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -93,7 +99,8 @@
     </div>
 </section>
 
-<script src="/scripts/skryptyLogowanie.js"></script>
+<?php echo "<script src='scripts/"."logowanie.js' type='text/javascript'></script>"; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

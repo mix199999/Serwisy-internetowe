@@ -2,9 +2,9 @@
 <?php
 
 
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
 
-include_once 'conf/connDB.php';
-include_once 'class/Users.php';
 
 
 $database = new Database();
@@ -27,6 +27,8 @@ if (isset($_POST['sendMessage']))
 
     $message =  $_POST['messageText'];
 
+
+   
 
     $user->sendMessage( $id_ticket, $message);
 

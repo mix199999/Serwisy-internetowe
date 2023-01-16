@@ -1,8 +1,8 @@
 <?php
 //include_once 'conf/connDB.php';
 //include_once 'class/Video.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/conf/connDB.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/class/Video.php';
+require_once USER_CLASS_PATH;
+require_once VIDEO_CLASS_PATH;
 
 
 if(isset($_POST['imgBase64'])) {

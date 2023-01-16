@@ -1,7 +1,7 @@
 <?php
 
-include_once 'conf/connDB.php';
-include_once 'class/Users.php';
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
 
 
 
@@ -38,7 +38,7 @@ try {
                 }
                 else if( $_SESSION["session_name"] == 4)
                 {
-                    include("./strony/newUser.html");
+                    include("./strony/newUser.php");
                 }
                //todo jesli inne role
 
@@ -62,7 +62,7 @@ try {
                 $_SESSION["action"] = "newUser";
                 echo $_SESSION["user_type"];
                 $_SESSION["user_type"] = 4;
-                header('Location: index.php?action=newUser.html');
+                header('Location: index.php?action=newUser.php');
             
             
                

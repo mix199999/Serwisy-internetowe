@@ -10,7 +10,16 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Tables - SB Admin</title>
-    <link href="style/adminStyles.css" rel="stylesheet" />
+    <?php 
+    echo "<link href='styles/zarzadzanieUzytkownikami.css' rel='stylesheet' />";
+   
+    echo "<script src='scripts/jquery-3.6.3.js'></script>"
+   
+
+    ?>
+
+
+   
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -21,7 +30,7 @@
 <body class="sb-nav-fixed">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html">Admin panel</a>
+    <a class="navbar-brand ps-3" href="">Admin panel</a>
     <!-- Sidebar Toggle-->
     <button onclick="hideSideBar()" class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search
@@ -46,12 +55,9 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
+                 
+                    
                     <div class="sb-sidenav-menu-heading">Main</div>
-                    <a class="nav-link" href="index.html">
-                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        Dashboard
-                    </a>
-                    <div class="sb-sidenav-menu-heading">Interface</div>
 
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
@@ -68,7 +74,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="./index.php?action=userRequests">Requests</a>
                                     <a class="nav-link" href="./index.php?action=tickets">Tickets</a>
-                                    <a class="nav-link" href="password.html">Forgot Password</a>
+                                   
                                 </nav>
                             </div>
 
@@ -99,7 +105,13 @@
             </div>
             <div class="sb-sidenav-footer">
                 <div class="small">Logged in as:</div>
-                <?php echo $_SESSION['userName'];  ?>
+               
+                <?php 
+                 if(isset($_SESSION['userName']))
+                {
+                    echo $_SESSION['userName'];
+                }  ?>
+               
             </div>
         </nav>
     </div>

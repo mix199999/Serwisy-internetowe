@@ -48,7 +48,10 @@
                         <td><?php echo $video->getTitle();?></td>
                         <td><?php echo $video->login;?></td>
                         <td style="text-align:center" >
-                            <button type="button" class="btn btn-danger">Delete</button>
+                        <a  href="index.php?action=videosAdministration&deleteVideo=<?php echo $video->id_video;?>" data-id-video="<?php echo $video->id_video;?>">
+
+                            <button type="submit" class="btn btn-danger " id="delete-video-btn" name="deleteVideo"  data-id-video="<?php echo $video->id_video;?>">Delete Video</button>
+                        </a>
                           <a href="index.php?action=watch&v=<?php echo $video->id_video;?>"> <button type="button" class="btn btn-primary">Watch</button></a>
                             <?php
 
@@ -103,8 +106,8 @@
                 </ul>
             </div>
             <div class="modal-footer">
-              <a  id="deleteBt" >
-                  <button type="submit" class="btn btn-danger float-end" id="delete-video-btn" name="deleteVideo">Delete Video</button>
+              <a  id="delete-video-btn >
+              <button type="submit" class="btn btn-danger float-end" " name="deleteVideo">Delete Video</button>
               </a>
                 <a id="rejectBt" >
                     <button type="submit" class="btn btn-secondary float-start" id="reject-report-btn" name="reject">Reject Report</button>
@@ -136,14 +139,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
 
 <script>
-    $(document).ready(function() {
-       var table =  $('#example').DataTable();
+   
+    
 
-    } );
+    
 
 
     $(document).ready(function(){
-
+        var table =  $('#example').DataTable();
         $('#checkReport').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget)
@@ -190,8 +193,22 @@
         })
 
         $('#checkReport').on('hide.bs.modal', function () {
-            table.row("#videoId"+videoId).remove().draw();
+           
         })
+        
+
+        $(document).on('click', '#deleteVBt', function() {
+           
+            var videoId = $(this).attr('data-id-video');
+            //remove row from table
+            table.row("#videoId"+videoId).remove().draw();
+            //send ajax request to delete video
+           
+            
+
+        });
+
+
 
     });
 

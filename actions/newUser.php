@@ -1,8 +1,9 @@
 <?php
 
-include_once 'conf/connDB.php';
-include_once 'class/Tag.php';
-include_once 'class/Video.php';
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
+require_once TAGS_CLASS_PATH;
+
 
 
 

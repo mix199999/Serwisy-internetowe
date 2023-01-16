@@ -1,6 +1,12 @@
 <?php
 
 define('_ROOT_PATH', dirname(__FILE__));
+define('CONN_PATH', dirname(__FILE__).'/conf/connDB.php');
+define('VIDEO_CLASS_PATH', dirname(__FILE__).'/class/Video.php');
+define('USER_CLASS_PATH', dirname(__FILE__).'/class/Users.php');
+
+
+
 
 session_start();
 

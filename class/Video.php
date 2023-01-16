@@ -17,10 +17,10 @@ class Video
     private $uploadedBy;
 
 
-
     private $weight = 0;
 
-    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null){
+    public function __construct($conn, $IDvideo = null, $title = null, $extension = null, $uploadedBy = null, $url = null, $tags = null)
+    {
         $this->conn = $conn;
         $this->IDvideo = $IDvideo;
         $this->title = $title;
@@ -31,123 +31,123 @@ class Video
     }
 
     //WIP
-    public static function getVideos($user = null, $tags = null){
+    public static function getVideos($user = null, $tags = null)
+    {
 
     }
-    public static function getVideosByTitle($conn, $title){
-        $query = "SELECT id_video FROM ".video::$videoTable." WHERE title LIKE ";
+
+    public static function getVideosByTitle($conn, $title)
+    {
+        $query = "SELECT id_video FROM " . video::$videoTable . " WHERE title LIKE ";
         $query .= "'%";
         $query .= $title;
         $query .= "%'";
         $stmt = $conn->prepare($query);
         $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+        if ($data = $stmt->fetchall(PDO::FETCH_ASSOC)) {
             return $data;
-        }
-        else{
+        } else {
             return null;
         }
     }
-    public static function getVideosByTag($conn, $tag){
-        $query = "SELECT id_video FROM ".video::$tagsTable." WHERE tag LIKE :tag";
+
+    public static function getVideosByTag($conn, $tag)
+    {
+        $query = "SELECT id_video FROM " . video::$tagsTable . " WHERE tag LIKE :tag";
         $stmt = $conn->prepare($query);
         $stmt->bindParam('tag', $tag, PDO::PARAM_STR);
         $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+        if ($data = $stmt->fetchall(PDO::FETCH_ASSOC)) {
             return $data;
-        }
-        else{
+        } else {
             return null;
         }
     }
-    public static function getVideosByUser($conn, $user){
-        $query = "SELECT id_video FROM ".video::$uploadedVideosTable." uv INNER JOIN users u ON uv.id_user = u.id_user WHERE login LIKE ";
+
+    public static function getVideosByUser($conn, $user)
+    {
+        $query = "SELECT id_video FROM " . video::$uploadedVideosTable . " uv INNER JOIN users u ON uv.id_user = u.id_user WHERE login LIKE ";
         $query .= "'%";
         $query .= $user;
         $query .= "%'";
         $stmt = $conn->prepare($query);
         $stmt->execute();
-        if($data = $stmt->fetchall(PDO::FETCH_ASSOC)){
+        if ($data = $stmt->fetchall(PDO::FETCH_ASSOC)) {
             return $data;
-        }
-        else{
+        } else {
             return null;
         }
     }
+
     /**
      * Uzupełnia pola w obiekcie pobierając je z bazy danych za pomocą ID -wymagane IDvideo-
      */
     public function completeFromDb()
     {
-        if($this->completeVideo() < 0){
+        if ($this->completeVideo() < 0) {
             return -1;
-        }
-        elseif($this->completeTags() < 0 or $this->completeUser() < 0){
+        } elseif ($this->completeTags() < 0 or $this->completeUser() < 0) {
             return 0;
-        }
-        else{
+        } else {
             return 1;
         }
 
     }
 
     //Uzupełnia dane z tabeli video
-    private function completeVideo(){
-        if(!$this->IDvideo){
+    private function completeVideo()
+    {
+        if (!$this->IDvideo) {
             return -1;
-        }
-        else{
-            $query = "SELECT title, extension, url FROM ".video::$videoTable." WHERE id_video = ?";
+        } else {
+            $query = "SELECT title, extension, url FROM " . video::$videoTable . " WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
-            if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $this->title = $data['title'];
                 $this->extension = $data['extension'];
                 $this->url = $data['url'];
                 return 1;
-            }
-            else{
+            } else {
                 return -1;
             }
         }
     }
 
     //Uzupełnia dane z tabeli tags
-    private function completeTags(){
-        if(!$this->IDvideo){
+    private function completeTags()
+    {
+        if (!$this->IDvideo) {
             return -1;
-        }
-        else{
-            $query = "SELECT tag FROM ".video::$tagsTable." WHERE id_video = ?";
+        } else {
+            $query = "SELECT tag FROM " . video::$tagsTable . " WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
-            if($data = $stmt->fetchALL(PDO::FETCH_ASSOC)){
+            if ($data = $stmt->fetchALL(PDO::FETCH_ASSOC)) {
                 $this->tags = $data;
                 return 1;
-            }
-            else{
+            } else {
                 return -1;
             }
         }
     }
 
     //Uzupełnia dane z tabeli uploaded_videos
-    private function completeUser(){
-        if(!$this->IDvideo){
+    private function completeUser()
+    {
+        if (!$this->IDvideo) {
             return -1;
-        }
-        else{
-            $query = "SELECT id_user FROM ".video::$uploadedVideosTable." WHERE id_video = ?";
+        } else {
+            $query = "SELECT id_user FROM " . video::$uploadedVideosTable . " WHERE id_video = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->IDvideo, PDO::PARAM_INT);
             $stmt->execute();
-            if($data = $stmt->fetch(PDO::FETCH_ASSOC)){
+            if ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $this->uploadedBy = $data['id_user'];
                 return 1;
-            }
-            else{
+            } else {
                 return -1;
             }
         }
@@ -155,14 +155,13 @@ class Video
 
 
     //Dodaje video z obiektu do tabeli video oraz jego tagi do tabeli tags
-    public function addVideoToDb(){
-        if($this->addVideo() < 0) {
+    public function addVideoToDb()
+    {
+        if ($this->addVideo() < 0) {
             return -1;
-        }
-        elseif (($this->tags != null && $this->addTags() < 0) or ($this->addUploadedBy() < 0)){
+        } elseif (($this->tags != null && $this->addTags() < 0) or ($this->addUploadedBy() < 0)) {
             return 0;
-        }
-        else{
+        } else {
             return 1;
         }
     }
@@ -177,28 +176,30 @@ class Video
     }
 */
     //Dodaje video z obiektu do tabeli video
-    private function addVideo(){
+    private function addVideo()
+    {
 
-        $query = "INSERT INTO ".video::$videoTable."(/*IDvideo,*/ title, extension, url) VALUES (/*:ID,*/ :title, :extension, :url)";
+        $query = "INSERT INTO " . video::$videoTable . "(/*IDvideo,*/ title, extension, url) VALUES (/*:ID,*/ :title, :extension, :url)";
         $stmt = $this->conn->prepare($query);
         //$stmt->bindParam('ID', $this->IDvideo, PDO::PARAM_INT);
         $stmt->bindParam('title', $this->title, PDO::PARAM_STR);
         $stmt->bindParam('extension', $this->extension, PDO::PARAM_STR);
         $stmt->bindParam('url', $this->url, PDO::PARAM_STR);
-        if(!$stmt->execute()){
+        if (!$stmt->execute()) {
             return -1;
-        }
-        else {
+        } else {
             $this->IDvideo = $this->completeIdFromDB();
             return 1;
         }
 
     }
+
     //Do zrobienia
-    private function addTags(){
+    private function addTags()
+    {
         //$query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES :values";
         $values = '';
-        foreach ($this->tags as $tag){
+        foreach ($this->tags as $tag) {
             $values .= "('";
             $values .= $this->IDvideo;
             $values .= "','";
@@ -207,30 +208,32 @@ class Video
         }
         $values[strlen($values) - 1] = ';';
 
-        $query = "INSERT INTO ".video::$tagsTable."(id_video, tag) VALUES ";
+        $query = "INSERT INTO " . video::$tagsTable . "(id_video, tag) VALUES ";
         $query .= $values;
         $stmt = $this->conn->prepare($query);
         //$stmt->bindParam('values', $values, PDO::PARAM_STR);
-        if(!$stmt->execute()){
+        if (!$stmt->execute()) {
             return -1;
-        }
-        else {
+        } else {
             //$stmt->commit();
         }
     }
-    private function  addUploadedBy(){
-        $query = "INSERT INTO ".video::$uploadedVideosTable."(id_video, id_user) VALUES (:idvideo, :iduser)";
+
+    private function addUploadedBy()
+    {
+        $query = "INSERT INTO " . video::$uploadedVideosTable . "(id_video, id_user) VALUES (:idvideo, :iduser)";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam('idvideo', $this->IDvideo, PDO::PARAM_INT);
         $stmt->bindParam('iduser', $this->uploadedBy, PDO::PARAM_INT);
-        if(!$stmt->execute()){
+        if (!$stmt->execute()) {
             return -1;
-        }
-        else {
+        } else {
             return 1;
         }
     }
-    private function completeIdFromDB(){
+
+    private function completeIdFromDB()
+    {
         $query = "SELECT id_video FROM videos ORDER BY id_video DESC LIMIT 1";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -239,22 +242,23 @@ class Video
         return $id;
     }
 
-    public function updateUrlToDb(){
-        if($this->IDvideo != null){
-            $query = "UPDATE ".video::$videoTable." SET url = '";
+    public function updateUrlToDb()
+    {
+        if ($this->IDvideo != null) {
+            $query = "UPDATE " . video::$videoTable . " SET url = '";
             $query .= $this->url;
             $query .= "' WHERE id_video = :idvideo";
             $stmt = $this->conn->prepare($query);
             //$stmt->bindParam('newUrl', $this->url, PDO::PARAM_STR);
             $stmt->bindParam('idvideo', $this->IDvideo, PDO::PARAM_INT);
-            if(!$stmt->execute()){
+            if (!$stmt->execute()) {
                 return -1;
-            }
-            else {
+            } else {
                 return 1;
             }
         }
     }
+
     public function getUploadedByLogin()
     {
         $query = "SELECT login FROM users WHERE id_user = :iduser";
@@ -262,7 +266,7 @@ class Video
         $stmt->bindParam('iduser', $this->uploadedBy, PDO::PARAM_INT);
         $stmt->execute();
         //$login = $stmt->fetch(PDO::FETCH_ASSOC);
-        if($login = $stmt->fetch(PDO::FETCH_ASSOC)){
+        if ($login = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $login = $login['login'];
             return $login;
         }
@@ -340,13 +344,14 @@ class Video
     {
         $this->weight = $weight;
     }
+
     public function addWeight($weight)
     {
         $this->weight += $weight;
     }
 
 
-    public static function youtube_link_to_embed($link) 
+    public static function youtube_link_to_embed($link)
     {
         // Sprawdź, czy link jest poprawny
         if (!preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $link, $match)) {
@@ -357,50 +362,53 @@ class Video
     }
 
     public static function getVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
-    {  
-        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
+    {
+        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM " . video::$videoTable . "    
         JOIN tags ON tags.id_video = videos.id_video                        
         JOIN user_tags ON tags.tag = user_tags.tag                          
         JOIN users ON user_tags.user_id = users.id_user 
         JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
-        WHERE users.login = '".$loginUser."'";
+        WHERE users.login = '" . $loginUser . "'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetchAll());
+        return ($stmt->fetchAll());
     }
 
     public static function getEditorUsername($videoid, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
-    {  
-        $query = "SELECT users.login FROM ".video::$usersTable."                            
+    {
+        $query = "SELECT users.login FROM " . video::$usersTable . "                            
         JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
-        WHERE uploaded_videos.id_video = '".$videoid."'";
+        WHERE uploaded_videos.id_video = '" . $videoid . "'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetch());
+        return ($stmt->fetch());
     }
+
     public static function getVideoIdFromUrl($videoUrl, $db)  //Funkcja, która dla podanego url pobierze jego id
-    {  
-        $query = "SELECT videos.id_video FROM ".video::$videoTable." 
-        WHERE url LIKE '%".$videoUrl."%'";
+    {
+        $query = "SELECT videos.id_video FROM " . video::$videoTable . " 
+        WHERE url LIKE '%" . $videoUrl . "%'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetch());
+        return ($stmt->fetch());
     }
 
     public static function getVideo($videoid, $db) //Funkcja pobierająca jedno video
-    {  
-        $query = "SELECT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
-        WHERE id_video = '".$videoid."'";
+    {
+        $query = "SELECT videos.url, videos.extension, videos.title, videos.id_video FROM " . video::$videoTable . "    
+        WHERE id_video = '" . $videoid . "'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetch());
+        return ($stmt->fetch());
     }
 
-    public static function isEmbed($url) {
+    public static function isEmbed($url)
+    {
         return preg_match('/^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+$/', $url);
     }
 
-    public static function youtube_embed_to_link($url) {
+    public static function youtube_embed_to_link($url)
+    {
         preg_match('/^https:\/\/www\.youtube\.com\/embed\/([a-zA-Z0-9]+)/', $url, $matches);
         if (count($matches) > 1) {
             return 'https://www.youtube.com/watch?v=' . $matches[1];
@@ -410,8 +418,8 @@ class Video
     }
 
     public static function getSelectedTags($db, $ile_wybrano, $userid) //Funkcja zapisujaca wybrane przez nowozarejestrowanego uzytkownika wybrane tagi
-    { 
-        for($i = 0; $i < $ile_wybrano; $i++){
+    {
+        for ($i = 0; $i < $ile_wybrano; $i++) {
 
 
             $selectQ = "INSERT INTO user_tags (tag, user_id) VALUES (?, ?)";
@@ -424,7 +432,8 @@ class Video
         }
     }
 
-    public static function getVideosByLogin($login, $db) {
+    public static function getVideosByLogin($login, $db)
+    {
         $query = "SELECT url, extension, title FROM videos v 
                 JOIN uploaded_videos uv ON v.id_video = uv.id_video
                 JOIN users u ON uv.id_user = u.id_user
@@ -440,19 +449,16 @@ class Video
 
     public static function getStaticVideosWithUserTags($loginUser, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
     {
-        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM ".video::$videoTable."    
+        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM " . video::$videoTable . "    
         JOIN tags ON tags.id_video = videos.id_video                        
         JOIN user_tags ON tags.tag = user_tags.tag                          
         JOIN users ON user_tags.user_id = users.id_user 
         JOIN uploaded_videos ON uploaded_videos.id_user = users.id_user
-        WHERE users.login = '".$loginUser."'";
+        WHERE users.login = '" . $loginUser . "'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return($stmt->fetchAll());
+        return ($stmt->fetchAll());
     }
-
-
-
 
 
     public function setTitle($title)
@@ -461,7 +467,8 @@ class Video
     }
 
 
-    public function getVideoData(){
+    public function getVideoData()
+    {
         $stmt = $this->conn->prepare("SELECT uploaded_videos.id_video, videos.title, users.login, videos.url FROM uploaded_videos 
     JOIN videos ON uploaded_videos.id_video = videos.id_video
     JOIN users ON uploaded_videos.id_user = users.id_user");
@@ -469,7 +476,7 @@ class Video
         $videoData = $stmt->fetchAll();
         $videoList = [];
 
-        foreach($videoData as $row) {
+        foreach ($videoData as $row) {
             $videoObject = new Video($this->conn);
             $videoObject->id_video = $row['id_video'];
             $videoObject->title = $row['title'];
@@ -482,19 +489,18 @@ class Video
         return $videoList;
     }
 
-    public function isReported() {
-        $stmt = $this->conn->prepare("SELECT * FROM reported_videos JOIN reported_video_reasons ON reported_videos.video_id = reported_video_reasons.video_id
+    public function isReported()
+    {
+        $stmt = $this->conn->prepare("SELECT DISTINCT * FROM reported_videos JOIN reported_video_reasons ON reported_videos.video_id = reported_video_reasons.video_id
+        JOIN reasons on reasons.reason_id = reported_video_reasons.reason_id
          WHERE reported_videos.video_id = :id_video");
         $stmt->bindParam(':id_video', $this->id_video, PDO::PARAM_INT);
         $stmt->execute();
-        if($stmt->rowCount() > 0)
-        {
+        if ($stmt->rowCount() > 0) {
 
             $reportedVideo = $stmt->fetchAll();
-            foreach ($reportedVideo as $row)
-            {
+            foreach ($reportedVideo as $row) {
                 $reportedVideoData[] = array(
-                    'id_reason' => $row['id_reason'],
                     'reason' => $row['reason'],
                     'video_id' => $row['video_id'],
                     'description' => $row['description']
@@ -502,9 +508,35 @@ class Video
             }
             $reportedVideo = json_encode($reportedVideoData);
             return $reportedVideo;
-        }
-        else
+        } else
             return 2;
+    }
+
+
+   public function deleteVideoReport()
+   {
+
+       $this->deleteFromTable('reported_video_reasons', 'video_id');
+       $this->deleteFromTable('reported_videos', 'video_id');
+
+   }
+
+   public function deleteCascadeVideo()
+   {
+       $this->deleteFromTable('reported_video_reasons', 'video_id');
+       $this->deleteFromTable('reported_videos', 'video_id');
+       $this->deleteFromTable('uploaded_videos', 'id_video');
+       $this->deleteFromTable('videos', 'id_video');
+   }
+
+
+    public function deleteFromTable($tableName, $columnName)
+    {
+        $deleteQuery = "DELETE FROM " . $tableName . " WHERE " . $columnName . " = ?";
+        $stmt= $this->conn->prepare($deleteQuery);
+        $stmt-> bindParam(1, $this->id_video, PDO::PARAM_INT);
+        $stmt->execute();
+
     }
 
 

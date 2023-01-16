@@ -15,8 +15,18 @@ $videoData = $video->getVideoData();
 
 
 
-//print_r($videoData);
+if(isset($_GET['reject']))
+{
+
+    $video->id_video = $_GET['reject'];
+    $video->deleteVideoReport();
 
 
+}
+else if(isset($_GET['deleteVideo']))
+{
+    $video->id_video = $_GET['deleteVideo'];
+    $video->deleteCascadeVideo();
+}
 
 

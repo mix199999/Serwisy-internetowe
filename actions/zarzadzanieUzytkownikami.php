@@ -1,8 +1,7 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/conf/connDB.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/class/Users.php';
-
+require_once CONN_PATH;
+require_once USER_CLASS_PATH;
 
 
 $database = new Database();
@@ -28,23 +27,18 @@ if(isset($_POST['alterUser']))
 
 
 
-
+    echo '<script>$("#example").DataTable().ajax.reload();</script>';
 
 
 }
 
-if(isset($_GET['delete']))
-{
-
-
+if(isset($_GET['delete'])) {
     $userToModify->id_user = $_GET['delete'];
-
-    if($userToModify->deleteCascadeUser())
-    {
-        echo "<script>location.reload();</script>";
-
+    if($userToModify->deleteCascadeUser()) {
+        // remove the row from the table using javascript
+        echo '<script>';
+        echo '  table.row("#userId"+userId).remove().draw();';
+        echo '</script>';
     }
-
-
-
 }
+

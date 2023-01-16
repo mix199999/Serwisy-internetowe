@@ -15,7 +15,7 @@
             <?php
             if($videoExist == true)         //sprawdzamy czy film wogole istnieje
             {              
-                if($userRole == 1) echo "<div class='mt-3 text-center mb-5'><a href='index.php?action=zarzadzanieUzytkownikami'> <button type='button' class='btn btn-primary'>Zarządzanie użytkownikami</button></a></div>";       //jezeli admin to dodajemy mu przycisk co przenosi do zarzadzania uzytkownikami
+                if($userRole == 1) echo "<div class='mt-3 text-center mb-5'><a href='index.php?action=videosAdministration'> <button type='button' class='btn btn-primary'>Zarządzanie użytkownikami</button></a></div>";       //jezeli admin to dodajemy mu przycisk co przenosi do zarzadzania uzytkownikami
                 
                 if(!isset($_GET['v']))      //jezeli w linku nie jest ustawiony parametr v
                 {       

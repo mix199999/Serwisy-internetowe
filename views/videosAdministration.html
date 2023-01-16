@@ -103,11 +103,18 @@
                 </ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger " data-bs-dismiss="modal">Close</button>
+              <a  id="deleteBt" >
+                  <button type="submit" class="btn btn-danger float-end" id="delete-video-btn" name="deleteVideo">Delete Video</button>
+              </a>
+                <a id="rejectBt" >
+                    <button type="submit" class="btn btn-secondary float-start" id="reject-report-btn" name="reject">Reject Report</button>
+                </a>
+
             </div>
         </div>
     </div>
 </div>
+
 
 
 <style>
@@ -130,7 +137,8 @@
 
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+       var table =  $('#example').DataTable();
+
     } );
 
 
@@ -168,6 +176,9 @@
                 console.log(reportedVideo[i].reason);
             }
 
+            $('#deleteBt').attr("href", "index.php?deleteVideo=" + videoId);
+            $('#rejectBt').attr("href", "index.php?reject=" + videoId);
+
             $('#videoTitle').text(videoTitle);
             $('#description').text(reportedVideo[0].description);
             var reasonsList = $('#reasonsList');
@@ -176,6 +187,10 @@
                 reasonsList.append('<li>'+reportedVideo[i].reason+'</li>');
             }
 
+        })
+
+        $('#checkReport').on('hide.bs.modal', function () {
+            table.row("#videoId"+videoId).remove().draw();
         })
 
     });

@@ -5,10 +5,12 @@ define('CONN_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/conf/connDB.ph
 define('VIDEO_CLASS_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/class/Video.php');
 define('USER_CLASS_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/class/Users.php');
 
-define('TAGS_CLASS_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/class/Tags.php');
+define('TAGS_CLASS_PATH', str_replace('\\', '/', dirname(__FILE__)) . '/class/Tag.php');
 define('_STYLES', str_replace('\\', '/', dirname(__FILE__)) . '/styles/');
 define('_SCRIPTS', str_replace('\\', '/', dirname(__FILE__)) . '/scripts/');
 define('_JQUERY', str_replace('\\', '/', dirname(__FILE__)) . '/scripts/jquery-3.6.3.js');
+//path to icons
+define('_ICONS', str_replace('\\', '/', dirname(__FILE__)) . '/icons/');
 
 
 // require_once CONN_PATH;

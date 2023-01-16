@@ -3,7 +3,7 @@
 require_once CONN_PATH;
 require_once USER_CLASS_PATH;
 require_once TAGS_CLASS_PATH;
-
+require_once VIDEO_CLASS_PATH;
 
 
 
@@ -20,7 +20,10 @@ if(isset($_POST["tag"]) && isset($_POST["submit"])) // sprawdzenie czy user wybr
     $iduser = intval($_SESSION["id_user"]);
     Video::getSelectedTags($db, $ile_wybrano, $iduser);
 
-    header('Location: index.php?action=StartPage');
+    echo'<script>location.href="index.php?action=StartPage"</script>';
+
+
+
 
 
 }

@@ -18,7 +18,7 @@
 
   <div class="row h-100">
 
-      <?php if(count($result) === 0 ): ?>
+      <?php if($result == 0): ?>
     <div class="col-12 d-flex align-items-center justify-content-center">
       <button class="btn btn-success btn-lg"   data-toggle="modal" data-target="#newTicket">Create New Ticket</button>
       <?php else: ?>
@@ -43,6 +43,7 @@
             else if($row[3] == 'payment')
             echo '<span class="badge bg-warning">'.$row[3].'</span>';
             echo '</li>';
+           
           }
           ?>
         </div>
@@ -50,7 +51,7 @@
       <?php endif; ?>
     </div>
   </div>
-
+ 
 
   <div class="modal" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -165,7 +166,12 @@
       var button = $(event.relatedTarget);
 
       var ticketId = button.data('id-case');
-      var loggedUser = button.data('logged-user');
+      var loggedUser =  <?php echo $row[0];  ?>
+
+      console.log("ticketId: "+ticketId);
+      console.log("loggedUser: "+loggedUser);
+
+
       if(ticketId != undefined)
       {
         console.log(ticketId);
@@ -194,9 +200,9 @@
 
     })
 
-   // $('#newTicket').on('hidden.bs.modal', function (e) {
-    //  location.reload();
-  // })
+   $('#newTicket').on('hidden.bs.modal', function (e) {
+     location.reload();
+  })
   })
 
 

@@ -460,6 +460,9 @@ class Video
         return ($stmt->fetchAll());
     }
 
+    
+
+
 
     public function setTitle($title)
     {
@@ -537,6 +540,19 @@ class Video
         $stmt-> bindParam(1, $this->id_video, PDO::PARAM_INT);
         $stmt->execute();
 
+    }
+
+
+    public static function getVideosForStartPage($id_user, $db) //Funkcja pobierajaca adresy URL dla użytkownika o jego wybranych tagach
+    {
+        $query = "SELECT DISTINCT videos.url, videos.extension, videos.title, videos.id_video FROM " . video::$videoTable . "    
+        JOIN tags ON tags.id_video = videos.id_video                        
+        JOIN user_tags ON tags.tag = user_tags.tag                          
+        JOIN users ON user_tags.user_id = users.id_user        
+        WHERE users.id_user = '" . $id_user . "'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+        return ($stmt->fetchAll());
     }
 
 

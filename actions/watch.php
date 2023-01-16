@@ -68,7 +68,7 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
 }
 else //jezeli nie jest ustawiony parametr v
 {
-    $urlTable = Video::getVideosWithUserTags($user->login, $db);                        //pobieramy tablice wszystkich filmow z tagami
+    $urlTable = Video:: getVideosForStartPage( $_SESSION['id_user'],$db);                   //pobieramy tablice wszystkich filmow z tagami
     if(!empty($urlTable[$currentIndex]['extension']))                       //sprawdzenie czy taki film wgl istnieje
     {
         if (!empty(Video::getEditorUsername($urlTable[$currentIndex]['id_video'], $db)))    //sprawdzamy czy jest tworca danego filmu bo niektore byly na sztywno bez

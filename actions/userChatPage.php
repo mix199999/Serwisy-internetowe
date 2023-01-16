@@ -43,7 +43,7 @@ if(isset($_POST['sendTicket']))
     $user->createNewTicket($ticketTitle, $ticketType, $ticketMessage);
 
 
-
+    echo'<script>location.href="index.php?action=userChatPage"</script>';
 
 
 

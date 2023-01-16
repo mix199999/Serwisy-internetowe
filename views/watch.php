@@ -63,7 +63,16 @@
 
             else  //jezeli film nie istnieje wyswietlamy komunikat ze zdjeciem o jego braku
             {
-            echo "<div class='text-center col-md-11'><img src='../icons/errorVideo.png' alt='error video'><p class='h1 text-center'>Brak filmu</p></div>";            
+              
+                echo "<div class='col-md-12 text-center mt-3'><img src='icons/errorVideo.png' alt='error' width='300' height='300'></div>";
+                echo "<div class='col-md-12 text-center mt-3'><h1 class='mt-3 font-weight-bold'>Ten film nie istnieje</h1></div>";
+                //może chcesz wybrać ponownie tagi?
+                //stwórz przycisk  przekierowuje do strony newUser.php 
+                echo "<div class='col-md-12 text-center mt-3'><a href='index.php?action=newUser'><button class='btn btn-secondary mx-2'>Wybierz ponownie tagi</button></a></div>";
+
+
+            
+               
             }
             ?>
       </div>

@@ -24,7 +24,7 @@
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a href="/index.php?action=StartPage" class="navbar-brand ps-3">User panel</a>
+            <a href="index.php?action=StartPage" class="navbar-brand ps-3">User panel</a>
             <!-- Sidebar Toggle-->
             <button onclick="hideSideBar()" class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
 <!--
@@ -90,6 +90,9 @@
                 document.getElementById("search-tag2").style.display = "inline-block	";
                 document.getElementById("search-tag3").style.display = "inline-block	";
             });
+
+
+            
         })
 
 </script>

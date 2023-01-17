@@ -9,6 +9,10 @@ $user = new User($db);
 
 $user->id_user = $_SESSION["id_user"];
 
+
+
+
+
 $user->getUserInfo();
 //no kurde nie dzialalo inaczej meh
 $_SESSION['userName'] = $user->login;

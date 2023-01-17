@@ -12,6 +12,7 @@ $user = new User($db);
 
 
 try {
+        //logowanie
 
         if(isset($_POST["login"])  && isset($_POST["passwd"]) && ($_POST["email"])== '')
         {	
@@ -45,11 +46,15 @@ try {
 
 
             } else {
-                $loginMessage = 'Invalid login! Please try again.';
+                
+                  // alert can't login
+                echo "<script>alert('Nie udało się zalogować');</script>";
+                  
+
             }
         }
 
-
+        //rejestracja i logowanie
         else if(isset($_POST["login"])  && isset($_POST["passwd"])&& $_POST["email"] != '')
         {
             $user = new User($db);
@@ -58,22 +63,27 @@ try {
             $user->passwd= $_POST["passwd"];
             $user->email= $_POST["email"];
 
-            $user -> addUser();
-                $_SESSION["action"] = "newUser";
-                echo $_SESSION["user_type"];
-                $_SESSION["user_type"] = 4;
-                header('Location: index.php?action=newUser.php');
-            
-            
+           if( $user -> addUser())
+           {
+            $_SESSION["action"] = "newUser";
                
-                
+            $_SESSION["user_type"] = $user->id_priv;
+            header('Location: index.php?action=newUser.php');
+           }
+              else
+              {
+                echo "<script>alert('Nie udało się zarejestrować');</script>";
+              }
                 
             
-                
-
             
-
         }
+
+ 
+        
+
+       
+        
         
        
 

@@ -32,7 +32,7 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
                 $editorId = $editor['login'];                                                 //z editor wyciagamy login i mamy login tworcy
             } else 
             {
-                $editorId = 'null';                                                   //dla braku edytora ustawiamy brak edytora
+                $editorId = '';                                                   //dla braku edytora ustawiamy brak edytora
             }
         }
         else
@@ -57,7 +57,7 @@ if(isset($_GET['v']))       //sprawdzamy czy w linku podana jest zmienna v
                 $editor = Video::getEditorUsername($oneVideoUrl['id_video'], $db);
                 $editorId = $editor['login'];
             } else {
-                    $editorId = 'null';
+                    $editorId = '';
             }
         }
         else
@@ -79,7 +79,7 @@ else //jezeli nie jest ustawiony parametr v
         } else 
         {
             $id_video_value = $urlTable[$currentIndex]['id_video'];
-            $editorName = 'null';                                                   //dla braku edytora ustawiamy brak edytora
+            $editorName = '';                                                   //dla braku edytora ustawiamy brak edytora
         }
     }
     else

@@ -34,34 +34,73 @@ class User
         }
     }
 
-
-    public function addUser()
+    public function checkIfExist()
     {
-        if ($this->login && $this->passwd && $this->email && $this->id_priv) {
-            $insertQuery = "INSERT INTO users (id_priv,login, passwd, email ) VALUES (?,?,?,?)";
-            $stmt = $this->conn->prepare($insertQuery);
-            $stmt->bindParam(1, $this->id_priv, PDO::PARAM_INT);
-            $stmt->bindParam(2, $this->login, PDO::PARAM_STR);
-            $stmt->bindParam(3, $this->passwd, PDO::PARAM_STR);
-            $stmt->bindParam(4, $this->email, PDO::PARAM_STR);
-            $stmt->execute();
-            $getQuery = "SELECT * FROM " . User::$userTable . " WHERE login = ?";
-            $stmt = $this->conn->prepare($getQuery);
+        if ($this->login) {
+            $sqlQuery = "SELECT * FROM " . User::$userTable . " WHERE login = ?";
+            $stmt = $this->conn->prepare($sqlQuery);
             $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
             $stmt->execute();
             if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                $_SESSION["user_type"] = $user['id_priv'];
-                $_SESSION["id_user"] = $user['id_user'];
-
                 return 1;
             } else {
                 return 0;
             }
-
         } else {
             return 0;
         }
+    }
+
+
+    public function addUser()
+    {
+        if ($this->login && $this->passwd && $this->email && $this->id_priv) 
+        {
+            //check if user exists
+            if(!$this->checkIfExist())
+            {
+                $insertQuery = "INSERT INTO users (id_priv,login, passwd, email ) VALUES (?,?,?,?)";
+                $stmt = $this->conn->prepare($insertQuery);
+                $stmt->bindParam(1, $this->id_priv, PDO::PARAM_INT);
+                $stmt->bindParam(2, $this->login, PDO::PARAM_STR);
+                $stmt->bindParam(3, $this->passwd, PDO::PARAM_STR);
+                $stmt->bindParam(4, $this->email, PDO::PARAM_STR);
+                $stmt->execute();
+                $getQuery = "SELECT * FROM " . User::$userTable . " WHERE login = ?";
+                $stmt = $this->conn->prepare($getQuery);
+                $stmt->bindParam(1, $this->login, PDO::PARAM_STR);
+               if($stmt->execute()) 
+               {
+                    if ($user = $stmt->fetch(PDO::FETCH_ASSOC))
+                    {
+    
+                        $_SESSION["user_type"] = $user['id_priv'];
+                        $_SESSION["id_user"] = $user['id_user'];
+    
+                        return 1;
+                    }
+                    else //if connot fetch user
+                        return 0;
+                    
+                } 
+                else //cannot execute query
+                {
+                    return 0;
+                }
+    
+            } 
+            else //if not all data is set
+            {
+                return 0;
+            }
+
+        }
+        else //if user exists
+        {
+            return 0;
+        }   
+
+      
 
     }
 
@@ -279,6 +318,28 @@ class User
 
     }
 
+    //fucntion to get all tickets for admin
+    public function getTickets()
+    {
+        $getTickets = "SELECT * FROM tickets JOIN messages ON messages.ticket_id = tickets.ticket_id 
+        AND (messages.sender_id = ? OR tickets.status = false)";
+    
+        $stmt= $this->conn-> prepare($getTickets);
+        $stmt-> bindParam(1,$this->id_user, PDO::PARAM_INT);
+        $stmt-> execute();
+    
+        if($stmt->rowCount() > 0)
+        {
+            $results= $stmt->fetchAll();
+            return $results;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+
 
 
 
@@ -309,19 +370,54 @@ class User
 
     public  function sendMessage( $id_ticket, $message )
     {
-        $sendMessage= "INSERT INTO messages (ticket_id, message, sender_id) VALUES (?,?,?)";
-        $stmt = $this->conn->prepare($sendMessage);
-        $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
-        $stmt->bindParam(2, $message, PDO::PARAM_STR);
-        $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
-        if( $stmt->execute())
+        
+        
+        $this->id_role = self::checkRole($this->conn, $this->id_user);
+        if($this->id_role == 1)
         {
-            return 1;
+            $sendMessage= "INSERT INTO messages (ticket_id, message, sender_id) VALUES (?,?,?)";
+            $stmt = $this->conn->prepare($sendMessage);
+            $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
+            $stmt->bindParam(2, $message, PDO::PARAM_STR);
+            $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
+            if( $stmt->execute())
+            {
+                //update status of the ticket
+                $updateStatus = "UPDATE tickets SET status = true WHERE ticket_id = ?";
+                $stmt = $this->conn->prepare($updateStatus);
+                $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
+                $stmt->execute();
+                return 1;
+               
+            }
+            else
+            {
+                return 0;
+            }
         }
         else
         {
-            return 0;
+                $sendMessage= "INSERT INTO messages (ticket_id, message, sender_id) VALUES (?,?,?)";
+            $stmt = $this->conn->prepare($sendMessage);
+            $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
+            $stmt->bindParam(2, $message, PDO::PARAM_STR);
+            $stmt->bindParam(3, $this->id_user, PDO::PARAM_INT);
+            if( $stmt->execute())
+            {
+                $updateStatus = "UPDATE tickets SET status = false WHERE ticket_id = ?";
+                $stmt = $this->conn->prepare($updateStatus);
+                $stmt->bindParam(1, $id_ticket, PDO::PARAM_INT);
+                $stmt->execute();
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
         }
+
+
+        
 
     }
 
@@ -440,6 +536,49 @@ class User
         $stmt->execute($values);
     }
 
+
+    public function getUserPassword()
+    {
+        $getPassword = "SELECT passwd FROM users WHERE id_user = ?";
+        $stmt = $this->conn->prepare($getPassword);
+        $stmt-> bindParam(1, $this->id_user, PDO::PARAM_INT);
+        if($stmt->execute() && $stmt->rowCount() > 0)
+        {
+            $result = $stmt->fetch();
+            $password = $result['passwd'];
+            return $password;
+        }
+    }
+
+    //function to check if password matches with the one in database
+    public function checkPassword()
+    {
+        if($this->oldPasswd == $this->getUserPassword())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+        
+    }
+
+    public function changePassword()
+    {
+        $changePassword = "UPDATE users SET passwd = ? WHERE id_user = ?";
+        $stmt = $this->conn->prepare($changePassword);
+        $stmt-> bindParam(1, $this->newPasswd, PDO::PARAM_STR);
+        $stmt-> bindParam(2, $this->id_user, PDO::PARAM_INT);
+        if($stmt->execute())
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
 
 

@@ -44,6 +44,60 @@ if(isset($_POST["Colorsubmit"])){ //sprawdzenie czy w tabeli istnieje już user 
         echo "<style> body{ background-color: ".$kolor."} </style>";
     }
 
+
+
+
+    
 }
 
 
+if(isset($_GET['changePassword']))
+    {
+
+        if($_GET['currentPassword'] =="" || $_GET['newPassword'] == "" || $_GET['confirmNewPassword'] == "")
+        {
+            echo "<script>alert('Wypełnij wszystkie pola!');</script>";
+            return;
+        }
+        else
+        {
+//sprawdzenie czy nowe hasła są takie same
+            if($_GET['newPassword'] == $_GET['confirmNewPassword'])
+            {
+                $user->newPasswd = $_GET['newPassword']; 
+                $user->oldPasswd = $_GET['currentPassword']; 
+
+                if($user->checkPassword())
+                {
+                    if($user->changePassword())
+                    {
+
+
+                        echo "<script>alert('Hasło zostało zmienione!');</script>";
+                    }
+                    else
+                    {
+                        echo "<script>alert('Wystąpił błąd podczas zmiany hasła!');</script>";
+                    }
+                }
+
+                else
+                {
+                    echo "<script>alert('Stare hasło jest niepoprawne!');</script>";
+                }
+
+                //sprawdzenie czy stare hasło jest takie samo jak w bazie danych
+
+
+
+                
+            }
+            else
+            {
+            echo "<script>alert('Hasła nie są takie same!');</script>";
+            }
+        }
+
+        
+
+    }

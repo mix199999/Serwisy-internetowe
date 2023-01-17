@@ -15,8 +15,11 @@
     ?>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Logowanie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
 <section class="vh-100 gradient-custom">
@@ -99,8 +102,48 @@
     </div>
 </section>
 
+
+
+<!-- Modal "login and password are required"-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Error</h5>
+        
+          
+        
+      </div>
+      <div class="modal-body">
+        
+        All fields are required!
+      </div>
+      <div class="modal-footer">
+    
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+// sprawdzenie czy login i hasło są wpisane
+$("form").submit(function(e){
+  if(!$("#log").val() || !$("#passw").val()){
+    $("#loginModal").modal("show");
+    e.preventDefault();
+    setTimeout(function(){
+      window.location.href = "index.php?action=logowanie";
+    }, 2000);
+  }
+});
+
+
+</script>
+
 <?php echo "<script src='scripts/"."logowanie.js' type='text/javascript'></script>"; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -442,8 +442,13 @@ class Video
         $stmt = $db->prepare($query);
         $stmt->bindParam(':login', $login);
         $stmt->execute();
+            //check if returned rows are more than 0
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
@@ -552,7 +557,16 @@ class Video
         WHERE users.id_user = '" . $id_user . "'";
         $stmt = $db->prepare($query);
         $stmt->execute();
-        return ($stmt->fetchAll());
+        //check if returned rows are more than 0
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return false;
+        }
+
+        
+
+       
     }
 
 

@@ -75,6 +75,20 @@
 
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=watch" class="nav-link">Oglądaj filmy</a></div>
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=ustawienia" class="nav-link">Ustawienia</a></div>
+                          <?php
+                          require_once USER_CLASS_PATH;
+                          require_once CONN_PATH;
+                          require_once VIDEO_CLASS_PATH;
+                          $database = new Database();
+                          $db = $database->getConnection();
+                            $userId = $_SESSION['id_user'];
+                                //go to userChannel.php with id of logged user
+                                $login = User::getUserLogin($userId, $db);
+                                if(Video::getVideosByLogin($login,$db) != false)
+                                echo "<div class='sb-sidenav-menu-heading'><a href='index.php?action=userChannel&channel=".$login."' class='nav-link'>Twoje konto</a></div>";
+                          ?>
+
+                          
 
 
 

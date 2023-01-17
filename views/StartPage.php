@@ -14,9 +14,15 @@
 
 
 <div class="col-12 min-vh-100 p-lg-5">
+
     <div class="row col-12 vh-100 d-flex justify-content-center align-items-start">
         <div class="d-flex flex-wrap justify-content-center h-25">
-            <?php foreach ($modifiedLinks  as $link): ?>
+        <?php 
+                   
+                   //if there are any videos, display them
+               foreach ($modifiedLinks  as $link): 
+           
+           ?>
             <div class="bs-card-video h-100 m-3 col-2 position-relative" data-link="<?php echo $link['url']; ?>"  data-video-title="<?php echo $link['title']; ?>">
                 <a class="d-block h-100 w-100" >
                     <iframe src="<?php echo $link['url']; ?>" class="card-img-top rounded h-100" ></iframe>

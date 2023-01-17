@@ -1,6 +1,12 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'].'/conf/connDB.php';
+define('_SERWER_PATH', str_replace('\\', '/', dirname(dirname(__FILE__))));
+
+// Include the User class file
+
+require_once _SERWER_PATH . '/class/Users.php';
+require_once _SERWER_PATH . '/conf/connDB.php';
+
 
 $database = new Database();
 $db = $database->getConnection();

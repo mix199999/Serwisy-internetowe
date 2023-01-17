@@ -47,6 +47,11 @@
           }
           ?>
         </div>
+        <li class="list-group-item list-group-item-action text-center" >
+                <button class="btn btn-success btn-lg "   data-toggle="modal" data-target="#newTicket">Create New Ticket</button>
+          </li>
+
+
       </ul>
       <?php endif; ?>
     </div>

@@ -28,7 +28,9 @@
     <div class="row col-12 h-100 d-flex justify-content-center align-items-start">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <button id="button1" class="btn btn-secondary m-3 px-3" >Zmień hasło</button>
+                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#passwordChangeModal">
+                    Zmień hasło
+                </button>
                 </li>
                 <li class="list-group-item">
                     <form  method="POST" action="index.php?action=ustawienia">
@@ -77,6 +79,39 @@
 
 
 
+<!-- Modal Change password-->
+<div class="modal fade" id="passwordChangeModal" tabindex="-1" role="dialog" aria-labelledby="passwordChangeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordChangeModalLabel">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method = 'GET' action="index.php?action=ustawienia">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="currentPassword">Current Password</label>
+            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="Enter your current password">
+          </div>
+          <div class="form-group">
+            <label for="newPassword">New Password</label>
+            <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter your new password">
+          </div>
+          <div class="form-group">
+            <label for="confirmNewPassword">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm your new password">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" name="changePassword" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -93,6 +128,12 @@
 
 $(document).ready(function(){
 
+    var rootPath = "<?php echo str_replace('\\', '/', dirname(dirname(__FILE__))) ?>";
+                
+                var rootPath = rootPath.substr(rootPath.lastIndexOf('/') + 1);
+               
+                var rootPath = 'http://localhost/' + rootPath + '/scripts/';
+
   document.getElementById("changePrivil-form").addEventListener("submit", function(event) {
         event.preventDefault(); //zeby nie byl od razu wyslany
     
@@ -105,7 +146,7 @@ $(document).ready(function(){
         } else {
             $.ajax({  
             type: 'POST',  
-            url: '/scripts/changePrivil.php', 
+            url: rootPath+'changePrivil.php', 
             data: {reason3: reason3, title3: title3, id_user3: id_user3},
             success: function(response) {
                 console.log(response);

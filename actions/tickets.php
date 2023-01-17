@@ -16,7 +16,7 @@ $user = new User($db);
 $user->id_user = $_SESSION['id_user'];;
 
 
-$result = User::getTable($db, 'tickets');
+$result = $user->getTickets();
 
 
 

@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" ></script>
+
+
+    <?php  echo "<script src='scripts/jquery-3.6.3.js'></script>"?>
 </head>
     <body>
 
@@ -102,5 +106,28 @@
                 </div>
             </div>
         </div>
+
+
+
+        <script>
+$(document).ready(function() {
+    $("input[name='type']").change(function() {
+        if ($("#filechck").is(":checked")) {
+            $("#fileChoice").show();
+            $("#urlChoice").hide();
+        } else if ($("#urlchck").is(":checked")) {
+            $("#fileChoice").hide();
+            $("#urlChoice").show();
+        }
+    });
+});
+</script>
+
+
+
     </body>
+
+
+
+
 </html>

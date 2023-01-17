@@ -107,16 +107,16 @@
         })
 
 
-        $('#issue').on('hidden.bs.modal', function (e) 
-        {
-            var requestID = $('input[name="requestID"]').val();
-            console.log(requestID);
+        // $('#issue').on('hidden.bs.modal', function (e) 
+        // {
+        //     var requestID = $('input[name="requestID"]').val();
+        //     console.log(requestID);
             
-            $('#'+requestID).attr('class', 'badge bg-danger');
+        //     $('#'+requestID).attr('class', 'badge bg-danger');
            
-            $('#'+requestID).text('Closed');
+        //     $('#'+requestID).text('Closed');
             
-        });
+        // });
 
 
 

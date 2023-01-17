@@ -48,7 +48,7 @@
                         <td><?php echo $video->getTitle();?></td>
                         <td><?php echo $video->login;?></td>
                         <td style="text-align:center" >
-                        <a  href="index.php?action=videosAdministration&deleteVideo=<?php echo $video->id_video;?>" data-id-video="<?php echo $video->id_video;?>">
+                        <a  href="index.php?action=&deleteVideo=<?php echo $video->id_video;?>" data-id-video="<?php echo $video->id_video;?>">
 
                             <button type="submit" class="btn btn-danger " id="delete-video-btn" name="deleteVideo"  data-id-video="<?php echo $video->id_video;?>">Delete Video</button>
                         </a>

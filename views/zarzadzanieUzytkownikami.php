@@ -13,7 +13,7 @@
 
   
    
-    echo "<link href='styles/".$_SESSION['action'].".css' rel='stylesheet' />";
+    
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
 

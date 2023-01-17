@@ -26,10 +26,12 @@ if(isset($_POST['send']))
     if($_POST['send'] == 'accept')
     {
         User::replyForUserRequest($adminMessage,$request_id,true,$db);
+        echo'<script>location.href="index.php?action=userRequests"</script>';
     }
     else if($_POST['send'] == 'reject')
     {
         User::replyForUserRequest($adminMessage,$request_id,false,$db);
+        echo'<script>location.href="index.php?action=userRequests"</script>';
     }
 
 

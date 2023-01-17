@@ -27,7 +27,7 @@ if(isset($_POST['alterUser']))
 
 
 
-    echo '<script>$("#example").DataTable().ajax.reload();</script>';
+     echo'<script>location.href="index.php?action=zarzadzanieUzytkownikami"</script>';
 
 
 }
@@ -35,10 +35,8 @@ if(isset($_POST['alterUser']))
 if(isset($_GET['delete'])) {
     $userToModify->id_user = $_GET['delete'];
     if($userToModify->deleteCascadeUser()) {
-        // remove the row from the table using javascript
-        echo '<script>';
-        echo '  table.row("#userId"+userId).remove().draw();';
-        echo '</script>';
+        
     }
+    echo'<script>location.href="index.php?action=zarzadzanieUzytkownikami"</script>';
 }
 

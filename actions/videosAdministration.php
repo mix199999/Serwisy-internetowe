@@ -27,6 +27,7 @@ else if(isset($_GET['deleteVideo']))
 {
     $video->id_video = $_GET['deleteVideo'];
     $video->deleteCascadeVideo();
+    echo'<script>location.href="index.php?action=videosAdministration"</script>';
 }
 
 

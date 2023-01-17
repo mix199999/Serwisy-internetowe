@@ -171,7 +171,8 @@
       var button = $(event.relatedTarget);
 
       var ticketId = button.data('id-case');
-      var loggedUser =  <?php echo $row[0];  ?>
+      var loggedUser =  <?php echo $_SESSION["id_user"];  ?>;
+      console.log("user: "+loggedUser);
 
       console.log("ticketId: "+ticketId);
       console.log("loggedUser: "+loggedUser);

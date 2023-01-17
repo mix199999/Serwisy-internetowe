@@ -402,10 +402,10 @@ class Video
         return ($stmt->fetch());
     }
 
-    public static function isEmbed($url)
-    {
-        return preg_match('/^https:\/\/www\.youtube\.com\/embed\/[a-zA-Z0-9]+$/', $url);
-    }
+	public static function isEmbed($url)
+	{
+		return preg_match('/^https:\/\/www\.youtube\.com\/embed\/.+$/', $url);
+	}
 
     public static function youtube_embed_to_link($url)
     {

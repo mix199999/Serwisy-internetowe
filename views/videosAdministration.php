@@ -106,9 +106,10 @@
                 </ul>
             </div>
             <div class="modal-footer">
-              <a  id="delete-video-btn >
-              <button type="submit" class="btn btn-danger float-end" " name="deleteVideo">Delete Video</button>
-              </a>
+               
+                <a id="deleteBt" >
+                    <button type="submit" class="btn btn-danger float-start" id="delete-report-btn" name="deleteVideo">Delete Video</button>
+            
                 <a id="rejectBt" >
                     <button type="submit" class="btn btn-secondary float-start" id="reject-report-btn" name="reject">Reject Report</button>
                 </a>

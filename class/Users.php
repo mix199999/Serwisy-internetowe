@@ -321,8 +321,9 @@ class User
     //fucntion to get all tickets for admin
     public function getTickets()
     {
-        $getTickets = "SELECT * FROM tickets JOIN messages ON messages.ticket_id = tickets.ticket_id 
-        AND (messages.sender_id = ? OR tickets.status = false)";
+        $getTickets = "SELECT DISTINCT tickets.* FROM tickets JOIN messages ON messages.ticket_id = tickets.ticket_id 
+        AND (messages.sender_id = ? OR tickets.status = false)
+            GROUP BY tickets.ticket_id;";
     
         $stmt= $this->conn-> prepare($getTickets);
         $stmt-> bindParam(1,$this->id_user, PDO::PARAM_INT);

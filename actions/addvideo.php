@@ -17,6 +17,8 @@ if(!isset($fileName)){
 }
 
 
+
+
 if(!is_null($imgBase64)){
     $img = $imgBase64;
     $img = str_replace('data:image/png;base64,', '', $img);
@@ -62,6 +64,8 @@ if(isset($_POST['title'])) {
     $tagsFormated = array();
     $tag = '';
     if(!empty($tags)){
+
+        $tags = str_replace(' ', '', $tags);        
         $tags = trim($tags);
         $tags = strtolower($tags);
         for($i = 0; $i < strlen($tags); $i++){

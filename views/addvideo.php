@@ -8,6 +8,7 @@
 
 
     <?php  echo "<script src='scripts/jquery-3.6.3.js'></script>"?>
+     <?php  echo "<script src='scripts/addvideo.js'></script>"?>
 </head>
     <body>
 
@@ -58,7 +59,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-lg-2 col-form-label" for="tags">Tagi:</label>
                             <div class="col">
-                                <textarea class="form-control" id="tags" rows="1" placeholder="Podaj tagi oddzielone przecinkami"></textarea>
+                                <textarea class="form-control" id="tags" name="tags" rows="1" placeholder="Podaj tagi oddzielone przecinkami"></textarea>
                             </div>
                         </div>
                         <div class="form-group row py-2" id="thumbnail-btn-div" style="display: none">

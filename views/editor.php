@@ -75,6 +75,8 @@
 
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=watch" class="nav-link">Oglądaj filmy</a></div>
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=ustawienia" class="nav-link">Ustawienia</a></div>
+                            <div class="sb-sidenav-menu-heading"><a href="./index.php?action=newUser" class="nav-link">Wybierz nowe tagi</a></div>
+                          
                           <?php
                           require_once USER_CLASS_PATH;
                           require_once VIDEO_CLASS_PATH;

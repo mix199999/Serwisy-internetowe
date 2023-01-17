@@ -15,9 +15,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     
+    <?php
     echo "<link href='styles/zarzadzanieUzytkownikami.css' rel='stylesheet' />";
    
    echo "<script src='scripts/jquery-3.6.3.js'></script>"
+
+   ?>
 </head>
 <body>
 
@@ -74,7 +77,9 @@
                         <div class="nav">
 
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=watch" class="nav-link">Oglądaj filmy</a></div>
+                          
                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=ustawienia" class="nav-link">Ustawienia</a></div>
+                             <div class="sb-sidenav-menu-heading"><a href="./index.php?action=newUser" class="nav-link">Wybierz nowe tagi</a></div>
                           <?php
                           require_once USER_CLASS_PATH;
                           require_once CONN_PATH;

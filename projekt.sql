@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Sty 2023, 19:59
+-- Czas generowania: 19 Sty 2023, 22:59
 -- Wersja serwera: 10.4.27-MariaDB
 -- Wersja PHP: 8.2.0
 
@@ -60,7 +60,15 @@ INSERT INTO `messages` (`id`, `ticket_id`, `message`, `sender_id`) VALUES
 (19, 7, 'I am requesting a change of email address for my account.', 3),
 (20, 7, 'We have received your request. Please confirm the new email address by clicking on the link sent to your current email address.', 1),
 (21, 7, 'I have confirmed the new email address. Can you please update my account?', 3),
-(22, 7, 'Your account has been updated with the new email address. Please let us know if you have any further issues.', 1);
+(22, 7, 'Your account has been updated with the new email address. Please let us know if you have any further issues.', 1),
+(28, 9, 'test user', 2),
+(29, 9, 'test user', 2),
+(30, 9, 'test user', 2),
+(31, 9, 'user_test', 2),
+(32, 9, 'sdadsa', 2),
+(33, NULL, 'asAsaSSA', 2),
+(34, 1, 'test user', 2),
+(35, 5, 'a', 2);
 
 -- --------------------------------------------------------
 
@@ -93,9 +101,16 @@ CREATE TABLE `privilege_change_request` (
   `user_id` int(11) NOT NULL,
   `case_status` tinyint(4) DEFAULT NULL,
   `user_message` text NOT NULL,
-  `admin_message` text NOT NULL,
+  `admin_message` text DEFAULT NULL,
   `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `privilege_change_request`
+--
+
+INSERT INTO `privilege_change_request` (`case_id`, `user_id`, `case_status`, `user_message`, `admin_message`, `title`) VALUES
+(1, 2, 0, 'I wan to be a youtuber like Klocuch', 'Not this time sorry...', 'Change');
 
 -- --------------------------------------------------------
 
@@ -107,6 +122,23 @@ CREATE TABLE `reasons` (
   `reason_id` int(11) NOT NULL,
   `reason` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Zrzut danych tabeli `reasons`
+--
+
+INSERT INTO `reasons` (`reason_id`, `reason`) VALUES
+(1, 'Treści o charakterze seksualnym'),
+(2, 'Treści przedstawiające przemoc lub budzące odrazę\r\n'),
+(3, 'Nękanie lub dokuczanie\r\n'),
+(4, 'Sceny szkodliwe lub niebezpieczne\r\n'),
+(5, 'Nieprawdziwe informacje'),
+(6, 'Wykorzystywanie dzieci\r\n'),
+(7, 'Propagowanie terroryzmu'),
+(8, 'Spam lub treści wprowadzające w błąd\r\n'),
+(9, 'Naruszenie moich praw'),
+(10, 'roblem z napisami\r\n'),
+(11, 'Treści krzywdzące lub szerzące nienawiść');
 
 -- --------------------------------------------------------
 
@@ -204,15 +236,15 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`ticket_id`, `user_id`, `status`, `type`, `ticket_name`) VALUES
-(1, 2, 1, 'technical', 'Cannot upload video'),
+(1, 2, 0, 'technical', 'Cannot upload video'),
 (2, 3, 1, 'other', 'Can t access account'),
 (3, 3, 1, 'account', 'Password reset request'),
 (4, 2, 1, 'technical', 'Error when streaming video'),
-(5, 2, 1, 'payment', 'Refund request'),
+(5, 2, 0, 'payment', 'Refund request'),
 (6, 3, 1, 'technical', 'Video quality issue'),
 (7, 3, 1, 'other', 'Suggestion for new feature'),
 (8, 2, 1, 'account', 'Change email request'),
-(9, 2, 1, 'payment', 'Payment not processed'),
+(9, 2, 0, 'payment', 'Payment not processed'),
 (10, 3, 1, 'technical', 'Video buffering issue');
 
 -- --------------------------------------------------------
@@ -432,7 +464,7 @@ ALTER TABLE `videos`
 -- AUTO_INCREMENT dla tabeli `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT dla tabeli `privileges`
@@ -444,25 +476,25 @@ ALTER TABLE `privileges`
 -- AUTO_INCREMENT dla tabeli `privilege_change_request`
 --
 ALTER TABLE `privilege_change_request`
-  MODIFY `case_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `case_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `reasons`
 --
 ALTER TABLE `reasons`
-  MODIFY `reason_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `reason_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT dla tabeli `reported_videos`
 --
 ALTER TABLE `reported_videos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `reported_video_reasons`
 --
 ALTER TABLE `reported_video_reasons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `tags`

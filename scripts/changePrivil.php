@@ -15,7 +15,8 @@ $db = $database->getConnection();
         $reason = $_POST['reason3'];
         $title = $_POST['title3'];
 
-        $stmt = $db->prepare("INSERT INTO privilege_change_request (user_id, case_status, user_message, admin_message, title) VALUES (:user_id, true, :user_message, null, :title)");
+        $stmt = $db->prepare("INSERT INTO privilege_change_request (user_id, case_status, user_message, admin_message, title)
+         VALUES (:user_id, true, :user_message, null, :title)");
         $stmt->bindParam(':user_id', $id_user);
         $stmt->bindParam(':user_message', $reason);
         $stmt->bindParam(':title', $title);

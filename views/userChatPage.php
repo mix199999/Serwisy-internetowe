@@ -22,29 +22,29 @@
     <div class="col-12 d-flex align-items-center justify-content-center">
       <button class="btn btn-success btn-lg"   data-toggle="modal" data-target="#newTicket">Create New Ticket</button>
       <?php else: ?>
+
+
       <ul class="list-group fa-padding">
-        <div class="list-group" id="myList" role="tablist">
-          <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
-          <?php
+                <div class="list-group" id="myList" role="tablist">
+                <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
+                <?php
                 foreach($result as $row)
                 {
-                  ?>
-          <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="
-                      <?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>">
-            <?php
-                      echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
-            echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
-            if($row[3] == 'technical')
-            echo '<span class="badge bg-success">'.$row[3].'</span>';
-            else if($row[3] == 'other')
-            echo '<span class="badge bg-danger">'.$row[3].'</span>';
-            else if($row[3] == 'account')
-            echo '<span class="badge bg-info">'.$row[3].'</span>';
-            else if($row[3] == 'payment')
-            echo '<span class="badge bg-warning">'.$row[3].'</span>';
-            echo '</li>';
-           
-          }
+                    ?>
+                    <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="<?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>" data-title="<?php echo $row[4]?>">
+                        <?php
+                        echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
+                        echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
+                        if($row[3] == 'technical')
+                        echo '<span class="badge bg-success">'.$row[3].'</span>';
+                        else if($row[3] == 'other')
+                        echo '<span class="badge bg-danger">'.$row[3].'</span>';
+                        else if($row[3] == 'account')
+                        echo '<span class="badge bg-info">'.$row[3].'</span>';
+                        else if($row[3] == 'payment')
+                        echo '<span class="badge bg-warning">'.$row[3].'</span>';
+                        echo '</li>';
+                }
           ?>
         </div>
         <li class="list-group-item list-group-item-action text-center" >
@@ -56,7 +56,7 @@
       <?php endif; ?>
     </div>
   </div>
- 
+</div>
 
   <div class="modal" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -76,7 +76,7 @@
             <textarea class="form-control" id="comment" rows="3" name="messageText"></textarea>
           </div>
           <input type="text" name="senderID" value="<?php echo $_SESSION['id_user']?>" style="visibility: hidden">
-          <input type="text" name="caseID" value="<?php echo $row[0]?>" style="visibility: hidden">
+          <input type="text" name="caseID" id="caseID" style="visibility: hidden">
           <div class="modal-footer">
             <button type="submit" class="btn btn-success float-end"name="sendMessage" value="accept">Send</button>
           </div>
@@ -87,7 +87,28 @@
   </div>
 
 
-  <div class="modal" id="newTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<script>
+    $("#myList").on("click", ".list-group-item-action", function() {
+        var title = $(this).data("title");
+        $("#reqID").text("CaseTitle: " + title);
+});
+</script>
+
+<script>
+$("#myList").on("click", ".list-group-item-action", function() {
+        var id = $(this).data("id-case");
+        $("#caseID").val(id); //ustawienie wartości pola na ID ticketa
+    });
+</script>
+
+
+
+
+
+<!-- MODAL -->
+
+<div class="modal" id="newTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -122,21 +143,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-<!-- MODAL -->
-
-
 
 
 

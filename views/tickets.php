@@ -20,53 +20,40 @@
         <div class="col-12" >
             <ul class="list-group fa-padding">
                 <div class="list-group" id="myList" role="tablist">
-                   <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
-                    <?php
-
-                        //check is $result is not equal to false
-                        if($result != false)
-                        {
-                            foreach($result as $row)
-                            {
-                                ?>
-                                <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="
-                                <?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>">
-                                    <?php
-                                echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
-                                    echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
-                                    if($row[3] == 'technical')
-                                    echo '<span class="badge bg-success">'.$row[3].'</span>';
-                                    else if($row[3] == 'other')
-                                    echo '<span class="badge bg-danger">'.$row[3].'</span>';
-                                    else if($row[3] == 'account')
-                                    echo '<span class="badge bg-info">'.$row[3].'</span>';
-                                    else if($row[3] == 'payment')
-                                    echo '<span class="badge bg-warning">'.$row[3].'</span>';
-                                    echo '</li>';
-                            }
-                    
-                        }
-                        else
-                        {
-                            echo '<li class="list-group-item list-group-item-action" data-toggle="list" role="tab" style="text-align: center;">No tickets</li>';
-                        }
-                        
-                         ?>
-                </div>
-            </ul>
-        </div>
+                <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
+                <?php
+                foreach($result as $row)
+                {
+                    ?>
+                    <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="<?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>" data-title="<?php echo $row[4]?>">
+                        <?php
+                        echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
+                        echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
+                        if($row[3] == 'technical')
+                        echo '<span class="badge bg-success">'.$row[3].'</span>';
+                        else if($row[3] == 'other')
+                        echo '<span class="badge bg-danger">'.$row[3].'</span>';
+                        else if($row[3] == 'account')
+                        echo '<span class="badge bg-info">'.$row[3].'</span>';
+                        else if($row[3] == 'payment')
+                        echo '<span class="badge bg-warning">'.$row[3].'</span>';
+                        echo '</li>';
+                }
+                ?>
+            </div>
+        </ul>
     </div>
+</div>
 
-
-    <div class="modal" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id ="reqID">Case Title: <?php echo $row[4]?></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div class="modal" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id ="reqID"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
                 <div  class="modal-body modal-body-scroll"id="chatText"  style=" max-height: 50vh; overflow-y: scroll;" >
 
                 </div>
@@ -93,7 +80,12 @@
 <!-- MODAL -->
 
 
-
+<script>
+    $("#myList").on("click", ".list-group-item-action", function() {
+        var title = $(this).data("title");
+        $("#reqID").text("CaseTitle: " + title);
+});
+</script>
 
 
 

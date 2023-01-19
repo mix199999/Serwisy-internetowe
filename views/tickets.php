@@ -23,24 +23,34 @@
                    <li class="list-group-item list-group-item-primary"><h5 style="text-align: center" >Tickets</h5></li>
                     <?php
 
-                        foreach($result as $row)
+                        //check is $result is not equal to false
+                        if($result != false)
                         {
-                            ?>
-                            <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="
-                            <?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>">
-                                <?php
-                            echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
-                                echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
-                                if($row[3] == 'technical')
-                                echo '<span class="badge bg-success">'.$row[3].'</span>';
-                                else if($row[3] == 'other')
-                                echo '<span class="badge bg-danger">'.$row[3].'</span>';
-                                else if($row[3] == 'account')
-                                echo '<span class="badge bg-info">'.$row[3].'</span>';
-                                else if($row[3] == 'payment')
-                                echo '<span class="badge bg-warning">'.$row[3].'</span>';
-                                echo '</li>';
+                            foreach($result as $row)
+                            {
+                                ?>
+                                <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#chatModal" id="case"  data-toggle="list" role="tab" data-id-case="
+                                <?php echo $row[0]?>" data-logged-user = "<?php echo $_SESSION['id_user']?>">
+                                    <?php
+                                echo  '<span class="number pull-right"> <h5>Case ID: #'.$row[0].'</h5></span>';
+                                    echo '<p class="info"> <h6> Case Title: '.$row[4].'</h6></p>';
+                                    if($row[3] == 'technical')
+                                    echo '<span class="badge bg-success">'.$row[3].'</span>';
+                                    else if($row[3] == 'other')
+                                    echo '<span class="badge bg-danger">'.$row[3].'</span>';
+                                    else if($row[3] == 'account')
+                                    echo '<span class="badge bg-info">'.$row[3].'</span>';
+                                    else if($row[3] == 'payment')
+                                    echo '<span class="badge bg-warning">'.$row[3].'</span>';
+                                    echo '</li>';
+                            }
+                    
                         }
+                        else
+                        {
+                            echo '<li class="list-group-item list-group-item-action" data-toggle="list" role="tab" style="text-align: center;">No tickets</li>';
+                        }
+                        
                          ?>
                 </div>
             </ul>

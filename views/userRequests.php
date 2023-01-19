@@ -23,7 +23,15 @@
                         <div class="padding"></div>
                         <div class="row">
                             <ul class="list-group fa-padding">
-                                <?php foreach($result as $row){ ?>
+                                <?php 
+
+                                if($result != false)
+                                {
+                                foreach($result as $row){ 
+                                    
+                                    
+                                    
+                                    ?>
                                 <li class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issue" data-user-message="<?php echo $row[3]?>" data-user-request-id="<?php echo $row[0]?>" data-toggle="list" role="tab">                                    <div class="media">
                                         <div class="media-body">
 
@@ -43,7 +51,13 @@
                                         </div>
                                     </div>
                                 </li>
-                                <?php } ?>
+                                <?php } 
+                            }
+                            else
+                            {
+                                echo '<li class="list-group-item list-group-item-action" data-toggle="list" role="tab" style="text-align: center;">There are no requests</li>';
+                            }
+                            ?>
                             </ul>
                         </div>
 

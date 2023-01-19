@@ -2,10 +2,10 @@
 
 class Database{
 	
-	private $server  = 'db.lcyymlqiyvommyghfjhw.supabase.co';
-    private $user  = 'postgres';
-    private $password   = "Rhl7CnX1VvhfU3jt";
-    private $db  = "postgres";
+	private $server  = 'localhost';
+    private $user  = 'root';
+    private $password   = "";
+    private $db  = "projekt";
 
 
 //$dsn = "pgsql:host=$host;port=5432;dbname=$db;";
@@ -18,7 +18,7 @@ class Database{
         //todo try... catch...
         try {
 
-            $dsn = "pgsql:host=$this->server;port=5432;dbname=$this->db;";
+            $dsn = "mysql:host=$this->server;port=3306;dbname=$this->db;";
             $conn = new PDO($dsn,$this->user,$this->password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
             return  $conn;
 
